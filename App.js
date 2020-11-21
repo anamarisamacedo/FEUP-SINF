@@ -9,7 +9,7 @@ export default function App() {
     <View style={styles.container}>
       <Text>I know it's just the beginning, but the project is now created!</Text>
       <StatusBar style="auto" />
-      <WarehouseButton name="Button"/>
+      <WarehouseButton name="--Button--"/>
     </View>
   );
 }
@@ -17,7 +17,7 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: 'black',
     alignItems: 'center',
     justifyContent: 'center',
   },
