@@ -1,10 +1,9 @@
 import React from 'react';
-import { StyleSheet, Button, View, SafeAreaView, Text, Alert, ImagePropTypes } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 const WarehouseButton = props =>  {
      return (
-        <TouchableOpacity style={styles.button} onPress={() => console.log("test")}>
+        <TouchableOpacity style={styles.button} onPress={() => console.log("warehouse button pressed")}>
           <Text style={[styles.text, styles.warehouseId]}>{props.id}</Text>
           <Text style={styles.text}>{props.name}</Text>
         </TouchableOpacity> 
@@ -21,7 +20,6 @@ const styles = StyleSheet.create({
      borderColor: 'white',
      borderRadius: 7,
      borderWidth: 1,
-     color: 'white',
    },
    text: {
     color: 'white',
