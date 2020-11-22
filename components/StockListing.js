@@ -1,6 +1,7 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 import BackButton from './BackButton';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 const stockList = [
   {
@@ -20,19 +21,7 @@ const stockList = [
 
 const StockListing = (props) => {
   const idName = props.id + " " + props.name;
-  //const stockList = props.stockList
-  const TabNavigator = createBottomTabNavigator(  
-    {  
-      Home:{  
-        screen:HomeScreen,  
-        navigationOptions:{  
-          tabBarLabel:'Home',  
-          tabBarIcon:({tintColor})=>(  
-              <Icon name="ios-home" color={tintColor} size={25}/>  
-          )  
-        }  
-      }
-    });
+ 
   return (
     <View>
       <View style={styles.main}>
