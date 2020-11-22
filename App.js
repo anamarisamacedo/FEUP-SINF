@@ -19,20 +19,24 @@ export default function App() {
         rightComponent={{ icon: "person", color: "white" }}
       />
       <View style={styles.container}>
-        <StockListing idName="A1 CPU" />
+        <StockListing id="A1" name="CPU"/>
       </View>
     </View>
   );
 }
 
-const list = [
+const stockList = [
   {
-    title: "Appointments",
-    icon: "av-timer",
+    ref: "10150",
+    loc: "A1.1.1",
+    name: "AMD Ryzen 5 3600",
+    stock: "28/50",
   },
   {
-    title: "Trips",
-    icon: "flight-takeoff",
+    ref: "10151",
+    loc: "A1.1.2",
+    name: "AMD Ryzen 5 3600X",
+    stock: "12/50",
   },
 ];
 
