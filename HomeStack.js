@@ -2,6 +2,7 @@ import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 import EntryScreen from './screens/EntryScreen'; 
 import WarehouseScreen from './screens/WarehouseScreen';
+import StockListingScreen from './screens/StockListingScreen';
 
 const screens = {
   EntryScreen: {
@@ -12,6 +13,12 @@ const screens = {
   },
   WarehouseScreen: {
     screen: WarehouseScreen,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  StockListingScreen: {
+    screen: StockListingScreen,
     navigationOptions: {
       headerShown: false,
     },
