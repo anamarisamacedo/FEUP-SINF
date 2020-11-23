@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Dimensions, Button } from "react-native";
+import { StyleSheet, Text, View, Dimensions, Button, TouchableOpacity } from "react-native";
 
 const supplierOrders = [
   {
@@ -56,28 +56,32 @@ export default function SupplierOrders({ navigation }) {
           </View>
           {supplierOrders.map((i) => {
             return (
-              <View style={styles.row} key={i}>
-                <View style={styles.supplierColumn}>
-                  <Text style={styles.textTable}>{i.supplier}</Text>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("OrderDetailsScreen")}
+              >
+                <View style={styles.row} key={i}>
+                  <View style={styles.supplierColumn}>
+                    <Text style={styles.textTable}>{i.supplier}</Text>
+                  </View>
+                  <View style={styles.orderColumn}>
+                    <Text style={styles.textTable}>{i.order}</Text>
+                  </View>
+                  <View style={styles.dateColumn}>
+                    <Text style={styles.textTable}>{i.date}</Text>
+                  </View>
+                  <View style={styles.statusColumn}>
+                    <Text style={styles.textTable}>{i.status}</Text>
+                  </View>
                 </View>
-                <View style={styles.orderColumn}>
-                  <Text style={styles.textTable}>{i.order}</Text>
-                </View>
-                <View style={styles.dateColumn}>
-                  <Text style={styles.textTable}>{i.date}</Text>
-                </View>
-                <View style={styles.statusColumn}>
-                  <Text style={styles.textTable}>{i.status}</Text>
-                </View>
-              </View>
+              </TouchableOpacity>
             );
           })}
         </View>
       </View>
       <View style={styles.bottom}>
-      <View style={styles.bottom}>
-        <Button title="Nagivate to home - TEMP" onPress={pressHandler} />
-      </View>
+        <View style={styles.bottom}>
+          <Button title="Nagivate to home - TEMP" onPress={pressHandler} />
+        </View>
       </View>
     </View>
   );
@@ -85,8 +89,8 @@ export default function SupplierOrders({ navigation }) {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: 'black',
-    alignItems: 'center'
+    backgroundColor: "black",
+    alignItems: "center",
   },
   main: {
     height: Dimensions.get("screen").height,
@@ -101,7 +105,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-end",
     marginBottom: 36,
-    alignItems: 'center'
+    alignItems: "center",
   },
   list: {
     backgroundColor: "black",
@@ -119,8 +123,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderBottomWidth: 1,
     borderBottomColor: "#d3d3d3",
-    flexWrap: 'wrap',
-    alignItems: 'flex-start',
+    flexWrap: "wrap",
+    alignItems: "flex-start",
   },
   header: {
     textAlign: "left",
@@ -128,8 +132,8 @@ const styles = StyleSheet.create({
     fontFamily: "Corbel",
     fontWeight: "bold",
     fontSize: 16,
-    flexWrap: 'wrap',
-    alignItems: 'flex-start',
+    flexWrap: "wrap",
+    alignItems: "flex-start",
   },
   textTable: {
     textAlign: "left",
@@ -137,8 +141,8 @@ const styles = StyleSheet.create({
     fontFamily: "Corbel",
     fontStyle: "normal",
     fontSize: 16,
-    flexWrap: 'wrap',
-    alignItems: 'flex-start',
+    flexWrap: "wrap",
+    alignItems: "flex-start",
   },
   row: {
     height: 30,

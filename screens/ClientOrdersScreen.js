@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  Button,
-} from "react-native";
+import { StyleSheet, Text, View, Dimensions, Button, TouchableOpacity } from "react-native";
 
 const clientOrders = [
   {
@@ -63,20 +57,24 @@ export default function ClientOrders({ navigation }) {
           </View>
           {clientOrders.map((i) => {
             return (
-              <View style={styles.row} key={i}>
-                <View style={styles.clientColumn}>
-                  <Text style={styles.textTable}>{i.client}</Text>
+              <TouchableOpacity
+                onPress={() => navigation.navigate('OrderDetailsScreen')}
+              >
+                <View style={styles.row} key={i}>
+                  <View style={styles.clientColumn}>
+                    <Text style={styles.textTable}>{i.client}</Text>
+                  </View>
+                  <View style={styles.orderColumn}>
+                    <Text style={styles.textTable}>{i.order}</Text>
+                  </View>
+                  <View style={styles.dateColumn}>
+                    <Text style={styles.textTable}>{i.date}</Text>
+                  </View>
+                  <View style={styles.statusColumn}>
+                    <Text style={styles.textTable}>{i.status}</Text>
+                  </View>
                 </View>
-                <View style={styles.orderColumn}>
-                  <Text style={styles.textTable}>{i.order}</Text>
-                </View>
-                <View style={styles.dateColumn}>
-                  <Text style={styles.textTable}>{i.date}</Text>
-                </View>
-                <View style={styles.statusColumn}>
-                  <Text style={styles.textTable}>{i.status}</Text>
-                </View>
-              </View>
+              </TouchableOpacity>
             );
           })}
         </View>
