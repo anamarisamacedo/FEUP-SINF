@@ -3,25 +3,25 @@ import { StyleSheet, Text, View, Dimensions, Button, TouchableOpacity } from "re
 
 const supplierOrders = [
   {
-    supplier: "012",
+    id: "012",
     order: "07863",
     date: "22-10-2020",
     status: "picking",
   },
   {
-    supplier: "012",
+    id: "012",
     order: "07863",
     date: "22-10-2020",
     status: "picking",
   },
   {
-    supplier: "013",
+    id: "013",
     order: "07863",
     date: "24-10-2020",
     status: "shipped",
   },
   {
-    supplier: "016",
+    id: "016",
     order: "07863",
     date: "20-10-2020",
     status: "picking",
@@ -57,11 +57,11 @@ export default function SupplierOrders({ navigation }) {
           {supplierOrders.map((i) => {
             return (
               <TouchableOpacity
-                onPress={() => navigation.navigate("OrderDetailsScreen")}
+                onPress={() => navigation.navigate("OrderDetailsScreen", {id: 'Supplier', order: i})}
               >
                 <View style={styles.row} key={i}>
                   <View style={styles.supplierColumn}>
-                    <Text style={styles.textTable}>{i.supplier}</Text>
+                    <Text style={styles.textTable}>{i.id}</Text>
                   </View>
                   <View style={styles.orderColumn}>
                     <Text style={styles.textTable}>{i.order}</Text>

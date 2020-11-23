@@ -31,9 +31,9 @@ const stockList = [
 ];
 
 export default function StockListingScreen({ navigation }) {
-  //const { id, name } = route.params;
-  //const title = JSON.stringify(id) + " " + JSON.stringify(name);
-  const title = "A1 CPU";
+  const id = navigation.getParam('id');
+  const name = navigation.getParam('name');
+  const title = id + " " + name;
   return (
     <View style={styles.main}>
       <View style={styles.container}>

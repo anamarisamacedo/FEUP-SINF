@@ -14,29 +14,27 @@ export default function WarehouseScreen({ navigation }) {
         <View style={styles.main}>
             <View style={styles.warehouseBtns}>
                 <View style={styles.row}>
-                    <WarehouseButton id="A1" name="CPU"/>
-                    <WarehouseButton id="B1" name="HDD" />
-                    <WarehouseButton id="C1" name="Case" />
+                    <WarehouseButton id="A1" name="CPU" onPress={() => navigation.navigate('StockListingScreen', {id: 'A1', name: 'CPU'})}/>
+                    <WarehouseButton id="B1" name="HDD" onPress={() => navigation.navigate('StockListingScreen', {id: 'B1', name: 'HDD'})}/>
+                    <WarehouseButton id="C1" name="Case" onPress={() => navigation.navigate('StockListingScreen', {id: 'C1', name: 'Case'})}/>
                 </View>
                 <View style={styles.row}>
-                    <WarehouseButton id="A2" name="GPU" />
-                    <WarehouseButton id="B2" name="SSD" />
-                    <WarehouseButton id="C2" name="Cooler" />
+                    <WarehouseButton id="A2" name="GPU" onPress={() => navigation.navigate('StockListingScreen', {id: 'A2', name: 'GPU'})}/>
+                    <WarehouseButton id="B2" name="SSD" onPress={() => navigation.navigate('StockListingScreen', {id: 'B2', name: 'SSD'})}/>
+                    <WarehouseButton id="C2" name="Cooler" onPress={() => navigation.navigate('StockListingScreen', {id: 'C2', name: 'Cooler'})}/>
                 </View>
                 <View style={styles.row}>
-                    <WarehouseButton id="A3" name="MB" />
-                    <WarehouseButton id="B3" name="RAM" />
-                    <WarehouseButton id="C3" name="PSU" />
+                    <WarehouseButton id="A3" name="MB" onPress={() => navigation.navigate('StockListingScreen', {id: 'A3', name: 'MB'})}/>
+                    <WarehouseButton id="B3" name="RAM" onPress={() => navigation.navigate('StockListingScreen', {id: 'B3', name: 'RAM'})} />
+                    <WarehouseButton id="C3" name="PSU" onPress={() => navigation.navigate('StockListingScreen', {id: 'C3', name: 'PSU'})}/>
                 </View>
                 <View style={[styles.row, { marginTop: 50 }]}>
                     <WarehouseButton id="OP" name="" />
                 </View>
             </View>
             <Button title='Nagivate to entry - TEMP' onPress={pressHandler} />
-            <Button title='Nagivate to stock list - TEMP' onPress={() => navigation.navigate('StockListingScreen', {id: 'A1', name: 'CPU'})} />
             <Button title='Nagivate to clients orders - TEMP' onPress={() => navigation.navigate('ClientOrdersScreen')} />
             <Button title='Nagivate to suppliers orders - TEMP' onPress={() => navigation.navigate('SupplierOrdersScreen')} />
-            <Button title='Nagivate to order details - TEMP' onPress={() => navigation.navigate('OrderDetailsScreen')} />
         </View>
     );
 

@@ -37,8 +37,10 @@ const items = [
 ];
 
 export default function ClientOrders({ navigation }) {
-  const title = "Order X Client y";
-  const subtitle = "Date: 22-10-2020  Status: picking";
+  const id = navigation.getParam('id');
+  const order = navigation.getParam('order');
+  const title = "Order " + order.order + " " + id + " " + order.id;
+  const subtitle = "Date: " + order.date + " Status: " + order.status;
   return (
     <View style={styles.main}>
       <View style={styles.container}>
