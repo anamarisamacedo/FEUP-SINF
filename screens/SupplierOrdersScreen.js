@@ -1,7 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from "react-native";
-import BackButton from "../components/BackButton";
-import { Icon } from "react-native-elements";
+import { StyleSheet, Text, View, Dimensions, Button } from "react-native";
 
 const supplierOrders = [
   {
@@ -31,12 +29,15 @@ const supplierOrders = [
 ];
 
 export default function SupplierOrders({ navigation }) {
-  const idName = "Suppliers' Orders";
+  const title = "Suppliers' Orders";
+  const pressHandler = () => {
+    navigation.push("WarehouseScreen");
+  };
   return (
     <View style={styles.main}>
       <View style={styles.container}>
-        <View style={styles.idName}>
-          <Text style={styles.text}>{idName}</Text>
+        <View style={styles.title}>
+          <Text style={styles.text}>{title}</Text>
         </View>
         <View>
           <View style={styles.row}>
@@ -74,12 +75,9 @@ export default function SupplierOrders({ navigation }) {
         </View>
       </View>
       <View style={styles.bottom}>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.goBack()}
-      >
-        <Icon name="chevron-left" color='#a9a9a9' />
-      </TouchableOpacity>
+      <View style={styles.bottom}>
+        <Button title="Nagivate to home - TEMP" onPress={pressHandler} />
+      </View>
       </View>
     </View>
   );
@@ -115,7 +113,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 19,
   },
-  idName: {
+  title: {
     marginTop: 50,
     marginBottom: 40,
     flexDirection: "row",

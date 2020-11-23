@@ -36,6 +36,7 @@ export default function WarehouseScreen({ navigation }) {
             <Button title='Nagivate to stock list - TEMP' onPress={() => navigation.navigate('StockListingScreen', {id: 'A1', name: 'CPU'})} />
             <Button title='Nagivate to clients orders - TEMP' onPress={() => navigation.navigate('ClientOrdersScreen')} />
             <Button title='Nagivate to suppliers orders - TEMP' onPress={() => navigation.navigate('SupplierOrdersScreen')} />
+            <Button title='Nagivate to order details - TEMP' onPress={() => navigation.navigate('OrderDetailsScreen')} />
         </View>
     );
 

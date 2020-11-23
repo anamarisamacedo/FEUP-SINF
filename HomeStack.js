@@ -5,6 +5,7 @@ import WarehouseScreen from './screens/WarehouseScreen';
 import StockListingScreen from './screens/StockListingScreen';
 import ClientOrdersScreen from './screens/ClientOrdersScreen';
 import SupplierOrdersScreen from './screens/SupplierOrdersScreen';
+import OrderDetailsScreen from './screens/OrderDetailsScreen';
 
 const screens = {
   EntryScreen: {
@@ -33,6 +34,12 @@ const screens = {
   },
   SupplierOrdersScreen: {
     screen: SupplierOrdersScreen,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  OrderDetailsScreen: {
+    screen: OrderDetailsScreen,
     navigationOptions: {
       headerShown: false,
     },

@@ -3,37 +3,35 @@ import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from "react-nati
 import BackButton from "../components/BackButton";
 import { Icon } from "react-native-elements";
 
-const stockList = [
+const items = [
   {
     ref: "10150",
-    loc: "A1.1.1",
+    loc: "A.1.1.1",
     name: "AMD Ryzen 5 3600",
-    stock: "28/50",
+    pqty: "3/3",
   },
   {
     ref: "10151",
-    loc: "A1.1.2",
+    loc: "A.1.1.2",
     name: "AMD Ryzen 5 3600X",
-    stock: "12/50",
+    pqty: "0/4",
   },
   {
     ref: "10152",
-    loc: "A1.1.3",
-    name: "AMD Ryzen 4 3600X",
-    stock: "48/50",
+    loc: "A.1.1.3",
+    name: "AMD Ryzen 7 3700",
+    pqty: "2/3",
   },
   {
     ref: "10153",
-    loc: "A1.1.4",
-    name: "AMD Ryzen 2 3600X",
-    stock: "32/50",
+    loc: "A.1.1.4",
+    name: "AMD Ryzen 7 3700X",
+    pqty: "2/2",
   },
 ];
 
-export default function StockListingScreen({ navigation }) {
-  //const { id, name } = route.params;
-  //const title = JSON.stringify(id) + " " + JSON.stringify(name);
-  const title = "A1 CPU";
+export default function ClientOrders({ navigation }) {
+  const title = "Order X Client y";
   return (
     <View style={styles.main}>
       <View style={styles.container}>
@@ -51,11 +49,11 @@ export default function StockListingScreen({ navigation }) {
             <View style={styles.nameColumn}>
               <Text style={styles.header}>{"Name"}</Text>
             </View>
-            <View style={styles.stockColumn}>
-              <Text style={styles.header}>{"Stock"}</Text>
+            <View style={styles.pqtyColumn}>
+              <Text style={styles.header}>{"P/Qty"}</Text>
             </View>
           </View>
-          {stockList.map((i) => {
+          {items.map((i) => {
             return (
               <View style={styles.row} key={i}>
                 <View style={styles.refColumn}>
@@ -67,8 +65,8 @@ export default function StockListingScreen({ navigation }) {
                 <View style={styles.nameColumn}>
                   <Text style={styles.textTable}>{i.name}</Text>
                 </View>
-                <View style={styles.stockColumn}>
-                  <Text style={styles.textTable}>{i.stock}</Text>
+                <View style={styles.pqtyColumn}>
+                  <Text style={styles.textTable}>{i.pqty}</Text>
                 </View>
               </View>
             );
@@ -154,5 +152,5 @@ const styles = StyleSheet.create({
   refColumn: { flexDirection: "column", flex: 0.6 },
   locColumn: { flexDirection: "column", flex: 0.6 },
   nameColumn: { flexDirection: "column", flex: 1.5 },
-  stockColumn: { flexDirection: "column", flex: 0.5 },
+  pqtyColumn: { flexDirection: "column", flex: 0.5 },
 });
