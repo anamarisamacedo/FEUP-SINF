@@ -1,75 +1,96 @@
-import React, { useState, useEffect} from "react";
+import React from "react";
 import { StyleSheet, Text, View, Dimensions, Button, TouchableOpacity } from "react-native";
-import Navbar from '../components/Navbar';
-import token from '../services/token';
-import Moment from 'moment';
-import jasminConstants from '../services/jasminConstants';
+import GeneralButton from "../components/GeneralButton";
 
-export default function SupplierOrdersScreen({ navigation }) {
-  const [orders, setOrders] = useState([]);
-  const [isLoading, setLoading] = useState(true);
-  const title = "Suppliers' Orders";
-  const accessToken = token.getToken();
-  
-  useEffect(() => {
-    const apiUrl = jasminConstants.url +"/api/" + jasminConstants.accountKey + "/" + jasminConstants.subscriptionKey + "/purchases/orders";
-    console.log(apiUrl)
-    fetch(apiUrl, {
-      method: "GET",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: "Bearer " + accessToken
-      }})
-      .then((response) => response.json())
-      .then((orders) => {setOrders(orders), console.log(orders)})
-      .finally(setLoading(false));
-  }, [])
+const pickingWaves = [
+  {
+    wave: "00124",
+    date: "22-10-2020",
+    hour: "08:21",
+    status: "in progress",
+  },
+  {
+    wave: "00125",
+    date: "22-10-2020",
+    hour: "08:21",
+    status: "in progress",
+  },
+  {
+    wave: "00122",
+    date: "22-10-2020",
+    hour: "08:21",
+    status: "concluded",
+  },
+  {
+    wave: "00121",
+    date: "22-10-2020",
+    hour: "08:21",
+    status: "in progress",
+  },
+  {
+    wave: "00120",
+    date: "22-10-2020",
+    hour: "08:21",
+    status: "concluded",
+  },
+  {
+    wave: "00126",
+    date: "22-10-2020",
+    hour: "08:21",
+    status: "in progress",
+  },
+];
+
+export default function PickingWavesScreen({ navigation }) {
+  const title = "Picking Waves";
+
   return (
     <View style={styles.main}>
-      <Navbar navigation={navigation}/>
       <View style={styles.container}>
         <View style={styles.title}>
           <Text style={styles.text}>{title}</Text>
         </View>
         <View>
           <View style={styles.row}>
-            <View style={styles.supplierColumn}>
-              <Text style={styles.header}>{"Supplier"}</Text>
-            </View>
-            <View style={styles.orderColumn}>
-              <Text style={styles.header}>{"Order"}</Text>
+            <View style={styles.waveColumn}>
+              <Text style={styles.header}>{"Wave"}</Text>
             </View>
             <View style={styles.dateColumn}>
               <Text style={styles.header}>{"Date"}</Text>
             </View>
+            <View style={styles.hourColumn}>
+              <Text style={styles.header}>{"Hour"}</Text>
+            </View>
             <View style={styles.statusColumn}>
-              <Text style={[styles.header, {textAlign: 'right'}]}>{"Status"}</Text>
+              <Text style={styles.header}>{"Status"}</Text>
             </View>
           </View>
-          {orders.map((i) => {
+          {pickingWaves.map((i) => {
             return (
               <TouchableOpacity
-                onPress={() => navigation.navigate("OrderDetailsScreen", {id: 'Client ' + i.sellerCustomerParty, orderId: i.naturalKey, date: i.documentDate})}
+                onPress={() => console.log("Pressed picking wave")}
               >
                 <View style={styles.row} key={i}>
-                  <View style={styles.supplierColumn}>
-                    <Text style={styles.textTable}>{i.sellerCustomerParty}</Text>
-                  </View>
-                  <View style={styles.orderColumn}>
-                    <Text style={styles.textTable}>{i.naturalKey}</Text>
+                  <View style={styles.waveColumn}>
+                    <Text style={styles.textTable}>{i.wave}</Text>
                   </View>
                   <View style={styles.dateColumn}>
-                    <Text style={styles.textTable}>{Moment(i.documentDate).format('YYYY/MM/DD')}</Text>
+                    <Text style={styles.textTable}>{i.date}</Text>
+                  </View>
+                  <View style={styles.hourColumn}>
+                    <Text style={styles.textTable}>{i.hour}</Text>
                   </View>
                   <View style={styles.statusColumn}>
-                    <Text style={[styles.textTable, {textAlign: 'right'}]}>{"X"}</Text>
+                    <Text style={styles.textTable}>{i.status}</Text>
                   </View>
                 </View>
               </TouchableOpacity>
             );
           })}
         </View>
+      </View>
+      <View style={styles.bottom}>
+        <GeneralButton name="Generate Picking Wave" onPress={() => console.log("Pressed generate pw")} />
       </View>
     </View>
   );
@@ -139,8 +160,8 @@ const styles = StyleSheet.create({
     borderBottomColor: "darkgray",
     marginTop: 4,
   },
-  supplierColumn: { flexDirection: "column", flex: 0.7 },
-  orderColumn: { flexDirection: "column", flex: 0.7 },
-  dateColumn: { flexDirection: "column", flex: 1 },
-  statusColumn: { flexDirection: "column", flex: 0.7 },
+  waveColumn: { flexDirection: "column", flex: 0.6 },
+  dateColumn: { flexDirection: "column", flex: 0.9 },
+  hourColumn: { flexDirection: "column", flex: 0.6 },
+  statusColumn: { flexDirection: "column", flex: 0.9 },
 });

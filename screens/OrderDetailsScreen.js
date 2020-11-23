@@ -36,7 +36,7 @@ const items = [
   },
 ];
 
-export default function ClientOrders({ navigation, route }) {
+export default function OrderDetailsScreen({ navigation, route }) {
   const {id, orderId, date} = route.params;
   const title = "Order " + orderId + " " + id;
   const subtitle = "Date: " + Moment(date).format('YYYY/MM/DD') + " Status: ";

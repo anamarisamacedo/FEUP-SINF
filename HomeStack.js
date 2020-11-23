@@ -10,6 +10,7 @@ import OrderDetailsScreen from './screens/OrderDetailsScreen';
 import LoginScreen from './screens/LoginScreen';
 import SignUpScreen from './screens/SignUpScreen';
 import PickersListScreen from './screens/PickersListScreen';
+import PickingWavesScreen from './screens/PickingWavesScreen';
 
 const screens = {
   EntryScreen: {
@@ -72,6 +73,12 @@ const screens = {
       headerShown: false,
     },
   },
+  PickingWavesScreen: {
+    screen: PickingWavesScreen,
+    navigationOptions: {
+      headerShown: false,
+    },
+  }
 };
 
 // home stack navigator screens

@@ -48,6 +48,10 @@ export default function WarehouseScreen({ navigation }) {
                     <WarehouseButton id="OP" name="" onPress={() => navigation.navigate('OPScreen')} />
                 </View>
             </View>
+            <Button title='Nagivate to entry - TEMP' onPress={pressHandler} />
+            <Button title='Nagivate to clients orders - TEMP' onPress={() => navigation.navigate('ClientOrdersScreen')} />
+            <Button title='Nagivate to suppliers orders - TEMP' onPress={() => navigation.navigate('SupplierOrdersScreen')} />
+            <Button title='Nagivate to picking waves list - TEMP' onPress={() => navigation.navigate('PickingWavesScreen')} />
         </View>
     );
 
