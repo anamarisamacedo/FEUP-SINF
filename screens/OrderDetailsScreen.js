@@ -34,7 +34,7 @@ const items = [
   },
 ];
 
-export default function ClientOrders({ navigation }) {
+export default function OrderDetailsScreen({ navigation }) {
   const id = navigation.getParam('id');
   const order = navigation.getParam('order');
   const title = "Order " + order.order + " " + id + " " + order.id;

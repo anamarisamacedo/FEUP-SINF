@@ -28,7 +28,7 @@ const clientOrders = [
   },
 ];
 
-export default function ClientOrders({ navigation }) {
+export default function ClientOrdersScreen({ navigation }) {
   const title = "Clients' Orders";
   const pressHandler = () => {
     navigation.push("WarehouseScreen");

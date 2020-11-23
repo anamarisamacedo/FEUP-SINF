@@ -6,6 +6,7 @@ import StockListingScreen from './screens/StockListingScreen';
 import ClientOrdersScreen from './screens/ClientOrdersScreen';
 import SupplierOrdersScreen from './screens/SupplierOrdersScreen';
 import OrderDetailsScreen from './screens/OrderDetailsScreen';
+import PickingWavesScreen from './screens/PickingWavesScreen';
 
 const screens = {
   EntryScreen: {
@@ -40,6 +41,12 @@ const screens = {
   },
   OrderDetailsScreen: {
     screen: OrderDetailsScreen,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  PickingWavesScreen: {
+    screen: PickingWavesScreen,
     navigationOptions: {
       headerShown: false,
     },

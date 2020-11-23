@@ -1,38 +1,49 @@
 import React from "react";
 import { StyleSheet, Text, View, Dimensions, Button, TouchableOpacity } from "react-native";
+import GeneralButton from "../components/GeneralButton";
 
-const supplierOrders = [
+const pickingWaves = [
   {
-    id: "012",
-    order: "07863",
+    wave: "00124",
     date: "22-10-2020",
-    status: "picking",
+    hour: "08:21",
+    status: "in progress",
   },
   {
-    id: "012",
-    order: "07863",
+    wave: "00125",
     date: "22-10-2020",
-    status: "picking",
+    hour: "08:21",
+    status: "in progress",
   },
   {
-    id: "013",
-    order: "07863",
-    date: "24-10-2020",
-    status: "shipped",
+    wave: "00122",
+    date: "22-10-2020",
+    hour: "08:21",
+    status: "concluded",
   },
   {
-    id: "016",
-    order: "07863",
-    date: "20-10-2020",
-    status: "picking",
+    wave: "00121",
+    date: "22-10-2020",
+    hour: "08:21",
+    status: "in progress",
+  },
+  {
+    wave: "00120",
+    date: "22-10-2020",
+    hour: "08:21",
+    status: "concluded",
+  },
+  {
+    wave: "00126",
+    date: "22-10-2020",
+    hour: "08:21",
+    status: "in progress",
   },
 ];
 
-export default function SupplierOrdersScreen({ navigation }) {
-  const title = "Suppliers' Orders";
-  const pressHandler = () => {
-    navigation.push("WarehouseScreen");
-  };
+export default function PickingWavesScreen({ navigation }) {
+  const title = "Picking Waves";
+
   return (
     <View style={styles.main}>
       <View style={styles.container}>
@@ -41,33 +52,33 @@ export default function SupplierOrdersScreen({ navigation }) {
         </View>
         <View>
           <View style={styles.row}>
-            <View style={styles.supplierColumn}>
-              <Text style={styles.header}>{"Supplier"}</Text>
-            </View>
-            <View style={styles.orderColumn}>
-              <Text style={styles.header}>{"Order"}</Text>
+            <View style={styles.waveColumn}>
+              <Text style={styles.header}>{"Wave"}</Text>
             </View>
             <View style={styles.dateColumn}>
               <Text style={styles.header}>{"Date"}</Text>
+            </View>
+            <View style={styles.hourColumn}>
+              <Text style={styles.header}>{"Hour"}</Text>
             </View>
             <View style={styles.statusColumn}>
               <Text style={styles.header}>{"Status"}</Text>
             </View>
           </View>
-          {supplierOrders.map((i) => {
+          {pickingWaves.map((i) => {
             return (
               <TouchableOpacity
-                onPress={() => navigation.navigate("OrderDetailsScreen", {id: 'Supplier', order: i})}
+                onPress={() => console.log("Pressed picking wave")}
               >
                 <View style={styles.row} key={i}>
-                  <View style={styles.supplierColumn}>
-                    <Text style={styles.textTable}>{i.id}</Text>
-                  </View>
-                  <View style={styles.orderColumn}>
-                    <Text style={styles.textTable}>{i.order}</Text>
+                  <View style={styles.waveColumn}>
+                    <Text style={styles.textTable}>{i.wave}</Text>
                   </View>
                   <View style={styles.dateColumn}>
                     <Text style={styles.textTable}>{i.date}</Text>
+                  </View>
+                  <View style={styles.hourColumn}>
+                    <Text style={styles.textTable}>{i.hour}</Text>
                   </View>
                   <View style={styles.statusColumn}>
                     <Text style={styles.textTable}>{i.status}</Text>
@@ -79,9 +90,7 @@ export default function SupplierOrdersScreen({ navigation }) {
         </View>
       </View>
       <View style={styles.bottom}>
-        <View style={styles.bottom}>
-          <Button title="Nagivate to home - TEMP" onPress={pressHandler} />
-        </View>
+        <GeneralButton name="Generate Picking Wave" onPress={() => console.log("Pressed generate pw")} />
       </View>
     </View>
   );
@@ -151,8 +160,8 @@ const styles = StyleSheet.create({
     borderBottomColor: "darkgray",
     marginTop: 4,
   },
-  supplierColumn: { flexDirection: "column", flex: 0.7 },
-  orderColumn: { flexDirection: "column", flex: 0.7 },
-  dateColumn: { flexDirection: "column", flex: 1 },
-  statusColumn: { flexDirection: "column", flex: 0.7 },
+  waveColumn: { flexDirection: "column", flex: 0.6 },
+  dateColumn: { flexDirection: "column", flex: 0.9 },
+  hourColumn: { flexDirection: "column", flex: 0.6 },
+  statusColumn: { flexDirection: "column", flex: 0.9 },
 });
