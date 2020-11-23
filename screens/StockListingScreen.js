@@ -1,7 +1,11 @@
 import React from "react";
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Dimensions
+} from "react-native";
 import BackButton from "../components/BackButton";
-import { Icon } from "react-native-elements";
 
 const stockList = [
   {
@@ -31,8 +35,8 @@ const stockList = [
 ];
 
 export default function StockListingScreen({ navigation }) {
-  const id = navigation.getParam('id');
-  const name = navigation.getParam('name');
+  const id = navigation.getParam("id");
+  const name = navigation.getParam("name");
   const title = id + " " + name;
   return (
     <View style={styles.main}>
@@ -76,12 +80,7 @@ export default function StockListingScreen({ navigation }) {
         </View>
       </View>
       <View style={styles.bottom}>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => navigation.goBack()}
-      >
-        <Icon name="chevron-left" color='#a9a9a9' />
-      </TouchableOpacity>
+        <BackButton onPress={() => navigation.goBack()} />
       </View>
     </View>
   );
@@ -89,8 +88,8 @@ export default function StockListingScreen({ navigation }) {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: 'black',
-    alignItems: 'center'
+    backgroundColor: "black",
+    alignItems: "center",
   },
   main: {
     height: Dimensions.get("screen").height,
@@ -105,7 +104,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "flex-end",
     marginBottom: 36,
-    alignItems: 'center'
+    alignItems: "center",
   },
   list: {
     backgroundColor: "black",
@@ -123,8 +122,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderBottomWidth: 1,
     borderBottomColor: "#d3d3d3",
-    flexWrap: 'wrap',
-    alignItems: 'flex-start',
+    flexWrap: "wrap",
+    alignItems: "flex-start",
   },
   header: {
     textAlign: "left",
@@ -132,8 +131,8 @@ const styles = StyleSheet.create({
     fontFamily: "Corbel",
     fontWeight: "bold",
     fontSize: 16,
-    flexWrap: 'wrap',
-    alignItems: 'flex-start',
+    flexWrap: "wrap",
+    alignItems: "flex-start",
   },
   textTable: {
     textAlign: "left",
@@ -141,8 +140,8 @@ const styles = StyleSheet.create({
     fontFamily: "Corbel",
     fontStyle: "normal",
     fontSize: 16,
-    flexWrap: 'wrap',
-    alignItems: 'flex-start',
+    flexWrap: "wrap",
+    alignItems: "flex-start",
   },
   row: {
     height: 30,

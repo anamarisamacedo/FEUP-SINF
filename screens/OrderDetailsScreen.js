@@ -3,11 +3,9 @@ import {
   StyleSheet,
   Text,
   View,
-  Dimensions,
-  TouchableOpacity,
+  Dimensions
 } from "react-native";
 import BackButton from "../components/BackButton";
-import { Icon } from "react-native-elements";
 
 const items = [
   {
@@ -86,12 +84,7 @@ export default function ClientOrders({ navigation }) {
         </View>
       </View>
       <View style={styles.bottom}>
-        <TouchableOpacity
-          style={styles.button}
-          onPress={() => navigation.goBack()}
-        >
-          <Icon name="chevron-left" color="#a9a9a9" />
-        </TouchableOpacity>
+        <BackButton onPress={() => navigation.goBack()}/>
       </View>
     </View>
   );
