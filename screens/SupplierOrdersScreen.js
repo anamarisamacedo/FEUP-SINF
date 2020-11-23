@@ -3,35 +3,35 @@ import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from "react-nati
 import BackButton from "../components/BackButton";
 import { Icon } from "react-native-elements";
 
-const clientOrders = [
+const supplierOrders = [
   {
-    client: "012",
+    supplier: "012",
     order: "07863",
     date: "22-10-2020",
     status: "picking",
   },
   {
-    client: "012",
+    supplier: "012",
     order: "07863",
     date: "22-10-2020",
     status: "picking",
   },
   {
-    client: "013",
+    supplier: "013",
     order: "07863",
     date: "24-10-2020",
     status: "shipped",
   },
   {
-    client: "016",
+    supplier: "016",
     order: "07863",
     date: "20-10-2020",
     status: "picking",
   },
 ];
 
-export default function ClientOrders({ navigation }) {
-  const idName = "Clients' Orders";
+export default function SupplierOrders({ navigation }) {
+  const idName = "Suppliers' Orders";
   return (
     <View style={styles.main}>
       <View style={styles.container}>
@@ -40,8 +40,8 @@ export default function ClientOrders({ navigation }) {
         </View>
         <View>
           <View style={styles.row}>
-            <View style={styles.clientColumn}>
-              <Text style={styles.header}>{"Client"}</Text>
+            <View style={styles.supplierColumn}>
+              <Text style={styles.header}>{"Supplier"}</Text>
             </View>
             <View style={styles.orderColumn}>
               <Text style={styles.header}>{"Order"}</Text>
@@ -53,11 +53,11 @@ export default function ClientOrders({ navigation }) {
               <Text style={styles.header}>{"Status"}</Text>
             </View>
           </View>
-          {clientOrders.map((i) => {
+          {supplierOrders.map((i) => {
             return (
               <View style={styles.row} key={i}>
-                <View style={styles.clientColumn}>
-                  <Text style={styles.textTable}>{i.client}</Text>
+                <View style={styles.supplierColumn}>
+                  <Text style={styles.textTable}>{i.supplier}</Text>
                 </View>
                 <View style={styles.orderColumn}>
                   <Text style={styles.textTable}>{i.order}</Text>
@@ -149,7 +149,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "darkgray",
     marginTop: 4,
   },
-  clientColumn: { flexDirection: "column", flex: 0.7 },
+  supplierColumn: { flexDirection: "column", flex: 0.7 },
   orderColumn: { flexDirection: "column", flex: 0.7 },
   dateColumn: { flexDirection: "column", flex: 1 },
   statusColumn: { flexDirection: "column", flex: 0.7 },
