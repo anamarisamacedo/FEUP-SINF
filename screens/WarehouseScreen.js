@@ -34,6 +34,7 @@ export default function WarehouseScreen({ navigation }) {
             </View>
             <Button title='Nagivate to entry - TEMP' onPress={pressHandler} />
             <Button title='Nagivate to stock list - TEMP' onPress={() => navigation.navigate('StockListingScreen', {id: 'A1', name: 'CPU'})} />
+            <Button title='Nagivate to client orders - TEMP' onPress={() => navigation.navigate('ClientOrdersScreen')} />
         </View>
     );
 

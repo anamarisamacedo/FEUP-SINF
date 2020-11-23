@@ -3,6 +3,7 @@ import { createAppContainer } from 'react-navigation';
 import EntryScreen from './screens/EntryScreen'; 
 import WarehouseScreen from './screens/WarehouseScreen';
 import StockListingScreen from './screens/StockListingScreen';
+import ClientOrdersScreen from './screens/ClientOrdersScreen';
 
 const screens = {
   EntryScreen: {
@@ -19,6 +20,12 @@ const screens = {
   },
   StockListingScreen: {
     screen: StockListingScreen,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  ClientOrdersScreen: {
+    screen: ClientOrdersScreen,
     navigationOptions: {
       headerShown: false,
     },

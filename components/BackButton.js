@@ -9,7 +9,7 @@ const BackButton = ({navigation}) => {
         style={styles.button}
         onPress={() => navigation.goBack()}
       >
-        <Icon name="chevron-left" color='#a9a9a9' />
+        <Icon name="chevron-left" color='#a9a9a9' size='26'/>
       </TouchableOpacity>
     </View>
   );

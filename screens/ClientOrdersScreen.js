@@ -3,37 +3,35 @@ import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from "react-nati
 import BackButton from "../components/BackButton";
 import { Icon } from "react-native-elements";
 
-const stockList = [
+const clients = [
   {
-    ref: "10150",
-    loc: "A1.1.1",
-    name: "AMD Ryzen 5 3600",
-    stock: "28/50",
+    client: "012",
+    order: "07863",
+    date: "22-10-2020",
+    status: "picking",
   },
   {
-    ref: "10151",
-    loc: "A1.1.2",
-    name: "AMD Ryzen 5 3600X",
-    stock: "12/50",
+    client: "012",
+    order: "07863",
+    date: "22-10-2020",
+    status: "picking",
   },
   {
-    ref: "10152",
-    loc: "A1.1.3",
-    name: "AMD Ryzen 4 3600X",
-    stock: "48/50",
+    client: "013",
+    order: "07863",
+    date: "24-10-2020",
+    status: "shipped",
   },
   {
-    ref: "10153",
-    loc: "A1.1.4",
-    name: "AMD Ryzen 2 3600X",
-    stock: "32/50",
+    client: "016",
+    order: "07863",
+    date: "20-10-2020",
+    status: "picking",
   },
 ];
 
-export default function StockListingScreen({ navigation }) {
-  //const { id, name } = route.params;
-  //const idName = JSON.stringify(id) + " " + JSON.stringify(name);
-  const idName = "A1 CPU";
+export default function ClientOrders({ navigation }) {
+  const idName = "Client's Orders";
   return (
     <View style={styles.main}>
       <View style={styles.container}>
@@ -42,33 +40,33 @@ export default function StockListingScreen({ navigation }) {
         </View>
         <View>
           <View style={styles.row}>
-            <View style={styles.refColumn}>
-              <Text style={styles.header}>{"Ref"}</Text>
+            <View style={styles.clientColumn}>
+              <Text style={styles.header}>{"Client"}</Text>
             </View>
-            <View style={styles.locColumn}>
-              <Text style={styles.header}>{"Loc"}</Text>
+            <View style={styles.orderColumn}>
+              <Text style={styles.header}>{"Order"}</Text>
             </View>
-            <View style={styles.nameColumn}>
-              <Text style={styles.header}>{"Name"}</Text>
+            <View style={styles.dateColumn}>
+              <Text style={styles.header}>{"Date"}</Text>
             </View>
-            <View style={styles.stockColumn}>
-              <Text style={styles.header}>{"Stock"}</Text>
+            <View style={styles.statusColumn}>
+              <Text style={styles.header}>{"Status"}</Text>
             </View>
           </View>
-          {stockList.map((i) => {
+          {clients.map((i) => {
             return (
               <View style={styles.row} key={i}>
-                <View style={styles.refColumn}>
-                  <Text style={styles.textTable}>{i.ref}</Text>
+                <View style={styles.clientColumn}>
+                  <Text style={styles.textTable}>{i.client}</Text>
                 </View>
-                <View style={styles.locColumn}>
-                  <Text style={styles.textTable}>{i.loc}</Text>
+                <View style={styles.orderColumn}>
+                  <Text style={styles.textTable}>{i.order}</Text>
                 </View>
-                <View style={styles.nameColumn}>
-                  <Text style={styles.textTable}>{i.name}</Text>
+                <View style={styles.dateColumn}>
+                  <Text style={styles.textTable}>{i.date}</Text>
                 </View>
-                <View style={styles.stockColumn}>
-                  <Text style={styles.textTable}>{i.stock}</Text>
+                <View style={styles.statusColumn}>
+                  <Text style={styles.textTable}>{i.status}</Text>
                 </View>
               </View>
             );
@@ -151,8 +149,8 @@ const styles = StyleSheet.create({
     borderBottomColor: "darkgray",
     marginTop: 4,
   },
-  refColumn: { flexDirection: "column", flex: 0.6 },
-  locColumn: { flexDirection: "column", flex: 0.6 },
-  nameColumn: { flexDirection: "column", flex: 1.5 },
-  stockColumn: { flexDirection: "column", flex: 0.5 },
+  clientColumn: { flexDirection: "column", flex: 0.7 },
+  orderColumn: { flexDirection: "column", flex: 0.7 },
+  dateColumn: { flexDirection: "column", flex: 1 },
+  statusColumn: { flexDirection: "column", flex: 0.7 },
 });
