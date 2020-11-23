@@ -1,5 +1,4 @@
 import React from 'react';
-import { StyleSheet, Text, View, Dimensions } from 'react-native';
 import Navigator from './HomeStack';
 
 export default function App() {
@@ -7,5 +6,4 @@ export default function App() {
       <Navigator />
     );
 }
-
 

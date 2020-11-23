@@ -2,13 +2,14 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 const WarehouseButton = props =>  {
-     return (
-        <TouchableOpacity style={styles.button} onPress={() => console.log("warehouse button pressed")}>
-          <Text style={[styles.text, styles.warehouseId]}>{props.id}</Text>
-          <Text style={styles.text}>{props.name}</Text>
-        </TouchableOpacity> 
-     );
+  return (
+     <TouchableOpacity style={styles.button} onPress={props.onPress}>
+       <Text style={[styles.text, styles.warehouseId]}>{props.id}</Text>
+       <Text style={styles.text}>{props.name}</Text>
+     </TouchableOpacity> 
+  );
 }
+
 
 const styles = StyleSheet.create({
    button: {
