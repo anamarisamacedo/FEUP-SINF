@@ -1,13 +1,15 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Icon } from 'react-native-elements';
+import { View, StyleSheet, TouchableOpacity } from "react-native";
+import { Icon } from "react-native-elements";
 
-const BackButton = () => {
+const BackButton = ({navigation}) => {
   return (
     <View>
-      <TouchableOpacity style={styles.button}>
-        <Icon name="chevron-left" size={25} style={styles.icon} />
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => navigation.goBack()}
+      >
+        <Icon name="chevron-left" color='#a9a9a9' />
       </TouchableOpacity>
     </View>
   );
@@ -15,14 +17,8 @@ const BackButton = () => {
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: "black",
-    alignItems: "center",
-    paddingHorizontal: 24,
-    paddingVertical: 13,
-    color: 'lightgrey'
-  },
-  icon: {
-      color: 'lighgrey'
+    backgroundColor: 'black',
+    alignItems: 'center'
   }
 });
 
