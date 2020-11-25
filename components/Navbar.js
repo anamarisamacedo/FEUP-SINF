@@ -1,10 +1,10 @@
 import React from 'react';
-import { Component } from "react";
-import { StyleSheet, TouchableHighlight, Icon, View, Image } from 'react-native';
+import { StyleSheet, TouchableHighlight, View, Image } from 'react-native';
+import { Icon } from 'react-native-elements'
 
 import LogoImage from "../images/logo.png"
 
-export default function WarehouseScreen({ navigation }) {
+export default function Navbar({ navigation }) {
     return(
         <View>
             <TouchableHighlight onPress={() => navigation.toggleDrawer()}>

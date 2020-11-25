@@ -12,7 +12,7 @@ export default function WarehouseScreen({ navigation }) {
     
     return (
         <View style={styles.main}>
-            <Navbar></Navbar>
+            <Navbar/>
             <View style={styles.warehouseBtns}>
                 <View style={styles.row}>
                     <WarehouseButton id="A1" name="CPU" />
