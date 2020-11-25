@@ -6,8 +6,22 @@ import StockListingScreen from './screens/StockListingScreen';
 import ClientOrdersScreen from './screens/ClientOrdersScreen';
 import SupplierOrdersScreen from './screens/SupplierOrdersScreen';
 import OrderDetailsScreen from './screens/OrderDetailsScreen';
+import LoginScreen from './screens/LoginScreen';
+import SignUpScreen from './screens/SignUpScreen';
 
 const screens = {
+  LoginScreen: {
+    screen: LoginScreen,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  SignUpScreen: {
+    screen: SignUpScreen,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
   EntryScreen: {
     screen: EntryScreen,
     navigationOptions: {
