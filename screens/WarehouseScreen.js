@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Button, View, Dimensions } from 'react-native';
 import WarehouseButton from '../components/WarehouseButton';
+import Navbar from '../components/Navbar';
 
 export default function WarehouseScreen({ navigation }) {
 
@@ -8,10 +9,10 @@ export default function WarehouseScreen({ navigation }) {
         //navigation.navigate('EntryScreen');
         navigation.push('EntryScreen');
     }
-
-    //const { nagivate } = this.props.nagivation;
+    
     return (
         <View style={styles.main}>
+            <Navbar></Navbar>
             <View style={styles.warehouseBtns}>
                 <View style={styles.row}>
                     <WarehouseButton id="A1" name="CPU" />
