@@ -2,8 +2,6 @@ import React from 'react';
 import { StyleSheet, View, Dimensions, Image, ActionSheetIOS } from 'react-native';
 import { createDrawerNavigator, DrawerActions } from '@react-navigation/drawer';
 import GeneralButton from '../components/GeneralButton';
-import NavigationDrawerStructure from '../components/NavigationDrawerStructure';
-import Navbar from '../components/Navbar';
 
 import LogoImage from "../images/logo.png"
 
@@ -18,12 +16,6 @@ export default function EntryScreen({ navigation }) {
 
     return (
         <View style={styles.main}>
-
-            <Navbar onPress={console.log("toggle drawer")}/>
-            <NavigationDrawerStructure nagivation={navigation} />
-
-
-
             <View style={styles.content}>
                 <Image
                     style={styles.image}

@@ -2,12 +2,13 @@ import React from 'react';
 import { StyleSheet, TouchableHighlight, View, Image } from 'react-native';
 import { Icon } from 'react-native-elements'
 
+
 import LogoImage from "../images/logo.png"
 
 const Navbar = props => {
     return (
         <View>
-            <TouchableHighlight onPress={props.onPress}>
+            <TouchableHighlight onPress={() => props.navigation.toggleDrawer()}>
                 <Icon 
                     style={styles.icon}
                     color='#E5E5E5'
