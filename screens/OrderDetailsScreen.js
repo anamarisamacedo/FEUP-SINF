@@ -60,7 +60,7 @@ export default function ClientOrders({ navigation }) {
               <Text style={styles.header}>{"Name"}</Text>
             </View>
             <View style={styles.pqtyColumn}>
-              <Text style={styles.header}>{"P/Qty"}</Text>
+              <Text style={[styles.header, {textAlign: 'center'}]}>{"P/Qty"}</Text>
             </View>
           </View>
           {items.map((i) => {
@@ -76,7 +76,7 @@ export default function ClientOrders({ navigation }) {
                   <Text style={styles.textTable}>{i.name}</Text>
                 </View>
                 <View style={styles.pqtyColumn}>
-                  <Text style={styles.textTable}>{i.pqty}</Text>
+                  <Text style={[styles.textTable, {textAlign: 'center'}]}>{i.pqty}</Text>
                 </View>
               </View>
             );

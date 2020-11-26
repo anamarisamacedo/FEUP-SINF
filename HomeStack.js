@@ -10,6 +10,12 @@ import LoginScreen from './screens/LoginScreen';
 import SignUpScreen from './screens/SignUpScreen';
 
 const screens = {
+  EntryScreen: {
+    screen: EntryScreen,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
   LoginScreen: {
     screen: LoginScreen,
     navigationOptions: {
@@ -18,12 +24,6 @@ const screens = {
   },
   SignUpScreen: {
     screen: SignUpScreen,
-    navigationOptions: {
-      headerShown: false,
-    },
-  },
-  EntryScreen: {
-    screen: EntryScreen,
     navigationOptions: {
       headerShown: false,
     },

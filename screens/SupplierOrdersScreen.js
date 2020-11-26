@@ -51,7 +51,7 @@ export default function SupplierOrders({ navigation }) {
               <Text style={styles.header}>{"Date"}</Text>
             </View>
             <View style={styles.statusColumn}>
-              <Text style={styles.header}>{"Status"}</Text>
+              <Text style={[styles.header, {textAlign: 'right'}]}>{"Status"}</Text>
             </View>
           </View>
           {supplierOrders.map((i) => {
@@ -70,7 +70,7 @@ export default function SupplierOrders({ navigation }) {
                     <Text style={styles.textTable}>{i.date}</Text>
                   </View>
                   <View style={styles.statusColumn}>
-                    <Text style={styles.textTable}>{i.status}</Text>
+                    <Text style={[styles.textTable, {textAlign: 'right'}]}>{i.status}</Text>
                   </View>
                 </View>
               </TouchableOpacity>
