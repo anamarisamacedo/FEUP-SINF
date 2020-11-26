@@ -11,6 +11,12 @@ import LoginScreen from './screens/LoginScreen';
 import SignUpScreen from './screens/SignUpScreen';
 import PickersListScreen from './screens/PickersListScreen';
 import PickingWavesScreen from './screens/PickingWavesScreen';
+import GeneratePickingWaveScreen from './screens/GeneratePickingWaveScreen';
+import PickerWaveScreen from './screens/PickerWaveScreen';
+import ManagerWaveScreen from './screens/ManagerWaveScreen';
+import ConcludedWaveScreen from './screens/ConcludedWaveScreen';
+
+
 
 const screens = {
   EntryScreen: {
@@ -78,6 +84,30 @@ const screens = {
     navigationOptions: {
       headerShown: false,
     },
+  },
+  GeneratePickingWaveScreen: {
+      screen: GeneratePickingWaveScreen,
+      navigationOptions: {
+        headerShown: false,
+      },
+  },
+  PickerWaveScreen: {
+      screen: PickerWaveScreen,
+      navigationOptions: {
+        headerShown: false,
+      },
+  },
+  ManagerWaveScreen: {
+      screen: ManagerWaveScreen,
+      navigationOptions: {
+        headerShown: false,
+      },
+  },
+  ConcludedWaveScreen: {
+      screen: ConcludedWaveScreen,
+      navigationOptions: {
+        headerShown: false,
+      },
   }
 };
 
