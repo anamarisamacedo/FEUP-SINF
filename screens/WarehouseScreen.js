@@ -1,17 +1,19 @@
 import React from 'react';
 import { StyleSheet, Button, View, Dimensions } from 'react-native';
 import WarehouseButton from '../components/WarehouseButton';
+import Navbar from '../components/Navbar';
 
 export default function WarehouseScreen({ navigation }) {
 
     const pressHandler = () => {
         //navigation.navigate('EntryScreen');
         navigation.push('EntryScreen');
+        //<Navbar onPress={navigation.toggleDrawer()}/>
     }
-
-    //const { nagivate } = this.props.nagivation;
+    
     return (
         <View style={styles.main}>
+            <Navbar navigation={navigation}/>
             <View style={styles.warehouseBtns}>
                 <View style={styles.row}>
                     <WarehouseButton id="A1" name="CPU" onPress={() => navigation.navigate('StockListingScreen', {id: 'A1', name: 'CPU'})}/>

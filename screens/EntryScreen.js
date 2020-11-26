@@ -1,8 +1,11 @@
 import React from 'react';
 import { StyleSheet, View, Dimensions, Image, ActionSheetIOS } from 'react-native';
+import { createDrawerNavigator, DrawerActions } from '@react-navigation/drawer';
 import GeneralButton from '../components/GeneralButton';
 
 import LogoImage from "../images/logo.png"
+
+const Drawer = createDrawerNavigator();
 
 export default function EntryScreen({ navigation }) {
 
