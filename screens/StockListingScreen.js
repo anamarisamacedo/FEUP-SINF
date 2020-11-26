@@ -1,4 +1,5 @@
 import React from "react";
+import { NativeModules } from "react-native";
 import {
   StyleSheet,
   Text,
@@ -34,9 +35,8 @@ const stockList = [
   },
 ];
 
-export default function StockListingScreen({ navigation }) {
-  const id = navigation.getParam("id");
-  const name = navigation.getParam("name");
+export default function StockListingScreen({ navigation, route }) {
+  const { id, name } = route.params;
   const title = id + " " + name;
   return (
     <View style={styles.main}>

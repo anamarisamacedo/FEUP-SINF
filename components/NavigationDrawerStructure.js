@@ -6,7 +6,7 @@ const NavigationDrawerStructure = props => {
     return (
         <View style={styles.menu}>
             <View style={styles.list}>
-                <TouchableHighlight onPress={() => props.nagivation.navigate('WarehouseScreen')}>
+                <TouchableHighlight onPress={() => props.navigation.navigate('WarehouseScreen')}>
                     <View style={styles.line}>
                         <Text style={styles.text}>
                             <Icon
@@ -17,10 +17,10 @@ const NavigationDrawerStructure = props => {
                         </Text>
                     </View>
                 </TouchableHighlight>
-                <TouchableHighlight onPress={() => props.nagivation.navigate('ListSuppliersOrders')}>
+                <TouchableHighlight onPress={() => props.navigation.navigate('SupplierOrdersScreen')}>
                     <View style={styles.line}>
                         <Text style={styles.text}>
-                            <Icon 
+                            <Icon
                                 style={styles.icon}
                                 name='sign-in-alt'
                                 type='font-awesome-5' />
@@ -28,10 +28,10 @@ const NavigationDrawerStructure = props => {
                         </Text>
                     </View>
                 </TouchableHighlight>
-                <TouchableHighlight onPress={() => props.nagivation.navigate('ListClientsOrders')}>
+                <TouchableHighlight onPress={() => props.navigation.navigate('ClientOrdersScreen')}>
                     <View style={styles.line}>
                         <Text style={styles.text}>
-                            <Icon 
+                            <Icon
                                 style={styles.icon}
                                 name='sign-out-alt'
                                 type='font-awesome-5' />
@@ -39,10 +39,10 @@ const NavigationDrawerStructure = props => {
                         </Text>
                     </View>
                 </TouchableHighlight>
-                <TouchableHighlight onPress={() => props.nagivation.navigate('ListPickingWaves')}>
+                <TouchableHighlight onPress={() => props.navigation.navigate('ListPickingWaves')}>
                     <View style={styles.line}>
                         <Text style={styles.text}>
-                            <Icon 
+                            <Icon
                                 style={styles.icon}
                                 name='water'
                                 type='font-awesome-5' />
@@ -50,10 +50,10 @@ const NavigationDrawerStructure = props => {
                         </Text>
                     </View>
                 </TouchableHighlight>
-                <TouchableHighlight onPress={() => props.nagivation.navigate('GeneratePickingWaves')}>
+                <TouchableHighlight onPress={() => props.navigation.navigate('GeneratePickingWaves')}>
                     <View style={styles.line}>
                         <Text style={styles.text}>
-                            <Icon 
+                            <Icon
                                 style={styles.icon}
                                 name='plus'
                                 type='font-awesome-5' />
@@ -63,10 +63,10 @@ const NavigationDrawerStructure = props => {
                 </TouchableHighlight>
             </View>
             <View style={styles.logout}>
-                <TouchableHighlight onPress={() => props.nagivation.navigate('Logout')}>
+                <TouchableHighlight onPress={() => props.navigation.navigate('EntryScreen')}>
                     <View style={styles.line}>
                         <Text style={styles.text_logout}>
-                            <Icon 
+                            <Icon
                                 style={styles.icon}
                                 color='#E5E5E5'
                                 name='door-open'
@@ -81,35 +81,35 @@ const NavigationDrawerStructure = props => {
 };
 
 const styles = StyleSheet.create({
-    menu:{
+    menu: {
         alignItems: 'left',
         justifyContent: 'center',
         backgroundColor: '#C4C4C4',
         flex: 1,
     },
     text: {
-      color: '#171717',
-      fontFamily: 'Corbel',
-      fontStyle: 'normal',
-      fontSize: 18,
+        color: '#171717',
+        fontFamily: 'Corbel',
+        fontStyle: 'normal',
+        fontSize: 18,
     },
-    logout:{
+    logout: {
         backgroundColor: '#464646'
     },
-    text_logout:{
+    text_logout: {
         color: '#E5E5E5',
-      fontFamily: 'Corbel',
-      fontStyle: 'normal',
-      fontSize: 18,
+        fontFamily: 'Corbel',
+        fontStyle: 'normal',
+        fontSize: 18,
     },
-    line:{
+    line: {
         padding: 7,
         margin: 7,
     },
-    icon:{
+    icon: {
         paddingRight: 10
     },
-    list:{
+    list: {
         flex: 1,
     }
 });
