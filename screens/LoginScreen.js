@@ -54,13 +54,14 @@ const styles = StyleSheet.create({
         fontStyle: 'normal',
         borderBottomColor: 'grey',
         borderBottomWidth: 1,
+        width: '50%',
     },
     content: {
         paddingVertical: 220,
         alignItems: 'center',
     },
     image: {
-        width: '100%',
+        width: '80%',
         height: '15%',
     }
 });

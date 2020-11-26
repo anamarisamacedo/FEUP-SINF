@@ -60,6 +60,7 @@ const styles = StyleSheet.create({
         fontStyle: 'normal',
         borderBottomColor: 'grey',
         borderBottomWidth: 1,
+        width: '50%',
     },
     content: {
         paddingVertical: 220,
