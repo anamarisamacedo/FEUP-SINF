@@ -1,18 +1,12 @@
 import * as React from 'react';
-import { StyleSheet, Text, Button, View, TouchableHighlight } from 'react-native';
+import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import { Icon } from 'react-native-elements';
 
-
-const NavigationDrawerStructure = (props) => {
-    //Structure for the navigatin Drawer
-    const toggleDrawer = () => {
-        //Props to open/close the drawer
-        props.navigationProps.toggleDrawer();
-    };
+const NavigationDrawerStructure = props => {
 
     return (
         <View style={styles.menu}>
-            <TouchableHighlight onPress={() => navigation.navigate('WarehouseScreen')}>
+            <TouchableHighlight onPress={() => props.nagivation.navigate('WarehouseScreen')}>
                 <View style={styles.line}>
                     <Text style={styles.text}>
                         <Icon
@@ -23,7 +17,7 @@ const NavigationDrawerStructure = (props) => {
                     </Text>
                 </View>
             </TouchableHighlight>
-            <TouchableHighlight onPress={() => navigation.navigate('ListSuppliersOrders')}>
+            <TouchableHighlight onPress={() => props.nagivation.navigate('ListSuppliersOrders')}>
                 <View style={styles.line}>
                     <Text style={styles.text}>
                         <Icon 
@@ -34,7 +28,7 @@ const NavigationDrawerStructure = (props) => {
                     </Text>
                 </View>
             </TouchableHighlight>
-            <TouchableHighlight onPress={() => navigation.navigate('ListClientsOrders')}>
+            <TouchableHighlight onPress={() => props.nagivation.navigate('ListClientsOrders')}>
                 <View style={styles.line}>
                     <Text style={styles.text}>
                         <Icon 
@@ -45,7 +39,7 @@ const NavigationDrawerStructure = (props) => {
                     </Text>
                 </View>
             </TouchableHighlight>
-            <TouchableHighlight onPress={() => navigation.navigate('ListPickingWaves')}>
+            <TouchableHighlight onPress={() => props.nagivation.navigate('ListPickingWaves')}>
                 <View style={styles.line}>
                     <Text style={styles.text}>
                         <Icon 
@@ -56,7 +50,7 @@ const NavigationDrawerStructure = (props) => {
                     </Text>
                 </View>
             </TouchableHighlight>
-            <TouchableHighlight onPress={() => navigation.navigate('GeneratePickingWaves')}>
+            <TouchableHighlight onPress={() => props.nagivation.navigate('GeneratePickingWaves')}>
                 <View style={styles.line}>
                     <Text style={styles.text}>
                         <Icon 
@@ -68,7 +62,7 @@ const NavigationDrawerStructure = (props) => {
                 </View>
             </TouchableHighlight>
             <View style={styles.logout}>
-                <TouchableHighlight onPress={() => navigation.navigate('Logout')}>
+                <TouchableHighlight onPress={() => props.nagivation.navigate('Logout')}>
                     <View style={styles.line}>
                         <Text style={styles.text_logout}>
                             <Icon 

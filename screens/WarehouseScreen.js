@@ -8,11 +8,12 @@ export default function WarehouseScreen({ navigation }) {
     const pressHandler = () => {
         //navigation.navigate('EntryScreen');
         navigation.push('EntryScreen');
+        //<Navbar onPress={navigation.toggleDrawer()}/>
     }
     
     return (
         <View style={styles.main}>
-            <Navbar/>
+            
             <View style={styles.warehouseBtns}>
                 <View style={styles.row}>
                     <WarehouseButton id="A1" name="CPU" />

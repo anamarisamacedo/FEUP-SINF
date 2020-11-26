@@ -4,10 +4,10 @@ import { Icon } from 'react-native-elements'
 
 import LogoImage from "../images/logo.png"
 
-export default function Navbar({ navigation }) {
-    return(
+const Navbar = props => {
+    return (
         <View>
-            <TouchableHighlight onPress={() => navigation.toggleDrawer()}>
+            <TouchableHighlight onPress={props.onPress}>
                 <Icon 
                     style={styles.icon}
                     color='#E5E5E5'
@@ -21,6 +21,7 @@ export default function Navbar({ navigation }) {
         </View>
     );
 }
+
 
 const styles = StyleSheet.create({
     text: {
@@ -36,3 +37,5 @@ const styles = StyleSheet.create({
         paddingRight: 10
     }
 });
+
+export default Navbar;
