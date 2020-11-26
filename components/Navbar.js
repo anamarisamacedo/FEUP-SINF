@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TouchableHighlight, View, Image } from 'react-native';
+import { StyleSheet, TouchableHighlight, View, Image, Text } from 'react-native';
 import { Icon } from 'react-native-elements'
 
 
@@ -7,10 +7,11 @@ import LogoImage from "../images/logo.png"
 
 const Navbar = props => {
     return (
-        <View>
-            <TouchableHighlight onPress={() => props.navigation.toggleDrawer()}>
+        <View style={styles.navbar}>
+            <TouchableHighlight style={styles.hamburger} onPress={() => props.navigation.toggleDrawer()}>
                 <Icon 
                     style={styles.icon}
+                    size={35}
                     color='#E5E5E5'
                     name='bars'
                     type='font-awesome-5' />
@@ -25,16 +26,18 @@ const Navbar = props => {
 
 
 const styles = StyleSheet.create({
-    text: {
-      color: '#171717',
-      fontFamily: 'Corbel',
-      fontStyle: 'normal',
-      fontSize: 18,
+    navbar:{
+        padding:10
+    },
+    hamburger: {
+        position: 'absolute',
+        left: 2,
     },
     image: {
-        width: '60%'
+        textAlign: 'center'
     },
     icon:{
+        paddingLeft: 10,
         paddingRight: 10
     }
 });
