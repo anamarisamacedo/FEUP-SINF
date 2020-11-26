@@ -9,11 +9,6 @@ const Drawer = createDrawerNavigator();
 
 export default function EntryScreen({ navigation }) {
 
-    function GoHome() {
-        console.log("Navigating to warehouse screen...");
-        navigation.navigate('WarehouseScreen');
-    }
-
     return (
         <View style={styles.main}>
             <View style={styles.content}>
@@ -22,13 +17,12 @@ export default function EntryScreen({ navigation }) {
                     source={LogoImage}
                 />
                 <View style={{ marginVertical: 30 }}></View>
-                <GeneralButton name="login" onPress={GoHome} />
+                <GeneralButton name="login" onPress={() => navigation.navigate('LoginScreen')} />
                 <View style={{ marginVertical: 30 }}></View>
-                <GeneralButton name="sign up" />
+                <GeneralButton name="sign up" onPress={() => navigation.navigate('SignUpScreen')} />
             </View>
         </View>
     );
-
 }
 
 const styles = StyleSheet.create({
