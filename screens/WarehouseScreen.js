@@ -1,16 +1,10 @@
 import React from 'react';
-import { StyleSheet, Button, View, Dimensions } from 'react-native';
+import { StyleSheet, View, Dimensions } from 'react-native';
 import WarehouseButton from '../components/WarehouseButton';
 import Navbar from '../components/Navbar';
 
 export default function WarehouseScreen({ navigation }) {
 
-    const pressHandler = () => {
-        //navigation.navigate('EntryScreen');
-        navigation.push('EntryScreen');
-        //<Navbar onPress={navigation.toggleDrawer()}/>
-    }
-    
     return (
         <View style={styles.main}>
             <Navbar navigation={navigation}/>
@@ -34,9 +28,6 @@ export default function WarehouseScreen({ navigation }) {
                     <WarehouseButton id="OP" name="" />
                 </View>
             </View>
-            <Button title='Nagivate to entry - TEMP' onPress={pressHandler} />
-            <Button title='Nagivate to clients orders - TEMP' onPress={() => navigation.navigate('ClientOrdersScreen')} />
-            <Button title='Nagivate to suppliers orders - TEMP' onPress={() => navigation.navigate('SupplierOrdersScreen')} />
         </View>
     );
 

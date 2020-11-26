@@ -1,7 +1,6 @@
 import React from 'react';
 import { StyleSheet, View, Dimensions, Image, Text, TextInput } from 'react-native';
 import GeneralButton from '../components/GeneralButton';
-
 import LogoImage from "../images/logo.png"
 
 export default function SignUpScreen({ navigation }) {

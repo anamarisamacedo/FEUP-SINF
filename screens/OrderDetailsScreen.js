@@ -6,6 +6,7 @@ import {
   Dimensions
 } from "react-native";
 import BackButton from "../components/BackButton";
+import Navbar from '../components/Navbar';
 
 const items = [
   {
@@ -34,13 +35,13 @@ const items = [
   },
 ];
 
-export default function ClientOrders({ navigation }) {
-  const id = navigation.getParam('id');
-  const order = navigation.getParam('order');
+export default function ClientOrders({ navigation, route }) {
+  const {id, order} = route.params;
   const title = "Order " + order.order + " " + id + " " + order.id;
   const subtitle = "Date: " + order.date + " Status: " + order.status;
   return (
     <View style={styles.main}>
+      <Navbar navigation={navigation}/>
       <View style={styles.container}>
         <View style={styles.title}>
           <Text style={styles.text}>{title}</Text>

@@ -1,5 +1,6 @@
 import React from "react";
 import { StyleSheet, Text, View, Dimensions, Button, TouchableOpacity } from "react-native";
+import Navbar from '../components/Navbar';
 
 const supplierOrders = [
   {
@@ -30,11 +31,10 @@ const supplierOrders = [
 
 export default function SupplierOrders({ navigation }) {
   const title = "Suppliers' Orders";
-  const pressHandler = () => {
-    navigation.push("WarehouseScreen");
-  };
+  
   return (
     <View style={styles.main}>
+      <Navbar navigation={navigation}/>
       <View style={styles.container}>
         <View style={styles.title}>
           <Text style={styles.text}>{title}</Text>
@@ -76,11 +76,6 @@ export default function SupplierOrders({ navigation }) {
               </TouchableOpacity>
             );
           })}
-        </View>
-      </View>
-      <View style={styles.bottom}>
-        <View style={styles.bottom}>
-          <Button title="Nagivate to home - TEMP" onPress={pressHandler} />
         </View>
       </View>
     </View>

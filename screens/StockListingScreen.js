@@ -1,5 +1,5 @@
 import React from "react";
-import { NativeModules } from "react-native";
+import Navbar from '../components/Navbar';
 import {
   StyleSheet,
   Text,
@@ -40,6 +40,7 @@ export default function StockListingScreen({ navigation, route }) {
   const title = id + " " + name;
   return (
     <View style={styles.main}>
+      <Navbar navigation={navigation} />
       <View style={styles.container}>
         <View style={styles.title}>
           <Text style={styles.text}>{title}</Text>
