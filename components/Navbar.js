@@ -27,7 +27,8 @@ const Navbar = props => {
 
 const styles = StyleSheet.create({
     navbar:{
-        padding:10
+        padding: 10,
+        height: 50
     },
     hamburger: {
         position: 'absolute',

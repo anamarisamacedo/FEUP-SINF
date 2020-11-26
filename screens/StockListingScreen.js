@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
   },
   container: {
     justifyContent: "space-evenly",
-    marginHorizontal: 15,
+    marginHorizontal: 15
   },
   bottom: {
     flex: 1,
