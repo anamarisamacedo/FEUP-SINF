@@ -15,7 +15,7 @@ import GeneratePickingWaveScreen from './screens/GeneratePickingWaveScreen';
 import PickerWaveScreen from './screens/PickerWaveScreen';
 import ManagerWaveScreen from './screens/ManagerWaveScreen';
 import ConcludedWaveScreen from './screens/ConcludedWaveScreen';
-
+import PickerInputScreen from './screens/PickerInputScreen';
 
 
 const screens = {
@@ -108,7 +108,13 @@ const screens = {
       navigationOptions: {
         headerShown: false,
       },
-  }
+  },
+  PickerInputScreen: {
+    screen: PickerInputScreen,
+    navigationOptions: {
+      headerShown: false,
+    },
+}
 };
 
 // home stack navigator screens
