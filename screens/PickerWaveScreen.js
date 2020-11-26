@@ -6,6 +6,7 @@ import {
   Dimensions
 } from "react-native";
 import BackButton from "../components/BackButton";
+import GeneralButton from "../components/GeneralButton";
 
 const wave = [
   {
@@ -84,6 +85,7 @@ export default function PickerWaveScreen({ navigation }) {
       </View>
       <View style={styles.bottom}>
         <BackButton onPress={() => navigation.goBack()}/>
+        <GeneralButton name="Report" onPress={() => navigation.navigate('PickerInputScreen', {wave, title})}/>
       </View>
     </View>
   );
