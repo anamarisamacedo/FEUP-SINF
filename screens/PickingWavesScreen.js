@@ -68,7 +68,7 @@ export default function PickingWavesScreen({ navigation }) {
           {pickingWaves.map((i) => {
             return (
               <TouchableOpacity
-                onPress={() => console.log("Pressed picking wave")}
+                onPress={() => navigation.navigate('PickerWaveScreen', {pickingWave: i})}
               >
                 <View style={styles.row} key={i}>
                   <View style={styles.waveColumn}>
@@ -90,7 +90,7 @@ export default function PickingWavesScreen({ navigation }) {
         </View>
       </View>
       <View style={styles.bottom}>
-        <GeneralButton name="Generate Picking Wave" onPress={() => console.log("Pressed generate pw")} />
+        <GeneralButton name="Generate Picking Wave" onPress={() => navigation.navigate('GeneratePickingWaveScreen')} />
       </View>
     </View>
   );
