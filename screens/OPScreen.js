@@ -11,27 +11,23 @@ import BackButton from "../components/BackButton";
 const opItems = [
   {
     ref: "10150",
-    loc: "A1.1.1",
     name: "AMD Ryzen 5 3600",
-    stock: "28/50",
+    qty: "28/50",
   },
   {
     ref: "10151",
-    loc: "A1.1.2",
     name: "AMD Ryzen 5 3600X",
-    stock: "12/50",
+    qty: "12/50",
   },
   {
     ref: "10152",
-    loc: "A1.1.3",
     name: "AMD Ryzen 4 3600X",
-    stock: "48/50",
+    qty: "48/50",
   },
   {
     ref: "10153",
-    loc: "A1.1.4",
     name: "AMD Ryzen 2 3600X",
-    stock: "32/50",
+    qty: "32/50",
   },
 ];
 
@@ -49,11 +45,11 @@ export default function OPScreen({ navigation }) {
             <View style={styles.refColumn}>
               <Text style={styles.header}>{"Ref"}</Text>
             </View>
-            <View style={styles.locColumn}>
-              <Text style={styles.header}>{"Loc"}</Text>
-            </View>
             <View style={styles.nameColumn}>
               <Text style={styles.header}>{"Name"}</Text>
+            </View>
+            <View style={styles.qtyColumn}>
+              <Text style={styles.header}>{"Quantity"}</Text>
             </View>
           </View>
           {opItems.map((i) => {
@@ -62,11 +58,11 @@ export default function OPScreen({ navigation }) {
                 <View style={styles.refColumn}>
                   <Text style={styles.textTable}>{i.ref}</Text>
                 </View>
-                <View style={styles.locColumn}>
-                  <Text style={styles.textTable}>{i.loc}</Text>
-                </View>
                 <View style={styles.nameColumn}>
                   <Text style={styles.textTable}>{i.name}</Text>
+                </View>
+                <View style={styles.qtyColumn}>
+                  <Text style={styles.textTable}>{i.qty}</Text>
                 </View>
               </View>
             );
@@ -145,6 +141,6 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   refColumn: { flexDirection: "column", flex: 0.8 },
-  locColumn: { flexDirection: "column", flex: 0.8 },
   nameColumn: { flexDirection: "column", flex: 1.5 },
+  qtyColumn: { flexDirection: "column", flex: 0.7 },
 });
