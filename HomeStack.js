@@ -9,6 +9,7 @@ import SupplierOrdersScreen from './screens/SupplierOrdersScreen';
 import OrderDetailsScreen from './screens/OrderDetailsScreen';
 import LoginScreen from './screens/LoginScreen';
 import SignUpScreen from './screens/SignUpScreen';
+import PickersListScreen from './screens/PickersListScreen';
 
 const screens = {
   EntryScreen: {
@@ -61,6 +62,12 @@ const screens = {
   },
   OrderDetailsScreen: {
     screen: OrderDetailsScreen,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
+  PickersListScreen: {
+    screen: PickersListScreen,
     navigationOptions: {
       headerShown: false,
     },

@@ -61,6 +61,17 @@ const NavigationDrawerStructure = props => {
                         </Text>
                     </View>
                 </TouchableHighlight>
+                <TouchableHighlight onPress={() => props.navigation.navigate('PickersListScreen')}>
+                    <View style={styles.line}>
+                        <Text style={styles.text}>
+                            <Icon
+                                style={styles.icon}
+                                name='user'
+                                type='font-awesome-5' />
+                            Pickers List
+                        </Text>
+                    </View>
+                </TouchableHighlight>
             </View>
             <View style={styles.logout}>
                 <TouchableHighlight onPress={() => props.navigation.navigate('EntryScreen')}>

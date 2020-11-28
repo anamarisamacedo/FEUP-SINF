@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from '../components/Navbar'; 
+import Navbar from '../components/Navbar';
 import {
   StyleSheet,
   Text,
@@ -8,35 +8,31 @@ import {
 } from "react-native";
 import BackButton from "../components/BackButton";
 
-const opItems = [
+const pickersList = [
   {
-    ref: "10150",
-    loc: "A1.1.1",
-    name: "AMD Ryzen 5 3600",
-    stock: "28/50",
+    code: "001",
+    name: "Trevor Crime Noah",
+    assignedWaves: "2",
   },
   {
-    ref: "10151",
-    loc: "A1.1.2",
-    name: "AMD Ryzen 5 3600X",
-    stock: "12/50",
+    code: "002",
+    name: "Veronica Mars",
+    assignedWaves: "3",
   },
   {
-    ref: "10152",
-    loc: "A1.1.3",
-    name: "AMD Ryzen 4 3600X",
-    stock: "48/50",
+    code: "003",
+    name: "Sherlock Holmes",
+    assignedWaves: "0",
   },
   {
-    ref: "10153",
-    loc: "A1.1.4",
-    name: "AMD Ryzen 2 3600X",
-    stock: "32/50",
+    code: "004",
+    name: "Paul McCartney",
+    assignedWaves: "5",
   },
 ];
 
-export default function OPScreen({ navigation }) {
-  const title = "Outpoint View";
+export default function PickersListScreen({ navigation, route }) {
+  const title = "Pickers";
   return (
     <View style={styles.main}>
       <Navbar navigation={navigation} />
@@ -46,45 +42,38 @@ export default function OPScreen({ navigation }) {
         </View>
         <View>
           <View style={styles.row}>
-            <View style={styles.refColumn}>
-              <Text style={styles.header}>{"Ref"}</Text>
-            </View>
-            <View style={styles.locColumn}>
-              <Text style={styles.header}>{"Loc"}</Text>
+            <View style={styles.codeColumn}>
+              <Text style={styles.header}>{"Code"}</Text>
             </View>
             <View style={styles.nameColumn}>
               <Text style={styles.header}>{"Name"}</Text>
             </View>
+            <View style={styles.awColumn}>
+              <Text style={styles.header}>{"Assigned Waves"}</Text>
+            </View>
           </View>
-          {opItems.map((i) => {
+          {pickersList.map((i) => {
             return (
               <View style={styles.row} key={i}>
-                <View style={styles.refColumn}>
-                  <Text style={styles.textTable}>{i.ref}</Text>
-                </View>
-                <View style={styles.locColumn}>
-                  <Text style={styles.textTable}>{i.loc}</Text>
+                <View style={styles.codeColumn}>
+                  <Text style={styles.textTable}>{i.code}</Text>
                 </View>
                 <View style={styles.nameColumn}>
                   <Text style={styles.textTable}>{i.name}</Text>
+                </View>
+                <View style={styles.awColumn}>
+                  <Text style={styles.textTable}>{i.assignedWaves}</Text>
                 </View>
               </View>
             );
           })}
         </View>
       </View>
-      <View style={styles.bottom}>
-        <BackButton onPress={() => navigation.goBack()} />
-      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  button: {
-    backgroundColor: "black",
-    alignItems: "center",
-  },
   main: {
     height: Dimensions.get("screen").height,
     width: Dimensions.get("screen").width,
@@ -93,12 +82,6 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "space-evenly",
     marginHorizontal: 15
-  },
-  bottom: {
-    flex: 1,
-    justifyContent: "flex-end",
-    marginBottom: 36,
-    alignItems: "center",
   },
   list: {
     backgroundColor: "black",
@@ -144,7 +127,7 @@ const styles = StyleSheet.create({
     borderBottomColor: "darkgray",
     marginTop: 4,
   },
-  refColumn: { flexDirection: "column", flex: 0.8 },
-  locColumn: { flexDirection: "column", flex: 0.8 },
+  codeColumn: { flexDirection: "column", flex: 0.6 },
   nameColumn: { flexDirection: "column", flex: 1.5 },
+  awColumn: { flexDirection: "column", alignItems:'center', flex: 1 },
 });
