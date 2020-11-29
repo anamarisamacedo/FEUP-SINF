@@ -12,22 +12,22 @@ const opItems = [
   {
     ref: "10150",
     name: "AMD Ryzen 5 3600",
-    qty: "28/50",
+    qty: "50",
   },
   {
     ref: "10151",
     name: "AMD Ryzen 5 3600X",
-    qty: "12/50",
+    qty: "50",
   },
   {
     ref: "10152",
     name: "AMD Ryzen 4 3600X",
-    qty: "48/50",
+    qty: "50",
   },
   {
     ref: "10153",
     name: "AMD Ryzen 2 3600X",
-    qty: "32/50",
+    qty: "50",
   },
 ];
 
@@ -49,7 +49,7 @@ export default function OPScreen({ navigation }) {
               <Text style={styles.header}>{"Name"}</Text>
             </View>
             <View style={styles.qtyColumn}>
-              <Text style={styles.header}>{"Quantity"}</Text>
+              <Text style={[styles.header, {textAlign: 'right'}]}>{"Qtd"}</Text>
             </View>
           </View>
           {opItems.map((i) => {
@@ -62,7 +62,7 @@ export default function OPScreen({ navigation }) {
                   <Text style={styles.textTable}>{i.name}</Text>
                 </View>
                 <View style={styles.qtyColumn}>
-                  <Text style={styles.textTable}>{i.qty}</Text>
+                  <Text style={[styles.textTable, {textAlign: 'right'}]}>{i.qty}</Text>
                 </View>
               </View>
             );
