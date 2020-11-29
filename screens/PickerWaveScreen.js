@@ -1,44 +1,112 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   StyleSheet,
   Text,
   View,
-  Dimensions
+  Dimensions,
+  Platform,
+  ScrollView,
+  LayoutAnimation,
+  TouchableOpacity,
+  SafeAreaView
 } from "react-native";
 import BackButton from "../components/BackButton";
 import GeneralButton from "../components/GeneralButton";
+import Expandable from "../components/Expandable";
 
 const wave = [
   {
-    ref: "10150",
-    loc: "A.1.1.1",
-    name: "AMD Ryzen 5 3600",
-    pqty: "3/3",
+    isExpanded: false,
+    section_name: 'A1',
+    items: [
+      {
+        ref: "10150",
+        loc: "A.1.1.1",
+        name: "AMD Ryzen 5 3600",
+        pqty: "3/3",
+      },
+      {
+        ref: "10151",
+        loc: "A.1.1.2",
+        name: "AMD Ryzen 5 3600X",
+        pqty: "0/4",
+      },
+      {
+        ref: "10152",
+        loc: "A.1.1.3",
+        name: "AMD Ryzen 7 3700",
+        pqty: "2/3",
+      },
+      {
+        ref: "10153",
+        loc: "A.1.1.4",
+        name: "AMD Ryzen 7 3700X",
+        pqty: "2/2",
+      },
+    ]
   },
   {
-    ref: "10151",
-    loc: "A.1.1.2",
-    name: "AMD Ryzen 5 3600X",
-    pqty: "0/4",
-  },
-  {
-    ref: "10152",
-    loc: "A.1.1.3",
-    name: "AMD Ryzen 7 3700",
-    pqty: "2/3",
-  },
-  {
-    ref: "10153",
-    loc: "A.1.1.4",
-    name: "AMD Ryzen 7 3700X",
-    pqty: "2/2",
-  },
+    isExpanded: false,
+    section_name: 'A2',
+    items: [
+      {
+        ref: "10150",
+        loc: "A.1.1.1",
+        name: "AMD Ryzen 5 3600",
+        pqty: "3/3",
+      },
+      {
+        ref: "10151",
+        loc: "A.1.1.2",
+        name: "AMD Ryzen 5 3600X",
+        pqty: "0/4",
+      },
+      {
+        ref: "10152",
+        loc: "A.1.1.3",
+        name: "AMD Ryzen 7 3700",
+        pqty: "2/3",
+      },
+      {
+        ref: "10153",
+        loc: "A.1.1.4",
+        name: "AMD Ryzen 7 3700X",
+        pqty: "2/2",
+      },
+    ]
+  }
 ];
 
 export default function PickerWaveScreen({ navigation }) {
   const pickingWave = navigation.getParam('pickingWave');
   const title = "Picking Wave " + pickingWave.wave;
   const subtitle = "Picker:                              Status: ";
+
+  const [listDataSource, setListDataSource] = useState(wave);
+  const multiSelect = true;
+
+  if (Platform.OS === 'android') {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
+
+  const updateLayout = (index) => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    const array = [...listDataSource];
+    if (multiSelect) {
+      // If multiple select is enabled
+      array[index]['isExpanded'] = !array[index]['isExpanded'];
+    } else {
+      // If single select is enabled
+      array.map((value, placeindex) =>
+        placeindex === index
+          ? (array[placeindex]['isExpanded'] =
+             !array[placeindex]['isExpanded'])
+          : (array[placeindex]['isExpanded'] = false),
+      );
+    }
+    setListDataSource(array);
+  };
+
   return (
     <View style={styles.main}>
       <View style={styles.container}>
@@ -63,24 +131,30 @@ export default function PickerWaveScreen({ navigation }) {
               <Text style={styles.header}>{"P/Qty"}</Text>
             </View>
           </View>
-          {wave.map((i) => {
-            return (
-              <View style={styles.row} key={i}>
-                <View style={styles.refColumn}>
-                  <Text style={styles.textTable}>{i.ref}</Text>
-                </View>
-                <View style={styles.locColumn}>
-                  <Text style={styles.textTable}>{i.loc}</Text>
-                </View>
-                <View style={styles.nameColumn}>
-                  <Text style={styles.textTable}>{i.name}</Text>
-                </View>
-                <View style={styles.pqtyColumn}>
-                  <Text style={styles.textTable}>{i.pqty}</Text>
-                </View>
+          <SafeAreaView style={{flex: 1}}>
+            <View>
+              <View>
+                <TouchableOpacity>
+                  <Text>
+                    {multiSelect
+                      ? 'Enable Single \n Expand'
+                      : 'Enalble Multiple \n Expand'}
+                  </Text>
+                </TouchableOpacity>
               </View>
-            );
-          })}
+              <ScrollView>
+                {listDataSource.map((wave, key) => (
+                  <Expandable
+                    key={wave.section_name}
+                    onClickFunction={() => {
+                      updateLayout(key);
+                    }}
+                    wave={wave}
+                  />
+                ))}
+              </ScrollView>
+            </View>
+          </SafeAreaView>
         </View>
       </View>
       <View style={styles.bottom}>
