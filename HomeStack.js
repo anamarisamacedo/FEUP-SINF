@@ -15,6 +15,12 @@ import PickerInputScreen from './screens/PickerInputScreen';
 
 
 const screens = {
+  PickingWavesScreen: {
+    screen: PickingWavesScreen,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
   EntryScreen: {
     screen: EntryScreen,
     navigationOptions: {
@@ -51,12 +57,7 @@ const screens = {
       headerShown: false,
     },
   },
-  PickingWavesScreen: {
-    screen: PickingWavesScreen,
-    navigationOptions: {
-      headerShown: false,
-    },
-  },
+  
   GeneratePickingWaveScreen: {
       screen: GeneratePickingWaveScreen,
       navigationOptions: {
