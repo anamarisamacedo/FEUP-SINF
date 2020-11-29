@@ -25,7 +25,7 @@ export default function WarehouseScreen({ navigation }) {
                     <WarehouseButton id="C3" name="PSU" onPress={() => navigation.navigate('StockListingScreen', {id: 'C3', name: 'PSU'})}/>
                 </View>
                 <View style={[styles.row, { marginTop: 50 }]}>
-                    <WarehouseButton id="OP" name="" />
+                    <WarehouseButton id="OP" name="" onPress={() => navigation.navigate('OPScreen')} />
                 </View>
             </View>
         </View>

@@ -3,11 +3,13 @@ import { createAppContainer } from 'react-navigation';
 import EntryScreen from './screens/EntryScreen'; 
 import WarehouseScreen from './screens/WarehouseScreen';
 import StockListingScreen from './screens/StockListingScreen';
+import OPScreen from './screens/OPScreen';
 import ClientOrdersScreen from './screens/ClientOrdersScreen';
 import SupplierOrdersScreen from './screens/SupplierOrdersScreen';
 import OrderDetailsScreen from './screens/OrderDetailsScreen';
 import LoginScreen from './screens/LoginScreen';
 import SignUpScreen from './screens/SignUpScreen';
+import PickersListScreen from './screens/PickersListScreen';
 
 const screens = {
   EntryScreen: {
@@ -40,6 +42,12 @@ const screens = {
       headerShown: false,
     },
   },
+  OPScreen: {
+    screen: OPScreen,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
   ClientOrdersScreen: {
     screen: ClientOrdersScreen,
     navigationOptions: {
@@ -57,7 +65,13 @@ const screens = {
     navigationOptions: {
       headerShown: false,
     },
-  }
+  },
+  PickersListScreen: {
+    screen: PickersListScreen,
+    navigationOptions: {
+      headerShown: false,
+    },
+  },
 };
 
 // home stack navigator screens
