@@ -22,6 +22,26 @@ import PickersListScren from './screens/PickersListScreen';
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
 
+//import * as firebase from 'firebase';
+import { firebase } from '@firebase/app';
+//import 'firebase/firebase-firestore'; 
+
+
+var firebaseConfig = {
+  apiKey: "AIzaSyDiHGyvCIdS47a2IVzgXeux5A37Wptz114",
+  authDomain: "react-firebase-bfbe7.firebaseapp.com",
+  databaseURL: "https://react-firebase-bfbe7.firebaseio.com",
+  projectId: "react-firebase-bfbe7",
+  storageBucket: "react-firebase-bfbe7.appspot.com",
+  messagingSenderId: "722858081202",
+  appId: "1:722858081202:web:c11d4295f506fa3c2d02ab",
+  measurementId: "G-6MN71Q5EEH"
+};
+
+if (firebase.apps.length === 0) {
+  firebase.initializeApp(firebaseConfig)
+}
+
 
 export default function App() {
   /*return (
