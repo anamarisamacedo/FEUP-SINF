@@ -157,7 +157,7 @@ export default function PickerWaveScreen({ navigation }) {
           </SafeAreaView>
         </View>
       </View>
-      <View style={styles.bottom}>
+      <View style={styles.bottomRow}>
         <BackButton onPress={() => navigation.goBack()}/>
         <GeneralButton name="Report" onPress={() => navigation.navigate('PickerInputScreen', {wave, title})}/>
       </View>
@@ -245,4 +245,12 @@ const styles = StyleSheet.create({
   locColumn: { flexDirection: "column", flex: 0.6 },
   nameColumn: { flexDirection: "column", flex: 1.5 },
   pqtyColumn: { flexDirection: "column", flex: 0.5 },
+  bottomRow: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "70%",
+    alignSelf: "center",
+    bottom: 0,
+    alignItems: "center",
+  },
 });

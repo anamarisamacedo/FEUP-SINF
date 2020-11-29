@@ -63,21 +63,17 @@ export default function PickerInputScreen({ navigation }) {
             );
           })}
         </View>
-        <View style={styles.bottomInput}>
-          <TextInput 
-            style={styles.textInput}
-            onChangeText={(text) => onChangeText(text)}
-            value={value}
-          />
-        </View>
-        <View syles={styles.bottomRow}>
-          <View style={styles.nameColumn}>
-            <BackButton onPress={() => navigation.goBack()} />
-          </View>
-          <View style={styles.nameColumn}>
-            <GeneralButton name="Submit" onPress={() => console.log("Submitted")}/>
-          </View>
-        </View>
+      </View>
+      <View style={styles.bottomInput}>
+        <TextInput 
+          style={styles.textInput}
+          onChangeText={(text) => onChangeText(text)}
+          value={value}
+        />
+      </View>
+      <View style={styles.bottomRow}>
+        <BackButton onPress={() => navigation.goBack()} />
+        <GeneralButton name="Submit" onPress={() => console.log("Submitted")}/>
       </View>
     </View>
   );
@@ -96,13 +92,16 @@ const styles = StyleSheet.create({
   },
   bottomRow: {
     flexDirection: "row",
-    justifyContent: "flex-end",
     justifyContent: "space-between",
+    width: "70%",
+    alignSelf: "center",
+    bottom: 40,
+    alignItems: "center",
   },
   bottomInput: {
     flex: 1,
     justifyContent: "flex-end",
-    marginBottom: 46,
+    marginBottom: 80,
     alignItems: "center",
   },
   list: {

@@ -57,7 +57,6 @@ const screens = {
       headerShown: false,
     },
   },
-  
   GeneratePickingWaveScreen: {
       screen: GeneratePickingWaveScreen,
       navigationOptions: {
