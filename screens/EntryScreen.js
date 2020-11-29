@@ -1,16 +1,25 @@
-import React from 'react';
-import { StyleSheet, View, Dimensions, Image, ActionSheetIOS } from 'react-native';
+import React, {useState} from 'react';
+import { StyleSheet, View, Dimensions, Image, Text } from 'react-native';
 import { createDrawerNavigator, DrawerActions } from '@react-navigation/drawer';
 import GeneralButton from '../components/GeneralButton';
 
-import LogoImage from "../images/logo.png"
+import LogoImage from "../images/logo.png";
+
+import {db} from '../config';
+
 
 const Drawer = createDrawerNavigator();
 
 export default function EntryScreen({ navigation }) {
-
+    const [value, setValue] = useState(0);
+    db.ref('/artigo').once('value', querySnapShot => {
+        setValue(querySnapShot.val());
+        //console.log(value);
+    });
+    //console.log(value);
     return (
         <View style={styles.main}>
+            <Text style={{color: 'white', fontSize: 50}}>{value}</Text>
             <View style={styles.content}>
                 <Image
                     style={styles.image}
