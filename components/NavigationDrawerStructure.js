@@ -93,7 +93,7 @@ const NavigationDrawerStructure = props => {
 
 const styles = StyleSheet.create({
     menu: {
-        alignItems: 'left',
+        //alignItems: 'left',
         justifyContent: 'center',
         backgroundColor: '#C4C4C4',
         flex: 1,

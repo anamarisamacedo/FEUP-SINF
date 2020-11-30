@@ -12,11 +12,10 @@ const Drawer = createDrawerNavigator();
 
 export default function EntryScreen({ navigation }) {
     const [value, setValue] = useState(0);
-    db.ref('/artigo').once('value', querySnapShot => {
-        setValue(querySnapShot.val());
-        //console.log(value);
+    db.ref('accounts/picker').once('value', querySnapShot => {
+        let data = querySnapShot.val();
+        console.log(data.password);
     });
-    //console.log(value);
     return (
         <View style={styles.main}>
             <Text style={{color: 'white', fontSize: 50}}>{value}</Text>

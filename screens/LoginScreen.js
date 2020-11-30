@@ -1,15 +1,18 @@
-import React from 'react';
+import React, {useState, useContext} from 'react';
 import { StyleSheet, View, Dimensions, Image, Text, TextInput } from 'react-native';
 import GeneralButton from '../components/GeneralButton';
+
+import { AuthContext } from '../navigation/AuthProvider';
 
 import LogoImage from "../images/logo.png"
 
 export default function LoginScreen({ navigation }) {
 
-    function GoHome() {
-        console.log("Navigating to warehouse screen...");
-        navigation.navigate('WarehouseScreen');
-    }
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [error, setError] = useState(null);
+
+    const { login } = useContext(AuthContext);
 
     return (
         <View style={styles.main}>
@@ -21,16 +24,16 @@ export default function LoginScreen({ navigation }) {
                 <View style={{ marginVertical: 30 }}></View>
                 <Text style={styles.text}>username</Text>
                 <View style={{ marginVertical: 4 }}></View>
-                <TextInput style={styles.textInput} onChangeText={text => {}}/>
+                <TextInput email="email" style={styles.textInput} onChangeText={email => setEmail(email)}/>
 
                 <View style={{ marginVertical: 20 }}></View>
 
                 <Text style={styles.text}>password</Text>
                 <View style={{ marginVertical: 4 }}></View>
-                <TextInput secureTextEntry={true} style={styles.textInput} onChangeText={text => {}}/>
+                <TextInput name="password" secureTextEntry={true} style={styles.textInput} onChangeText={password => setPassword(password)}/>
 
                 <View style={{ marginVertical: 30 }}></View>
-                <GeneralButton name="login" onPress={GoHome} />
+                <GeneralButton name="login" onPress={() => login(email, password)} />
             </View>
         </View>
     );
