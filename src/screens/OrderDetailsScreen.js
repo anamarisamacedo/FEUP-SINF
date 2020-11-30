@@ -7,6 +7,7 @@ import {
 } from "react-native";
 import BackButton from "../components/BackButton";
 import Navbar from '../components/Navbar';
+import Moment from 'moment';
 
 const items = [
   {
@@ -36,9 +37,9 @@ const items = [
 ];
 
 export default function ClientOrders({ navigation, route }) {
-  const {id, order} = route.params;
-  const title = "Order " + order.order + " " + id + " " + order.id;
-  const subtitle = "Date: " + order.date + " Status: " + order.status;
+  const {id, orderId, date} = route.params;
+  const title = "Order " + orderId + " " + id;
+  const subtitle = "Date: " + Moment(date).format('YYYY/MM/DD') + " Status: ";
   return (
     <View style={styles.main}>
       <Navbar navigation={navigation}/>
