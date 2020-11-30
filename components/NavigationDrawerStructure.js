@@ -1,8 +1,10 @@
-import * as React from 'react';
+import React, {useContext} from 'react';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import { Icon } from 'react-native-elements';
+import { AuthContext } from '../navigation/AuthProvider';
 
 const NavigationDrawerStructure = props => {
+    const { logout } = useContext(AuthContext);
     return (
         <View style={styles.menu}>
             <View style={styles.list}>
@@ -74,7 +76,7 @@ const NavigationDrawerStructure = props => {
                 </TouchableHighlight>
             </View>
             <View style={styles.logout}>
-                <TouchableHighlight onPress={() => props.navigation.navigate('EntryScreen')}>
+                <TouchableHighlight onPress={() => logout()}>
                     <View style={styles.line}>
                         <Text style={styles.text_logout}>
                             <Icon
