@@ -1,7 +1,6 @@
-import React, {useState, useContext} from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, View, Dimensions, Image, Text, TextInput } from 'react-native';
 import GeneralButton from '../components/GeneralButton';
-
 import { AuthContext } from '../navigation/AuthProvider';
 
 import LogoImage from "../images/logo.png"
@@ -13,10 +12,25 @@ export default function LoginScreen({ navigation }) {
     const [error, setError] = useState(null);
 
     const { login } = useContext(AuthContext);
+    const [shouldShow, setShouldShow] = useState(false);
+
+    function loginTemp() {
+        const value = login(email, password).then((res) => {
+            const jsonData = JSON.parse(res);
+            console.log(jsonData);
+          })
+        //if (!this._unmounted) {
+          //const user = JSON.parse(value);
+          console.log(value);
+        //}
+      }
 
     return (
         <View style={styles.main}>
             <View style={styles.content}>
+                {shouldShow ? (
+                    <Text style={{color:'red'}}>Wrong email or password!</Text>
+                ) : null}
                 <Image
                     style={styles.image}
                     source={LogoImage}
@@ -24,16 +38,16 @@ export default function LoginScreen({ navigation }) {
                 <View style={{ marginVertical: 30 }}></View>
                 <Text style={styles.text}>username</Text>
                 <View style={{ marginVertical: 4 }}></View>
-                <TextInput email="email" style={styles.textInput} onChangeText={email => setEmail(email)}/>
+                <TextInput email="email" style={styles.textInput} onChangeText={email => setEmail(email)} />
 
                 <View style={{ marginVertical: 20 }}></View>
 
                 <Text style={styles.text}>password</Text>
                 <View style={{ marginVertical: 4 }}></View>
-                <TextInput name="password" secureTextEntry={true} style={styles.textInput} onChangeText={password => setPassword(password)}/>
+                <TextInput name="password" secureTextEntry={true} style={styles.textInput} onChangeText={password => setPassword(password)} />
 
                 <View style={{ marginVertical: 30 }}></View>
-                <GeneralButton name="login" onPress={() => login(email, password)} />
+                <GeneralButton name="login" onPress={() => loginTemp()} />
             </View>
         </View>
     );
