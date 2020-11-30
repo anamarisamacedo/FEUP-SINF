@@ -14,23 +14,19 @@ export default function LoginScreen({ navigation }) {
     const { login } = useContext(AuthContext);
     const [shouldShow, setShouldShow] = useState(false);
 
-    function loginTemp() {
-        const value = login(email, password).then((res) => {
-            const jsonData = JSON.parse(res);
-            console.log(jsonData);
+    function loginSubmit() {
+        login(email, password).then((res) => {
+            if(res == false) {
+                setShouldShow(true);
+            } else {
+                setShouldShow(false);
+            }
           })
-        //if (!this._unmounted) {
-          //const user = JSON.parse(value);
-          console.log(value);
-        //}
       }
 
     return (
         <View style={styles.main}>
             <View style={styles.content}>
-                {shouldShow ? (
-                    <Text style={{color:'red'}}>Wrong email or password!</Text>
-                ) : null}
                 <Image
                     style={styles.image}
                     source={LogoImage}
@@ -46,8 +42,10 @@ export default function LoginScreen({ navigation }) {
                 <View style={{ marginVertical: 4 }}></View>
                 <TextInput name="password" secureTextEntry={true} style={styles.textInput} onChangeText={password => setPassword(password)} />
 
+                <Text style={styles.feedback}>{shouldShow ? "Wrong email or password!" : ""} </Text>
+
                 <View style={{ marginVertical: 30 }}></View>
-                <GeneralButton name="login" onPress={() => loginTemp()} />
+                <GeneralButton name="login" onPress={() => loginSubmit()} />
             </View>
         </View>
     );
@@ -80,5 +78,9 @@ const styles = StyleSheet.create({
     image: {
         width: '80%',
         height: '15%',
+    },
+    feedback: {
+        color: 'red',
+        marginTop: 20
     }
 });
