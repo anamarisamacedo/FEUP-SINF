@@ -9,8 +9,15 @@ export default function SignUpScreen({ navigation }) {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [errorMsg, setErrorMsg] = useState('');
 
     const { register } = useContext(AuthContext);
+
+    function registerSubmit() {
+        register(email, password).then((res) => {
+            setErrorMsg(res);
+        })
+    }
 
     return (
         <View style={styles.main}>
@@ -36,8 +43,10 @@ export default function SignUpScreen({ navigation }) {
                 <View style={{ marginVertical: 4 }}></View>
                 <TextInput style={styles.textInput} onChangeText={text => {}}/>
 
+                <Text style={styles.feedback}> {errorMsg} </Text>
+
                 <View style={{ marginVertical: 30 }}></View>
-                <GeneralButton name="sign up" onPress={() => register(email, password)} />
+                <GeneralButton name="sign up" onPress={() => registerSubmit(email, password)} />
             </View>
         </View>
     );
@@ -70,5 +79,9 @@ const styles = StyleSheet.create({
     image: {
         width: '100%',
         height: '15%',
+    },
+    feedback: {
+        color: 'red',
+        marginTop: 20
     }
 });
