@@ -6932,6 +6932,13 @@
   "resolved" "https://registry.npmjs.org/react-is/-/react-is-16.13.1.tgz"
   "version" "16.13.1"
 
+"react-native-dropdown-picker@^3.7.1":
+  "integrity" "sha512-YyT4q+CgMw299ypSlvSOt/tZiYD0bsTmnNKazLwpYM3ouGaj34NTDS+MHVyiYpyZbn4XSs+FHRcs12PupWS7Cg=="
+  "resolved" "https://registry.npmjs.org/react-native-dropdown-picker/-/react-native-dropdown-picker-3.7.1.tgz"
+  "version" "3.7.1"
+  dependencies:
+    "react-native-vector-icons" "^7.0.0"
+
 "react-native-elements@^3.0.0-alpha.1":
   "integrity" "sha512-m85yQLo3wPkC5pF4Sp6bWltINElOVk6G57Ld2QNnVnXHwJ4PI5gYOoSvatxbsUV8MHQuvzTePRwDLZIjFu7HDg=="
   "resolved" "https://registry.npmjs.org/react-native-elements/-/react-native-elements-3.0.0-alpha.1.tgz"
@@ -7041,7 +7048,7 @@
     "unimodules-sensors-interface" "~5.3.0"
     "unimodules-task-manager-interface" "~5.3.0"
 
-"react-native-vector-icons@^7.1.0":
+"react-native-vector-icons@^7.0.0", "react-native-vector-icons@^7.1.0":
   "integrity" "sha512-V2a1zJ4i+kS8O4j183gIwX14St9AxxXabxwYpFBgRhvr2NDXyFcjHDEAgrOYYlt2W57e20aN1tBDU/I+wn9WtQ=="
   "resolved" "https://registry.npmjs.org/react-native-vector-icons/-/react-native-vector-icons-7.1.0.tgz"
   "version" "7.1.0"

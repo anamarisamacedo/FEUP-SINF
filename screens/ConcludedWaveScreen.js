@@ -1,43 +1,126 @@
-import React from "react";
+import React, {useState} from "react";
 import {
   StyleSheet,
   Text,
+  TextInput,
   View,
-  Dimensions
+  Dimensions,
+  Platform,
+  ScrollView,
+  LayoutAnimation,
+  TouchableOpacity,
+  SafeAreaView
 } from "react-native";
 import BackButton from "../components/BackButton";
+import GeneralButton from "../components/GeneralButton";
+import Expandable from "../components/Expandable";
 
 const wave = [
   {
-    ref: "10150",
-    loc: "A.1.1.1",
-    name: "AMD Ryzen 5 3600",
-    pqty: "3/3",
+    isExpanded: false,
+    section_name: 'A1',
+    items: [
+      {
+        ref: "10150",
+        loc: "A.1.1.1",
+        name: "AMD Ryzen 5 3600",
+        pqty: "3/3",
+      },
+      {
+        ref: "10151",
+        loc: "A.1.1.2",
+        name: "AMD Ryzen 5 3600X",
+        pqty: "0/4",
+      },
+      {
+        ref: "10152",
+        loc: "A.1.1.3",
+        name: "AMD Ryzen 7 3700",
+        pqty: "2/3",
+      },
+      {
+        ref: "10153",
+        loc: "A.1.1.4",
+        name: "AMD Ryzen 7 3700X",
+        pqty: "2/2",
+      },
+    ]
   },
   {
-    ref: "10151",
-    loc: "A.1.1.2",
-    name: "AMD Ryzen 5 3600X",
-    pqty: "0/4",
-  },
-  {
-    ref: "10152",
-    loc: "A.1.1.3",
-    name: "AMD Ryzen 7 3700",
-    pqty: "2/3",
-  },
-  {
-    ref: "10153",
-    loc: "A.1.1.4",
-    name: "AMD Ryzen 7 3700X",
-    pqty: "2/2",
-  },
+    isExpanded: false,
+    section_name: 'A2',
+    items: [
+      {
+        ref: "10150",
+        loc: "A.1.1.1",
+        name: "AMD Ryzen 5 3600",
+        pqty: "3/3",
+      },
+      {
+        ref: "10151",
+        loc: "A.1.1.2",
+        name: "AMD Ryzen 5 3600X",
+        pqty: "0/4",
+      },
+      {
+        ref: "10152",
+        loc: "A.1.1.3",
+        name: "AMD Ryzen 7 3700",
+        pqty: "2/3",
+      },
+      {
+        ref: "10153",
+        loc: "A.1.1.4",
+        name: "AMD Ryzen 7 3700X",
+        pqty: "2/2",
+      },
+    ]
+  }
 ];
 
-export default function ConcludedWaveScreen({ navigation }) {
+const stat = [
+    {
+        picker: "Picker1",
+        creationDate: "20-10-2020 16h59",
+        conclusionDate: "20-10-2020 17h45",
+        status: "Concluded",
+        report: "Qualquer coisa que o picker escreveu no report",
+    },
+];
+
+export default function PickerWaveScreen({ navigation }) {
   const pickingWave = navigation.getParam('pickingWave');
   const title = "Picking Wave " + pickingWave.wave;
-  const subtitle = "Picker:                              Status: ";
+  const subtitle = "Picker: " + stat[0].picker +"                           Status: " + stat[0].status;
+  const creation = stat[0].creationDate;
+  const conclusion = stat[0].conclusionDate;
+
+  const [value, onChangeText] = useState(stat[0].report);
+  const [listDataSource, setListDataSource] = useState(wave);
+  const multiSelect = true;
+
+  if (Platform.OS === 'android') {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
+
+  const updateLayout = (index) => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    const array = [...listDataSource];
+    if (multiSelect) {
+      // If multiple select is enabled
+      array[index]['isExpanded'] = !array[index]['isExpanded'];
+    } else {
+      // If single select is enabled
+      array.map((value, placeindex) =>
+        placeindex === index
+          ? (array[placeindex]['isExpanded'] =
+             !array[placeindex]['isExpanded'])
+          : (array[placeindex]['isExpanded'] = false),
+      );
+    }
+    setListDataSource(array);
+  };
+
   return (
     <View style={styles.main}>
       <View style={styles.container}>
@@ -46,6 +129,8 @@ export default function ConcludedWaveScreen({ navigation }) {
         </View>
         <View style={styles.subtitle}>
           <Text style={styles.subtext}>{subtitle}</Text>
+          <Text style={styles.subtext}>Created: {creation}</Text>
+          <Text style={styles.subtext}>Concluded: {conclusion}</Text>
         </View>
         <View>
           <View style={styles.row}>
@@ -62,28 +147,43 @@ export default function ConcludedWaveScreen({ navigation }) {
               <Text style={styles.header}>{"P/Qty"}</Text>
             </View>
           </View>
-          {wave.map((i) => {
-            return (
-              <View style={styles.row} key={i}>
-                <View style={styles.refColumn}>
-                  <Text style={styles.textTable}>{i.ref}</Text>
-                </View>
-                <View style={styles.locColumn}>
-                  <Text style={styles.textTable}>{i.loc}</Text>
-                </View>
-                <View style={styles.nameColumn}>
-                  <Text style={styles.textTable}>{i.name}</Text>
-                </View>
-                <View style={styles.pqtyColumn}>
-                  <Text style={styles.textTable}>{i.pqty}</Text>
-                </View>
+          <SafeAreaView style={{flex: 1}}>
+            <View>
+              <View>
+                <TouchableOpacity>
+                  <Text>
+                    {multiSelect
+                      ? 'Enable Single \n Expand'
+                      : 'Enalble Multiple \n Expand'}
+                  </Text>
+                </TouchableOpacity>
               </View>
-            );
-          })}
+              <ScrollView>
+                {listDataSource.map((wave, key) => (
+                  <Expandable
+                    key={wave.section_name}
+                    onClickFunction={() => {
+                      updateLayout(key);
+                    }}
+                    wave={wave}
+                  />
+                ))}
+              </ScrollView>
+            </View>
+          </SafeAreaView>
         </View>
       </View>
-      <View style={styles.bottom}>
+      <View style={styles.bottomRow}>
         <BackButton onPress={() => navigation.goBack()}/>
+        <View style={styles.bottomInput}>
+            <TextInput
+              multiline = {true}
+              editable = {false}
+              style={styles.textInput}
+              onChangeText={(text) => onChangeText(text)}
+              value={value}
+            />
+          </View>
       </View>
     </View>
   );
@@ -109,6 +209,12 @@ const styles = StyleSheet.create({
     marginBottom: 36,
     alignItems: "center",
   },
+  bottomInput: {
+      flex: 1,
+      justifyContent: "flex-end",
+      marginBottom: 0,
+      alignItems: "center",
+    },
   list: {
     backgroundColor: "black",
   },
@@ -149,6 +255,25 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     alignItems: "flex-start",
   },
+  textInput: {
+      width: 150,
+      height: 60,
+      alignItems: "right",
+      backgroundColor:"darkgrey",
+      color: "#d3d3d3",
+      fontFamily: "Corbel",
+      fontStyle: "normal",
+      fontSize: 15,
+      borderColor: "lightgrey",
+      borderWidth: 1,
+      flexWrap: "wrap",
+      multiline: true,
+      numberOfLines: "4",
+      textAlignVertical: "top",
+      placeholderTextColor: "darkgrey",
+      position: "absolute",
+      bottom: 0,
+    },
   textTable: {
     textAlign: "left",
     color: "#d3d3d3",
@@ -169,4 +294,15 @@ const styles = StyleSheet.create({
   locColumn: { flexDirection: "column", flex: 0.6 },
   nameColumn: { flexDirection: "column", flex: 1.5 },
   pqtyColumn: { flexDirection: "column", flex: 0.5 },
+
+  bottomRow: {
+      flexDirection: "row",
+      justifyContent: "space-between",
+      width: "70%",
+      alignSelf: "center",
+      bottom: 40,
+      alignItems: "center",
+      position:"absolute",
+      bottom: 25,
+    },
 });
