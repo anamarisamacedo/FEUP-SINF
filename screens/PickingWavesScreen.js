@@ -41,6 +41,7 @@ const pickingWaves = [
   },
 ];
 
+
 export default function PickingWavesScreen({ navigation }) {
   const title = "Picking Waves";
 

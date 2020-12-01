@@ -52,7 +52,7 @@ export default function PickerInputScreen({ navigation }) {
                 <View style={styles.pqtyColumn}>
                   <TextInput
                     style={styles.quantityInput}
-                    keyboardType="numberic"
+                    keyboardType="numeric"
                     onChangeText={(text) => onChangeText(text)}
                     value={value}
                     maxLength={10}

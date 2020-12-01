@@ -80,7 +80,7 @@ const wave = [
 export default function PickerWaveScreen({ navigation }) {
   const pickingWave = navigation.getParam('pickingWave');
   const title = "Picking Wave " + pickingWave.wave;
-  const subtitle = "Picker:                              Status: ";
+  const subtitle = "Picker:                                      Status: " + pickingWave.status;
 
   const [listDataSource, setListDataSource] = useState(wave);
   const multiSelect = true;
@@ -245,12 +245,15 @@ const styles = StyleSheet.create({
   locColumn: { flexDirection: "column", flex: 0.6 },
   nameColumn: { flexDirection: "column", flex: 1.5 },
   pqtyColumn: { flexDirection: "column", flex: 0.5 },
+
   bottomRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    width: "70%",
-    alignSelf: "center",
-    bottom: 0,
-    alignItems: "center",
-  },
+      flexDirection: "row",
+      justifyContent: "space-between",
+      width: "70%",
+      alignSelf: "center",
+      bottom: 40,
+      alignItems: "center",
+      position:"absolute",
+      bottom: 25,
+    },
 });

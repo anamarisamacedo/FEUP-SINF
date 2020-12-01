@@ -11,7 +11,6 @@ import {
 const Expandable = ({wave, onClickFunction}) => {
     //Custom Component for the Expandable List
     const [layoutHeight, setLayoutHeight] = useState(0);
-    console.log(wave);
 
     useEffect(() => {
       if (wave.isExpanded) {
@@ -41,10 +40,10 @@ const Expandable = ({wave, onClickFunction}) => {
             return (
               <View style={styles.row} key={i}>
                 <View style={styles.refColumn}>
-                  <Text style={styles.textTable}>{i.ref}</Text>
+                  <Text style={styles.textTable}>{i.loc}</Text>
                 </View>
                 <View style={styles.locColumn}>
-                  <Text style={styles.textTable}>{i.loc}</Text>
+                  <Text style={styles.textTable}>{i.ref}</Text>
                 </View>
                 <View style={styles.nameColumn}>
                   <Text style={styles.textTable}>{i.name}</Text>
