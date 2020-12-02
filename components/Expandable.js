@@ -6,11 +6,14 @@ import {
   View,
   Text,
   TouchableOpacity,
+  TextInput,
 } from 'react-native';
 
-const Expandable = ({wave, onClickFunction}) => {
+const Expandable = ({wave,onClickFunction}) => {
     //Custom Component for the Expandable List
     const [layoutHeight, setLayoutHeight] = useState(0);
+
+    const [value, onChangeText] = useState(0);
 
     useEffect(() => {
       if (wave.isExpanded) {
@@ -19,7 +22,7 @@ const Expandable = ({wave, onClickFunction}) => {
         setLayoutHeight(0);
       }
     }, [wave.isExpanded]);
-  
+
     return (
       <View>
         <TouchableOpacity
@@ -90,5 +93,5 @@ export default Expandable;
       refColumn: { flexDirection: "column", flex: 0.6 },
       locColumn: { flexDirection: "column", flex: 0.6 },
       nameColumn: { flexDirection: "column", flex: 1.5 },
-      pqtyColumn: { flexDirection: "column", flex: 0.5 },
+      pqtyColumn: { flexDirection: "column", flex: 0.5 ,},
   });

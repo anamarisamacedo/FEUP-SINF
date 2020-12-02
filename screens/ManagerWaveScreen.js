@@ -78,7 +78,7 @@ const wave = [
   }
 ];
 
-const pickers = ["picker1", "picker2", "picker3", "picker4", "picker5",]
+const pickers = ["picker1", "picker2", "picker3", "picker4", "picker5"]
 
 export default function PickerWaveScreen({ navigation }) {
   const pickingWave = navigation.getParam('pickingWave');
@@ -87,7 +87,7 @@ export default function PickerWaveScreen({ navigation }) {
   const status = "Status: " + pickingWave.status;
 
   const [value, setValue] = useState(null);
-  const [item, setItems] = useState(picker);
+  const [item, setItems] = useState(pickers[0]);
   let controller;
 
   const [listDataSource, setListDataSource] = useState(wave);
@@ -124,6 +124,8 @@ export default function PickerWaveScreen({ navigation }) {
         <View style={styles.subtitle}>
           <Text style={styles.subtext}>{picker}</Text>
             <DropDownPicker style={{paddingVertical: 1}}
+                items={pickers}
+                zIndex={50000}
                 containerStyle={{width: 150, height: 25}}
                 labelStyle={{
                     fontSize: 14,
@@ -132,9 +134,8 @@ export default function PickerWaveScreen({ navigation }) {
                 }}
                 //dropDownStyle={{backgroundColor: 'black'}}
                 activeLabelStyle={{color: 'black'}}
-                items={pickers}
                 controller={instance => controller = instance}
-                defaultValue={value}
+                placeholder={item}
                 onChangeItem={item => setValue(item.value)}
             />
            <Text style={styles.subtext}> {status} </Text>
