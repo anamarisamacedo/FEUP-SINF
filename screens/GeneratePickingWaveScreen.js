@@ -43,7 +43,7 @@ const pickingWaves = [
 
 export default function GeneratePickingWaveScreen({ navigation }) {
   const title = "Generate Picking Wave";
-  const [productNum,setNum] = useState('0');
+  const [productNum,onChangeText] = useState('0');
 
   return (
     <View style={styles.main}>
@@ -54,7 +54,7 @@ export default function GeneratePickingWaveScreen({ navigation }) {
       </View>
       <View style={styles.row}>
         <Text style={styles.text2}> Max Number of Products: </Text>
-        <TextInput keyboardType='numeric' style={styles.input} placeholder="Number" onChangeText={(val)=>this.setNum(val)}/>
+        <TextInput keyboardType='numeric' style={styles.input} placeholder="0" onChangeText={(text) => onChangeText(text)}/>
       </View>
       <View style={styles.bottom}>
         <GeneralButton name="Generate Picking Wave" onPress={() => console.log("Pressed generate pw")} />
