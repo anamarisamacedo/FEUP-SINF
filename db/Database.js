@@ -3,10 +3,7 @@ const crypto = require('crypto');
 
 const queries = {
     addAccount: function (email) {
-        //db.ref('accounts/picker').once('value', querySnapShot => {
-        //  let data = querySnapShot.val();
-        //  console.log(data.password);
-        //});
+        
         db.ref('accounts/' + hash(email)).set({
             manager: false
         }).then(() => console.log(email + "'s account was created!'"));
@@ -21,6 +18,14 @@ const queries = {
         db.ref('accounts/' + hash(email)).update({
             manager: false
         }).then(() => console.log(email + " is no longer a Manager!"));
+    },
+    isManager: function (email) {
+        let data = null;
+        db.ref('accounts/' + hash(email)).once('value', querySnapShot => {
+          data = querySnapShot.val();
+        });
+        return data.manager;
+        
     }
 }
 
