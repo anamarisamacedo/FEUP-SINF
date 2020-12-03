@@ -4,6 +4,7 @@ import GeneralButton from '../components/GeneralButton';
 import LogoImage from "../images/logo.png"
 
 import { AuthContext } from '../navigation/AuthProvider';
+import queries from '../db/Database';
 
 export default function SignUpScreen({ navigation }) {
 
@@ -16,6 +17,7 @@ export default function SignUpScreen({ navigation }) {
     function registerSubmit() {
         register(email, password).then((res) => {
             setErrorMsg(res);
+            queries.addAccount(email);
         })
     }
 
