@@ -7,11 +7,8 @@ import LogoImage from "../images/logo.png";
 const Drawer = createDrawerNavigator();
 
 export default function EntryScreen({ navigation }) {
-    const [value, setValue] = useState(0);
-
     return (
         <View style={styles.main}>
-            <Text style={{ color: 'white', fontSize: 50 }}>{value}</Text>
             <View style={styles.content}>
                 <Image
                     style={styles.image}
