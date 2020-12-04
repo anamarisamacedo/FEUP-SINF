@@ -28,14 +28,16 @@ const Navbar = props => {
 const styles = StyleSheet.create({
     navbar:{
         padding: 10,
-        height: 50
-    },
-    hamburger: {
-        position: 'absolute',
-        left: 2,
+        margin: 10,
+        height: 50,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
     image: {
-        textAlign: 'center'
+        width: 250,
+        height: 35,
+
     },
     icon:{
         paddingLeft: 10,
