@@ -1,10 +1,33 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Dimensions } from 'react-native';
 import WarehouseButton from '../components/WarehouseButton';
 import Navbar from '../components/Navbar';
+import token from "../services/token";
+
+const accountKey = "242968"; // TODO: put your account key here
+const subscriptionKey = "242968-0001"; // TODO: put your account key here
+const urlJ = "https://my.jasminsoftware.com/";
+var accessToken;
 
 export default function WarehouseScreen({ navigation }) {
-
+    const [warehouses, setWarehouses] = useState([]);
+    const [isLoading, setLoading] = useState(true);
+    accessToken = token.getToken();
+    useEffect(() => {
+        const apiUrl = urlJ + "/api/" + accountKey + "/" + subscriptionKey + "/materialscore/warehouses";
+        console.log(apiUrl);
+        fetch(apiUrl, {
+          method: "GET",
+          headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + accessToken,
+          },
+        })
+          .then((response) => response.json())
+          .then((respWarehouses) => {setWarehouses(respWarehouses), console.log(respWarehouses)})
+          .finally(setLoading(false));
+      }, []);
     return (
         <View style={styles.main}>
             <Navbar navigation={navigation}/>
