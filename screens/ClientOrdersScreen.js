@@ -3,10 +3,7 @@ import { StyleSheet, Text, View, Dimensions, Button, TouchableOpacity } from "re
 import Navbar from '../components/Navbar';
 import token from '../services/token';
 import Moment from 'moment';
-
-const accountKey = "242968"; // TODO: put your account key here
-const subscriptionKey = "242968-0001"; // TODO: put your account key here
-const urlJ = "https://my.jasminsoftware.com/";
+import jasminConstants from '../services/jasminConstants';
 
 export default function ClientOrders({ navigation }) {
   const [orders, setOrders] = useState([]);
@@ -15,7 +12,7 @@ export default function ClientOrders({ navigation }) {
   const accessToken = token.getToken();
 
   useEffect(() => {
-    const apiUrl = urlJ+"/api/" + accountKey+ "/" + subscriptionKey + "/sales/orders";
+    const apiUrl = jasminConstants.url +"/api/" + jasminConstants.accountKey + "/" + jasminConstants.subscriptionKey + "/sales/orders";
     fetch(apiUrl, {
       method: "GET",
       headers: {

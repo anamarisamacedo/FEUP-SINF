@@ -9,10 +9,7 @@ import {
 } from "react-native";
 import BackButton from "../components/BackButton";
 import token from '../services/token';
-
-const accountKey = "242968"; // TODO: put your account key here
-const subscriptionKey = "242968-0001"; // TODO: put your account key here
-const urlJ = "https://my.jasminsoftware.com/";  
+import jasminConstants from '../services/jasminConstants';
 
 export default function StockListingScreen({ navigation, route }) {
   const [stock, setStock] = useState([]);
@@ -22,7 +19,7 @@ export default function StockListingScreen({ navigation, route }) {
   const accessToken = token.getToken();
 
   useEffect(() => {
-    const apiUrl = urlJ + "/api/" + accountKey + "/" + subscriptionKey + "/materialscore/materialsitems";
+    const apiUrl = jasminConstants.url + "/api/" + jasminConstants.accountKey + "/" + jasminConstants.subscriptionKey + "/materialscore/materialsitems";
     
     fetch(apiUrl, {
       method: "GET",

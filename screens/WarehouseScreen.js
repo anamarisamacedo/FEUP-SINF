@@ -3,18 +3,15 @@ import { StyleSheet, View, Dimensions } from 'react-native';
 import WarehouseButton from '../components/WarehouseButton';
 import Navbar from '../components/Navbar';
 import token from "../services/token";
-
-const accountKey = "242968"; // TODO: put your account key here
-const subscriptionKey = "242968-0001"; // TODO: put your account key here
-const urlJ = "https://my.jasminsoftware.com/";
-var accessToken;
+import jasminConstants from '../services/jasminConstants';
 
 export default function WarehouseScreen({ navigation }) {
     const [warehouses, setWarehouses] = useState([]);
     const [isLoading, setLoading] = useState(true);
-    accessToken = token.getToken();
+    const accessToken = token.getToken();
+
     useEffect(() => {
-        const apiUrl = urlJ + "/api/" + accountKey + "/" + subscriptionKey + "/materialscore/warehouses";
+        const apiUrl = jasminConstants.url + "/api/" + jasminConstants.accountKey + "/" + jasminConstants.subscriptionKey + "/materialscore/warehouses";
         console.log(apiUrl);
         fetch(apiUrl, {
           method: "GET",
