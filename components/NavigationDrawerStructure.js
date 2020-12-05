@@ -41,7 +41,7 @@ const NavigationDrawerStructure = props => {
                         </Text>
                     </View>
                 </TouchableHighlight>
-                <TouchableHighlight onPress={() => props.navigation.navigate('ListPickingWaves')}>
+                <TouchableHighlight onPress={() => props.navigation.navigate('PickingWavesScreen')}>
                     <View style={styles.line}>
                         <Text style={styles.text}>
                             <Icon
@@ -52,7 +52,7 @@ const NavigationDrawerStructure = props => {
                         </Text>
                     </View>
                 </TouchableHighlight>
-                <TouchableHighlight onPress={() => props.navigation.navigate('GeneratePickingWaves')}>
+                <TouchableHighlight onPress={() => props.navigation.navigate('GeneratePickingWaveScreen')}>
                     <View style={styles.line}>
                         <Text style={styles.text}>
                             <Icon

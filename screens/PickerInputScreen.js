@@ -15,6 +15,7 @@ import {
 import BackButton from "../components/BackButton";
 import GeneralButton from "../components/GeneralButton";
 import Expandable from "../components/Expandable";
+import Navbar from '../components/Navbar';
 
 const wave = [
   {
@@ -79,11 +80,10 @@ const wave = [
   }
 ];
 
-export default function PickerInputScreen({ navigation }) {
+export default function PickerInputScreen({ navigation, route }) {
   const [value, onChangeText] = useState("hey");
 
-  const title = navigation.getParam("title");
-  const wave = navigation.getParam("wave");
+  const {title, wave} = route.params;
 
   const [listDataSource, setListDataSource] = useState(wave);
     const multiSelect = true;
@@ -112,6 +112,7 @@ export default function PickerInputScreen({ navigation }) {
 
   return (
     <View style={styles.main}>
+      <Navbar navigation={navigation}/>
       <View style={styles.container}>
         <View style={styles.title}>
           <Text style={styles.text}>{title}</Text>

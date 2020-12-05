@@ -13,6 +13,7 @@ import {
 import BackButton from "../components/BackButton";
 import GeneralButton from "../components/GeneralButton";
 import Expandable from "../components/Expandable";
+import Navbar from '../components/Navbar';
 
 const wave = [
   {
@@ -77,8 +78,8 @@ const wave = [
   }
 ];
 
-export default function PickerWaveScreen({ navigation }) {
-  const pickingWave = navigation.getParam('pickingWave');
+export default function PickerWaveScreen({ navigation, route }) {
+  const {pickingWave} = route.params;
   const title = "Picking Wave " + pickingWave.wave;
   const subtitle = "Picker:                                      Status: " + pickingWave.status;
 
@@ -109,6 +110,7 @@ export default function PickerWaveScreen({ navigation }) {
 
   return (
     <View style={styles.main}>
+      <Navbar navigation={navigation}/>
       <View style={styles.container}>
         <View style={styles.title}>
           <Text style={styles.text}>{title}</Text>

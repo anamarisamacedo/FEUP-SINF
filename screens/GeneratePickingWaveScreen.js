@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import { StyleSheet, Text, TextInput, View, Dimensions, Button, TouchableOpacity } from "react-native";
 import GeneralButton from "../components/GeneralButton";
+import Navbar from '../components/Navbar';
 
 const pickingWaves = [
   {
@@ -46,7 +47,9 @@ export default function GeneratePickingWaveScreen({ navigation }) {
   const [productNum,onChangeText] = useState('0');
 
   return (
+    
     <View style={styles.main}>
+      <Navbar navigation={navigation}/>
       <View style={styles.container}>
         <View style={styles.title}>
           <Text style={styles.text}>{title}</Text>

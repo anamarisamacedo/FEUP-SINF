@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, Text, View, Dimensions, Button, TouchableOpacity } from "react-native";
 import GeneralButton from "../components/GeneralButton";
+import Navbar from '../components/Navbar';
 
 const pickingWaves = [
   {
@@ -47,6 +48,7 @@ export default function PickingWavesScreen({ navigation }) {
 
   return (
     <View style={styles.main}>
+      <Navbar navigation={navigation}/>
       <View style={styles.container}>
         <View style={styles.title}>
           <Text style={styles.text}>{title}</Text>
