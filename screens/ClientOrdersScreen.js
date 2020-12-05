@@ -5,7 +5,7 @@ import token from '../services/token';
 import Moment from 'moment';
 import jasminConstants from '../services/jasminConstants';
 
-export default function ClientOrders({ navigation }) {
+export default function ClientOrdersScreen({ navigation }) {
   const [orders, setOrders] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const title = "Clients' Orders";
