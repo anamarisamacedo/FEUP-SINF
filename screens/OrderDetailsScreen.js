@@ -12,6 +12,7 @@ import Navbar from '../components/Navbar';
 import token from '../services/token';
 import jasminConstants from '../services/jasminConstants';
 import Moment from 'moment';
+import queries from "../db/Database";
 
 export default function OrderDetails({ navigation, route }) {
   const {id, orderId, date, client} = route.params;
@@ -41,8 +42,13 @@ export default function OrderDetails({ navigation, route }) {
       .finally(setLoading(false));
   }, [items, title])
 
-  const subtitle = "Date: " + Moment(date).format('YYYY/MM/DD') + " Status: " + "TODO"; //todo - status
-  console.log(title);
+  var status = "X"
+  /*if (client)
+    status = queries.getClientOrderStatus(orderId);
+  else
+    status = queries.getSupplierOrderStatus(orderId);*/
+
+  const subtitle = "Date: " + Moment(date).format('YYYY/MM/DD') + " Status: " + status;
 
   return (
     <View style={styles.main}>

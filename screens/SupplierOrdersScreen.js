@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import token from '../services/token';
 import Moment from 'moment';
 import jasminConstants from '../services/jasminConstants';
+import queries from "../db/Database";
 
 export default function SupplierOrdersScreen({ navigation }) {
   const [orders, setOrders] = useState([]);
@@ -48,6 +49,8 @@ export default function SupplierOrdersScreen({ navigation }) {
             </View>
           </View>
           {orders.map((i) => {
+            //const status = queries.getSupplierOrderStatus(i.id);
+            const status="X"
             return (
               <TouchableOpacity
                 onPress={() => navigation.navigate("OrderDetailsScreen", {id: 'Supplier ' + i.sellerSupplierPartyName, orderId: i.id, date: i.documentDate, client: false})}
@@ -63,7 +66,7 @@ export default function SupplierOrdersScreen({ navigation }) {
                     <Text style={styles.textTable}>{Moment(i.documentDate).format('YYYY/MM/DD')}</Text>
                   </View>
                   <View style={styles.statusColumn}>
-                    <Text style={[styles.textTable, {textAlign: 'right'}]}>{"X"}</Text>
+                    <Text style={[styles.textTable, {textAlign: 'right'}]}>{status}</Text>
                   </View>
                 </View>
               </TouchableOpacity>
