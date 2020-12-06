@@ -1,51 +1,18 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from "react-native";
 import GeneralButton from "../components/GeneralButton";
 import Navbar from '../components/Navbar';
-
-const pickingWaves = [
-  {
-    wave: "00124",
-    date: "22-10-2020",
-    hour: "08:21",
-    status: "in progress",
-  },
-  {
-    wave: "00125",
-    date: "22-10-2020",
-    hour: "08:21",
-    status: "in progress",
-  },
-  {
-    wave: "00122",
-    date: "22-10-2020",
-    hour: "08:21",
-    status: "concluded",
-  },
-  {
-    wave: "00121",
-    date: "22-10-2020",
-    hour: "08:21",
-    status: "in progress",
-  },
-  {
-    wave: "00120",
-    date: "22-10-2020",
-    hour: "08:21",
-    status: "concluded",
-  },
-  {
-    wave: "00126",
-    date: "22-10-2020",
-    hour: "08:21",
-    status: "in progress",
-  },
-];
-
+import pickingWaveService from '../services/pickingWaves'
 
 export default function PickingWavesScreen({ navigation }) {
   const title = "Picking Waves";
-
+  const [pw, setPw] = useState([]);
+  useEffect(() => {
+    pickingWaveService.getPickingWaves().then(response => {
+      console.log(response)
+      setPw(response);
+    })
+  })
   return (
     <View style={styles.main}>
       <Navbar navigation={navigation}/>
@@ -68,7 +35,7 @@ export default function PickingWavesScreen({ navigation }) {
               <Text style={styles.header}>{"Status"}</Text>
             </View>
           </View>
-          {pickingWaves.map((i) => {
+          {pw.map((i) => {
             return (
               <TouchableOpacity
                 onPress={() => navigation.navigate('PickerWaveScreen', {pickingWave: i})}
