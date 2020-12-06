@@ -90,7 +90,7 @@ export default function PickerWaveScreen({ navigation, route }) {
   const [item, setItems] = useState(pickers[0]);
   let controller;
 
-  const [listDataSource, setListDataSource] = useState(wave);
+  const [listDataSource, setListDataSource] = useState(pickingWave.items);
   const multiSelect = true;
 
   if (Platform.OS === 'android') {
@@ -169,7 +169,7 @@ export default function PickerWaveScreen({ navigation, route }) {
               <ScrollView>
                 {listDataSource.map((wave, key) => (
                   <Expandable
-                    key={wave.section_name}
+                    key={wave.defaultWarehouse}
                     onClickFunction={() => {
                       updateLayout(key);
                     }}

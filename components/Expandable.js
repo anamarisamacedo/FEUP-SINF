@@ -9,19 +9,19 @@ import {
   TextInput,
 } from 'react-native';
 
-const Expandable = ({wave,onClickFunction}) => {
+const Expandable = ({items,onClickFunction}) => {
     //Custom Component for the Expandable List
     const [layoutHeight, setLayoutHeight] = useState(0);
 
     const [value, onChangeText] = useState(0);
 
     useEffect(() => {
-      if (wave.isExpanded) {
+      if (items.isExpanded) {
         setLayoutHeight(null);
       } else {
         setLayoutHeight(0);
       }
-    }, [wave.isExpanded]);
+    }, [items.isExpanded]);
 
     return (
       <View>
@@ -39,7 +39,7 @@ const Expandable = ({wave,onClickFunction}) => {
             overflow: 'hidden',
             backgroundColor: 'black',
           }}>
-          {wave.items.map((i) => {
+          {items.map((i) => {
             return (
               <View style={styles.row} key={i}>
                 <View style={styles.refColumn}>

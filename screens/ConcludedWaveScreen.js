@@ -80,12 +80,12 @@ const wave = [
 export default function PickerWaveScreen({ navigation, route }) {
   const {pickingWave } = route.params;
   const title = "Picking Wave " + pickingWave.wave;
-  const subtitle = "Picker: " + pickingWave.picker +"                           Status: " + pickingWave.status;
+  const subtitle = "Picker: " + pickingWave.assignedPicker +"                           Status: " + pickingWave.status;
   const creation = pickingWave.createdDate + " " + pickingWave.createdHour;
   const conclusion = pickingWave.concludedDate + " " + pickingWave.concludedHour;
 
   const [value, onChangeText] = useState(pickingWave.report);
-  const [listDataSource, setListDataSource] = useState(wave);
+  const [listDataSource, setListDataSource] = useState(pickingWave.items);
   const multiSelect = true;
 
   if (Platform.OS === 'android') {
@@ -150,7 +150,7 @@ export default function PickerWaveScreen({ navigation, route }) {
               <ScrollView>
                 {listDataSource.map((wave, key) => (
                   <Expandable
-                    key={wave.section_name}
+                    key={wave.defaultWarehouse}
                     onClickFunction={() => {
                       updateLayout(key);
                     }}
