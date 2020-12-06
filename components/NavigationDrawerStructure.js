@@ -20,7 +20,7 @@ const NavigationDrawerStructure = props => {
                     </View>
                 </TouchableHighlight>
                 {
-                    AuthProvider.IsManager && 
+                    //AuthProvider.IsManager && 
                     <TouchableHighlight onPress={() => props.navigation.navigate('SupplierOrdersScreen')}>
                         <View style={styles.line}>
                             <Text style={styles.text}>
@@ -34,7 +34,7 @@ const NavigationDrawerStructure = props => {
                     </TouchableHighlight>
                 }
                 {
-                    AuthProvider.IsManager && 
+                    //AuthProvider.IsManager && 
                     <TouchableHighlight onPress={() => props.navigation.navigate('ClientOrdersScreen')}>
                         <View style={styles.line}>
                             <Text style={styles.text}>

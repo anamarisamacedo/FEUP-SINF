@@ -13,7 +13,7 @@ export default function SupplierOrdersScreen({ navigation }) {
   
   useEffect(() => {
     const apiUrl = jasminConstants.url +"/api/" + jasminConstants.accountKey + "/" + jasminConstants.subscriptionKey + "/purchases/orders";
-    console.log(apiUrl)
+
     fetch(apiUrl, {
       method: "GET",
       headers: {
@@ -22,7 +22,7 @@ export default function SupplierOrdersScreen({ navigation }) {
         Authorization: "Bearer " + accessToken
       }})
       .then((response) => response.json())
-      .then((orders) => {setOrders(orders), console.log(orders)})
+      .then((orders) => {setOrders(orders)})
       .finally(setLoading(false));
   }, [])
   return (
@@ -50,11 +50,11 @@ export default function SupplierOrdersScreen({ navigation }) {
           {orders.map((i) => {
             return (
               <TouchableOpacity
-                onPress={() => navigation.navigate("OrderDetailsScreen", {id: 'Client ' + i.sellerCustomerParty, orderId: i.naturalKey, date: i.documentDate})}
+                onPress={() => navigation.navigate("OrderDetailsScreen", {id: 'Supplier ' + i.sellerSupplierPartyName, orderId: i.id, date: i.documentDate, client: false})}
               >
                 <View style={styles.row} key={i}>
                   <View style={styles.supplierColumn}>
-                    <Text style={styles.textTable}>{i.sellerCustomerParty}</Text>
+                    <Text style={styles.textTable}>{i.sellerSupplierPartyName}</Text>
                   </View>
                   <View style={styles.orderColumn}>
                     <Text style={styles.textTable}>{i.naturalKey}</Text>

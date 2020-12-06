@@ -1,56 +1,31 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
   View,
   Dimensions
 } from "react-native";
+
 import BackButton from "../components/BackButton";
 import Navbar from '../components/Navbar';
-import Moment from 'moment';
-
-const accountKey = "242968"; // TODO: put your account key here
-const subscriptionKey = "242968-0001"; // TODO: put your account key here
-const urlJ = "https://my.jasminsoftware.com/";
-const accessToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IkFEM0Q1RDJERjM4OTZBMDUwMzYwNzVDQkNFNDc0RDJBMjI4MUVCM0UiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJyVDFkTGZPSmFnVURZSFhMemtkTktpS0I2ejQifQ.eyJuYmYiOjE2MDY3NDk3OTUsImV4cCI6MTYwNjc2NDE5NSwiaXNzIjoiaHR0cHM6Ly9pZGVudGl0eS5wcmltYXZlcmFic3MuY29tIiwiYXVkIjpbImh0dHBzOi8vaWRlbnRpdHkucHJpbWF2ZXJhYnNzLmNvbS9yZXNvdXJjZXMiLCJqYXNtaW4iXSwiY2xpZW50X2lkIjoiU0lORjA0WUFQUCIsInNjb3BlIjpbImFwcGxpY2F0aW9uIl19.Zhc0-5xPiNiuI---U-nq72UhFEBsKpv_qMWSnGUisUGn5umR35H9bk35UZwwBjZfNSnPXRJQjxlE5T_taEF7refWavrewpTuXCdelFGhcSo5AdJLpcVLEAUrBgjHbPRe23Z1g_c2GABYgiwrUg5LrIc64CZs0mhSG4VyOHcQZr8Qin7MPy9CRm0WpDHcgDj2c_gggOY80eP2tgtxpQlFXiN-nqgCkKLlqmJIJe413jgqFGQpkFfTEo1HPFMFMT1fpaGbIlZQN3z2HKOBkMCu55Yz9iWLjon4S2l2fsizddG6YLQ7OgW20h0yhym_nWFApaBFyp5m-RCnpRJ2QMIrpw"; // TODO: put the authorization access token here (this should be obtained previously)
-
-const items = [
-  {
-    ref: "10150",
-    loc: "A.1.1.1",
-    name: "AMD Ryzen 5 3600",
-    pqty: "3/3",
-  },
-  {
-    ref: "10151",
-    loc: "A.1.1.2",
-    name: "AMD Ryzen 5 3600X",
-    pqty: "0/4",
-  },
-  {
-    ref: "10152",
-    loc: "A.1.1.3",
-    name: "AMD Ryzen 7 3700",
-    pqty: "2/3",
-  },
-  {
-    ref: "10153",
-    loc: "A.1.1.4",
-    name: "AMD Ryzen 7 3700X",
-    pqty: "2/2",
-  },
-];
+import token from '../services/token';
+import jasminConstants from '../services/jasminConstants';
 
 export default function OrderDetails({ navigation, route }) {
-  const {id, order} = route.params;
+  const {id, orderId, date, client} = route.params;
 
-  const [orderJ, setOrder] = useState([]);
+  const [order, setOrder] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const title = "Order Details";
-  const accessToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6IkFEM0Q1RDJERjM4OTZBMDUwMzYwNzVDQkNFNDc0RDJBMjI4MUVCM0UiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJyVDFkTGZPSmFnVURZSFhMemtkTktpS0I2ejQifQ.eyJuYmYiOjE2MDY3NDk3OTUsImV4cCI6MTYwNjc2NDE5NSwiaXNzIjoiaHR0cHM6Ly9pZGVudGl0eS5wcmltYXZlcmFic3MuY29tIiwiYXVkIjpbImh0dHBzOi8vaWRlbnRpdHkucHJpbWF2ZXJhYnNzLmNvbS9yZXNvdXJjZXMiLCJqYXNtaW4iXSwiY2xpZW50X2lkIjoiU0lORjA0WUFQUCIsInNjb3BlIjpbImFwcGxpY2F0aW9uIl19.Zhc0-5xPiNiuI---U-nq72UhFEBsKpv_qMWSnGUisUGn5umR35H9bk35UZwwBjZfNSnPXRJQjxlE5T_taEF7refWavrewpTuXCdelFGhcSo5AdJLpcVLEAUrBgjHbPRe23Z1g_c2GABYgiwrUg5LrIc64CZs0mhSG4VyOHcQZr8Qin7MPy9CRm0WpDHcgDj2c_gggOY80eP2tgtxpQlFXiN-nqgCkKLlqmJIJe413jgqFGQpkFfTEo1HPFMFMT1fpaGbIlZQN3z2HKOBkMCu55Yz9iWLjon4S2l2fsizddG6YLQ7OgW20h0yhym_nWFApaBFyp5m-RCnpRJ2QMIrpw"; // TODO: put the authorization access token here (this should be obtained previously)
-  //const accessToken = token.getToken();
+  const accessToken = token.getToken();
+  
+  var sales = "/sales";
+  if (!client)
+    sales = "/purchases";
+
+  const apiUrl = jasminConstants.url + "/api/" + jasminConstants.accountKey + "/" + jasminConstants.subscriptionKey + sales + "/orders/" + orderId;
+  console.log(apiUrl);
+
   useEffect(() => {
-    const apiUrl = urlJ+"/api/" + accountKey+ "/" + subscriptionKey + "/sales/orders/" + order.orderId;
     fetch(apiUrl, {
       method: "GET",
       headers: {
@@ -59,13 +34,15 @@ export default function OrderDetails({ navigation, route }) {
         Authorization: "Bearer " + accessToken
       }})
       .then((response) => response.json())
-      .then((orderJ) => {setOrder(orderJ), console.log(orderJ)})
+      .then((order) => {console.log(order), setOrder(order)})
       .finally(setLoading(false));
   }, [])
 
-  const title = "Order " + orderJ.naturalKey + " " + id + " " + order.id;
-  const subtitle = "Date: " + order.date + " Status: " + order.status;
-  const items = orderJ.documentLines.
+
+  const title = "Order " + order.naturalKey + " " + id;
+  const subtitle = "Date: " + date + " Status: " + "TODO"; //todo - status
+  const items = order.documentLines;
+
   return (
     <View style={styles.main}>
       <Navbar navigation={navigation}/>
@@ -95,16 +72,16 @@ export default function OrderDetails({ navigation, route }) {
             return (
               <View style={styles.row} key={i}>
                 <View style={styles.refColumn}>
-                  <Text style={styles.textTable}>{i.ref}</Text>
+                  <Text style={styles.textTable}>{i.salesItem}</Text>
                 </View>
                 <View style={styles.locColumn}>
-                  <Text style={styles.textTable}>{i.loc}</Text>
+                  <Text style={styles.textTable}>{i.warehouse}</Text>
                 </View>
                 <View style={styles.nameColumn}>
-                  <Text style={styles.textTable}>{i.name}</Text>
+                  <Text style={styles.textTable}>{i.salesItemDescription}</Text>
                 </View>
                 <View style={styles.pqtyColumn}>
-                  <Text style={[styles.textTable, {textAlign: 'center'}]}>{i.pqty}</Text>
+                  <Text style={[styles.textTable, {textAlign: 'center'}]}>{i.quantity}</Text>
                 </View>
               </View>
             );

@@ -21,7 +21,7 @@ export default function ClientOrdersScreen({ navigation }) {
         Authorization: "Bearer " + accessToken
       }})
       .then((response) => response.json())
-      .then((orders) => {setOrders(orders), console.log(orders)})
+      .then((orders) => {setOrders(orders)})
       .finally(setLoading(false));
   }, [])
   return (
@@ -49,7 +49,7 @@ export default function ClientOrdersScreen({ navigation }) {
           {orders.map((i) => {
             return (
               <TouchableOpacity
-                onPress={() => navigation.navigate('OrderDetailsScreen', {id: 'Client ' + i.buyerCustomerParty, orderId: i.naturalKey, date: i.documentDate})}
+                onPress={() => navigation.navigate('OrderDetailsScreen', {id: 'Client ' + i.buyerCustomerParty, orderId: i.id, date: i.documentDate, client: true})}
               >
                 <View style={styles.row} key={i}>
                   <View style={styles.clientColumn}>
