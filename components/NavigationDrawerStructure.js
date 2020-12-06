@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import { StyleSheet, Text, View, TouchableHighlight } from 'react-native';
 import { Icon } from 'react-native-elements';
-import { AuthContext } from '../navigation/AuthProvider';
+import { AuthProvider, AuthContext } from '../navigation/AuthProvider';
 
 const NavigationDrawerStructure = props => {
     const { logout } = useContext(AuthContext);
@@ -19,29 +19,35 @@ const NavigationDrawerStructure = props => {
                         </Text>
                     </View>
                 </TouchableHighlight>
-                <TouchableHighlight onPress={() => props.navigation.navigate('SupplierOrdersScreen')}>
-                    <View style={styles.line}>
-                        <Text style={styles.text}>
-                            <Icon
-                                style={styles.icon}
-                                name='sign-in-alt'
-                                type='font-awesome-5' />
-                            List Supplier's Orders
-                        </Text>
-                    </View>
-                </TouchableHighlight>
-                <TouchableHighlight onPress={() => props.navigation.navigate('ClientOrdersScreen')}>
-                    <View style={styles.line}>
-                        <Text style={styles.text}>
-                            <Icon
-                                style={styles.icon}
-                                name='sign-out-alt'
-                                type='font-awesome-5' />
-                            List Client's Orders
-                        </Text>
-                    </View>
-                </TouchableHighlight>
-                <TouchableHighlight onPress={() => props.navigation.navigate('ListPickingWaves')}>
+                {
+                    AuthProvider.IsManager && 
+                    <TouchableHighlight onPress={() => props.navigation.navigate('SupplierOrdersScreen')}>
+                        <View style={styles.line}>
+                            <Text style={styles.text}>
+                                <Icon
+                                    style={styles.icon}
+                                    name='sign-in-alt'
+                                    type='font-awesome-5' />
+                                List Supplier's Orders
+                            </Text>
+                        </View>
+                    </TouchableHighlight>
+                }
+                {
+                    AuthProvider.IsManager && 
+                    <TouchableHighlight onPress={() => props.navigation.navigate('ClientOrdersScreen')}>
+                        <View style={styles.line}>
+                            <Text style={styles.text}>
+                                <Icon
+                                    style={styles.icon}
+                                    name='sign-out-alt'
+                                    type='font-awesome-5' />
+                                List Client's Orders
+                            </Text>
+                        </View>
+                    </TouchableHighlight>
+                }
+                <TouchableHighlight onPress={() => props.navigation.navigate('PickingWavesScreen')}>
                     <View style={styles.line}>
                         <Text style={styles.text}>
                             <Icon
@@ -52,18 +58,23 @@ const NavigationDrawerStructure = props => {
                         </Text>
                     </View>
                 </TouchableHighlight>
-                <TouchableHighlight onPress={() => props.navigation.navigate('GeneratePickingWaves')}>
-                    <View style={styles.line}>
-                        <Text style={styles.text}>
-                            <Icon
-                                style={styles.icon}
-                                name='plus'
-                                type='font-awesome-5' />
-                            Generate Picking Wave
-                        </Text>
-                    </View>
-                </TouchableHighlight>
-                <TouchableHighlight onPress={() => props.navigation.navigate('PickersListScreen')}>
+                {
+                    AuthProvider.IsManager && 
+                    <TouchableHighlight onPress={() => props.navigation.navigate('GeneratePickingWaveScreen')}>
+                        <View style={styles.line}>
+                            <Text style={styles.text}>
+                                <Icon
+                                    style={styles.icon}
+                                    name='plus'
+                                    type='font-awesome-5' />
+                                Generate Picking Wave
+                            </Text>
+                        </View>
+                    </TouchableHighlight>
+                }
+                {
+                    AuthProvider.IsManager && 
+                    <TouchableHighlight onPress={() => props.navigation.navigate('PickersListScreen')}>
                     <View style={styles.line}>
                         <Text style={styles.text}>
                             <Icon
@@ -73,7 +84,8 @@ const NavigationDrawerStructure = props => {
                             Pickers List
                         </Text>
                     </View>
-                </TouchableHighlight>
+                    </TouchableHighlight>
+                }
             </View>
             <View style={styles.logout}>
                 <TouchableHighlight onPress={() => logout()}>

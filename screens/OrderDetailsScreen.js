@@ -7,6 +7,7 @@ import {
 } from "react-native";
 import BackButton from "../components/BackButton";
 import Navbar from '../components/Navbar';
+import Moment from 'moment';
 
 const accountKey = "242968"; // TODO: put your account key here
 const subscriptionKey = "242968-0001"; // TODO: put your account key here

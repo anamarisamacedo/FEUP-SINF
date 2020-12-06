@@ -1,11 +1,11 @@
 import React, { useState, useContext } from 'react';
 import { StyleSheet, View, Dimensions, Image, Text, TextInput } from 'react-native';
 import GeneralButton from '../components/GeneralButton';
-import { AuthContext } from '../navigation/AuthProvider';
+import { AuthContext, AuthProvider } from '../navigation/AuthProvider';
+import LogoImage from "../images/logo.png";
 
-import LogoImage from "../images/logo.png"
 
-export default function LoginScreen({ navigation }) {
+export default function LoginScreen() {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');

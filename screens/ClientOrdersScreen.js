@@ -1,37 +1,29 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Dimensions, Button, TouchableOpacity } from "react-native";
 import Navbar from '../components/Navbar';
+import token from '../services/token';
+import Moment from 'moment';
+import jasminConstants from '../services/jasminConstants';
 
-const clientOrders = [
-  {
-    id: "012",
-    order: "07863",
-    date: "22-10-2020",
-    status: "picking",
-  },
-  {
-    id: "012",
-    order: "07863",
-    date: "22-10-2020",
-    status: "picking",
-  },
-  {
-    id: "013",
-    order: "07863",
-    date: "24-10-2020",
-    status: "shipped",
-  },
-  {
-    id: "016",
-    order: "07863",
-    date: "20-10-2020",
-    status: "picking",
-  },
-];
-
-export default function ClientOrders({ navigation }) {
+export default function ClientOrdersScreen({ navigation }) {
+  const [orders, setOrders] = useState([]);
+  const [isLoading, setLoading] = useState(true);
   const title = "Clients' Orders";
+  const accessToken = token.getToken();
 
+  useEffect(() => {
+    const apiUrl = jasminConstants.url +"/api/" + jasminConstants.accountKey + "/" + jasminConstants.subscriptionKey + "/sales/orders";
+    fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: "Bearer " + accessToken
+      }})
+      .then((response) => response.json())
+      .then((orders) => {setOrders(orders), console.log(orders)})
+      .finally(setLoading(false));
+  }, [])
   return (
     <View style={styles.main}>
       <Navbar navigation={navigation}/>
@@ -54,23 +46,23 @@ export default function ClientOrders({ navigation }) {
               <Text style={[styles.header, {textAlign: 'right'}]}>{"Status"}</Text>
             </View>
           </View>
-          {clientOrders.map((i) => {
+          {orders.map((i) => {
             return (
               <TouchableOpacity
-                onPress={() => navigation.navigate('OrderDetailsScreen', {id: 'Client', order: i})}
+                onPress={() => navigation.navigate('OrderDetailsScreen', {id: 'Client ' + i.buyerCustomerParty, orderId: i.naturalKey, date: i.documentDate})}
               >
                 <View style={styles.row} key={i}>
                   <View style={styles.clientColumn}>
-                    <Text style={styles.textTable}>{i.id}</Text>
+                    <Text style={styles.textTable}>{i.buyerCustomerParty}</Text>
                   </View>
                   <View style={styles.orderColumn}>
-                    <Text style={styles.textTable}>{i.order}</Text>
+                    <Text style={styles.textTable}>{i.naturalKey}</Text>
                   </View>
                   <View style={styles.dateColumn}>
-                    <Text style={styles.textTable}>{i.date}</Text>
+                    <Text style={styles.textTable}>{Moment(i.documentDate).format('YYYY/MM/DD')}</Text>
                   </View>
                   <View style={styles.statusColumn}>
-                    <Text style={[styles.textTable, {textAlign: 'right'}]}>{i.status}</Text>
+                    <Text style={[styles.textTable, {textAlign: 'right'}]}>{"X"}</Text>
                   </View>
                 </View>
               </TouchableOpacity>
