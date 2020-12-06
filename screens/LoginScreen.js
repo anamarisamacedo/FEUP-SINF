@@ -21,8 +21,16 @@ export default function LoginScreen() {
                 setShouldShow(true);
             } else {
                 setShouldShow(false);
-                AuthProvider.IsManager = queries.isManager(email);
-                console.log(AuthProvider.IsManager);
+                //console.log("query res: " + queries.isManager(email));
+                //AuthProvider.IsManager = await 
+                //queries.isManager(email).then(response => console.log(response));
+
+                /*queries.isManager(email).then(response => {
+                    AuthProvider.IsManager = response;
+                    console.log(response);
+                });*/
+                //console.log(AuthProvider.IsManager);
+
             }
           })
       }

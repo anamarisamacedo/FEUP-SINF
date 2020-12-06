@@ -20,12 +20,21 @@ const queries = {
         }).then(() => console.log(email + " is no longer a Manager!"));
     },
     isManager: function (email) {
-        let data = null;
-        db.ref('accounts/' + hash(email)).once('value', querySnapShot => {
+        /*let data = null;
+        return db.ref('accounts/' + hash(email)).once('value', querySnapShot => {
           data = querySnapShot.val();
-        });
-        return data.manager;
-        
+          console.log("in query func = " + data.manager);
+          return data.manager;
+        });*/
+
+        return new Promise(resolve => {
+            let data = null;
+            db.ref('accounts/' + hash(email)).once('value', querySnapShot => {
+            data = querySnapShot.val();
+            console.log("in query func = " + data.manager);
+            resolve(data.manager);
+            });
+        })
     }
 }
 
