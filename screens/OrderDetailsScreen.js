@@ -3,16 +3,20 @@ import {
   StyleSheet,
   Text,
   View,
-  Dimensions
+  Dimensions,
+  ActivityIndicator
 } from "react-native";
 
 import BackButton from "../components/BackButton";
 import Navbar from '../components/Navbar';
 import token from '../services/token';
 import jasminConstants from '../services/jasminConstants';
+import Moment from 'moment';
 
 export default function OrderDetails({ navigation, route }) {
   const {id, orderId, date, client} = route.params;
+
+  console.log(orderId);
 
   const [items, setItems] = useState([]);
   const [title, setTitle] = useState("");
@@ -35,9 +39,10 @@ export default function OrderDetails({ navigation, route }) {
       .then((response) => response.json())
       .then((order) => {setItems(order.documentLines), setTitle("Order " + order.naturalKey + " " + id)})
       .finally(setLoading(false));
-  }, [])
+  }, [items, title])
 
-  const subtitle = "Date: " + date + " Status: " + "TODO"; //todo - status
+  const subtitle = "Date: " + Moment(date).format('YYYY/MM/DD') + " Status: " + "TODO"; //todo - status
+  console.log(title);
 
   return (
     <View style={styles.main}>
@@ -50,38 +55,50 @@ export default function OrderDetails({ navigation, route }) {
           <Text style={styles.subtext}>{subtitle}</Text>
         </View>
         <View>
-          <View style={styles.row}>
-            <View style={styles.refColumn}>
-              <Text style={styles.header}>{"Ref"}</Text>
-            </View>
-            <View style={styles.locColumn}>
-              <Text style={styles.header}>{"Loc"}</Text>
-            </View>
-            <View style={styles.nameColumn}>
-              <Text style={styles.header}>{"Name"}</Text>
-            </View>
-            <View style={styles.pqtyColumn}>
-              <Text style={[styles.header, {textAlign: 'center'}]}>{"P/Qty"}</Text>
-            </View>
-          </View>
-          {items.map((i) => {
-            return (
-              <View style={styles.row} key={i}>
+          {isLoading ? (
+            <ActivityIndicator />
+          ) : (
+            <View>
+              <View style={styles.row}>
                 <View style={styles.refColumn}>
-                  <Text style={styles.textTable}>{i.salesItem}</Text>
+                  <Text style={styles.header}>{"Ref"}</Text>
                 </View>
                 <View style={styles.locColumn}>
-                  <Text style={styles.textTable}>{i.warehouse}</Text>
+                  <Text style={styles.header}>{"Loc"}</Text>
                 </View>
                 <View style={styles.nameColumn}>
-                  <Text style={styles.textTable}>{i.salesItemDescription}</Text>
+                  <Text style={styles.header}>{"Name"}</Text>
                 </View>
                 <View style={styles.pqtyColumn}>
-                  <Text style={[styles.textTable, {textAlign: 'center'}]}>{i.quantity}</Text>
+                  <Text style={[styles.header, {textAlign: 'center'}]}>{"P/Qty"}</Text>
                 </View>
               </View>
-            );
-          })}
+              {items.map((i) => {
+                var item = i.salesItem;
+                var itemDescription = i.salesItemDescription
+                if (!client){
+                  item = i.purchasesItem;
+                  itemDescription = i.purchasesItemDescription;
+                }  
+                return (
+                  <View style={styles.row} key={i}>
+                    <View style={styles.refColumn}>
+                      <Text style={styles.textTable}>{item}</Text>
+                    </View>
+                    <View style={styles.locColumn}>
+                      <Text style={styles.textTable}>{i.warehouse}</Text>
+                    </View>
+                    <View style={styles.nameColumn}>
+                      <Text style={styles.textTable}>{itemDescription}</Text>
+                    </View>
+                    <View style={styles.pqtyColumn}>
+                      <Text style={[styles.textTable, {textAlign: 'center'}]}>{i.quantity}</Text>
+                    </View>
+                  </View>
+                );
+              })}
+            </View>
+          )}
         </View>
       </View>
       <View style={styles.bottom}>
