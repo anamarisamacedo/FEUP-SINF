@@ -14,9 +14,10 @@ import jasminConstants from '../services/jasminConstants';
 export default function StockListingScreen({ navigation, route }) {
   const [stock, setStock] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const { id, name } = route.params;
-  const title = id + " " + name;
+  const { warehouseId, warehouseName, warehouseDescription } = route.params;
+  const title = warehouseName + " " + warehouseDescription;
   const accessToken = token.getToken();
+  var currentStock; 
 
   useEffect(() => {
     const apiUrl = jasminConstants.url + "/api/" + jasminConstants.accountKey + "/" + jasminConstants.subscriptionKey + "/materialscore/materialsitems";
@@ -59,7 +60,12 @@ export default function StockListingScreen({ navigation, route }) {
               </View>
             </View>
             {stock.map((i) => {
-              if(i.defaultWarehouse == id){
+              if(i.defaultWarehouseId == warehouseId){
+                (i.materialsItemWarehouses).map((j) =>{
+                  if(j.warehouseId == warehouseId){
+                    currentStock = j.stockBalance;
+                  }
+                })
               return (
                 <View style={styles.row} key={i}>
                   <View style={styles.refColumn}>
@@ -72,7 +78,7 @@ export default function StockListingScreen({ navigation, route }) {
                     <Text style={styles.textTable}>{i.description}</Text>
                   </View>
                   <View style={styles.stockColumn}>
-              <Text style={styles.textTable}>{"X"}</Text>
+              <Text style={styles.textTable}>{currentStock+"/"+i.maxStock}</Text>
                   </View>
                 </View>
               )};
