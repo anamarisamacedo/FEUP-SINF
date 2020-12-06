@@ -12,6 +12,12 @@ const pWqueries = {
                 } else resolve(pw);
             });
         })
+    },
+
+    submitReport(pw, report) {
+        db.ref('pickingWaves/').orderByChild('wave').equalTo(pw).update({
+            report: report
+        }).then(() => console.log(email + "'s account was created!'"));
     }
 }
 

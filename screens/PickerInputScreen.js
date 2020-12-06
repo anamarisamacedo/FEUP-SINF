@@ -16,6 +16,7 @@ import BackButton from "../components/BackButton";
 import GeneralButton from "../components/GeneralButton";
 import Expandable from "../components/Expandable";
 import Navbar from '../components/Navbar';
+import pickingWaves from "../services/pickingWaves";
 
 const wave = [
   {
@@ -81,7 +82,7 @@ const wave = [
 ];
 
 export default function PickerInputScreen({ navigation, route }) {
-  const [value, onChangeText] = useState("hey");
+  const [value, onChangeText] = useState("Submit any observations or comments here");
 
   const {title, wave} = route.params;
 
@@ -170,7 +171,7 @@ export default function PickerInputScreen({ navigation, route }) {
       </View>
       <View style={styles.bottomRow}>
         <BackButton onPress={() => navigation.goBack()} />
-        <GeneralButton name="Submit" onPress={() => console.log("Submitted")}/>
+        <GeneralButton name="Submit" onPress={() => pickingWaves.submitReport(value)}/>
       </View>
     </View>
   );
