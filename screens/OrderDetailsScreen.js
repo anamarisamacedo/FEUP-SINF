@@ -14,16 +14,15 @@ import jasminConstants from '../services/jasminConstants';
 export default function OrderDetails({ navigation, route }) {
   const {id, orderId, date, client} = route.params;
 
-  const [order, setOrder] = useState([]);
+  const [items, setItems] = useState([]);
+  const [title, setTitle] = useState("");
   const [isLoading, setLoading] = useState(true);
   const accessToken = token.getToken();
   
   var sales = "/sales";
   if (!client)
     sales = "/purchases";
-
   const apiUrl = jasminConstants.url + "/api/" + jasminConstants.accountKey + "/" + jasminConstants.subscriptionKey + sales + "/orders/" + orderId;
-  console.log(apiUrl);
 
   useEffect(() => {
     fetch(apiUrl, {
@@ -34,14 +33,11 @@ export default function OrderDetails({ navigation, route }) {
         Authorization: "Bearer " + accessToken
       }})
       .then((response) => response.json())
-      .then((order) => {console.log(order), setOrder(order)})
+      .then((order) => {setItems(order.documentLines), setTitle("Order " + order.naturalKey + " " + id)})
       .finally(setLoading(false));
   }, [])
 
-
-  const title = "Order " + order.naturalKey + " " + id;
   const subtitle = "Date: " + date + " Status: " + "TODO"; //todo - status
-  const items = order.documentLines;
 
   return (
     <View style={styles.main}>
