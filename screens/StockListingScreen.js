@@ -87,7 +87,7 @@ export default function StockListingScreen({ navigation, route }) {
                       <Text style={styles.textTable}>{i.description}</Text>
                     </View>
                     <View style={styles.stockColumn}>
-                      <TouchableOpacity onPress={() => console.log("Pressed")}>
+                      <TouchableOpacity onPress={() => console.log("")}>
                         <Text style={styles.textTable}>
                           {currentStock + "/" + i.maxStock}
                         </Text>
@@ -124,7 +124,7 @@ const styles = StyleSheet.create({
   bottom: {
     flex: 1,
     justifyContent: "flex-end",
-    marginBottom: 36,
+    marginBottom: 20,
     alignItems: "center",
   },
   list: {
