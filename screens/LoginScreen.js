@@ -3,7 +3,6 @@ import { StyleSheet, View, Dimensions, Image, Text, TextInput } from 'react-nati
 import GeneralButton from '../components/GeneralButton';
 import { AuthContext, AuthProvider } from '../navigation/AuthProvider';
 import LogoImage from "../images/logo.png";
-import queries from '../db/Database';
 
 
 export default function LoginScreen() {
@@ -21,16 +20,6 @@ export default function LoginScreen() {
                 setShouldShow(true);
             } else {
                 setShouldShow(false);
-                //console.log("query res: " + queries.isManager(email));
-                //AuthProvider.IsManager = await 
-                //queries.isManager(email).then(response => console.log(response));
-
-                /*queries.isManager(email).then(response => {
-                    AuthProvider.IsManager = response;
-                    console.log(response);
-                });*/
-                //console.log(AuthProvider.IsManager);
-
             }
           })
       }

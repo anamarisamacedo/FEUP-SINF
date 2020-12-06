@@ -16,7 +16,7 @@ export const AuthProvider = ({ children }) => {
             try {
               queries.isManager(email).then(response => {
                 AuthProvider.IsManager = response;
-                console.log(response);
+                console.log("User " + email + " is " + (response? "" : "not ") + "a Manager!");
               });
               await Firebase.auth().signInWithEmailAndPassword(email, password);
             } catch (e) {

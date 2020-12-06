@@ -3,7 +3,7 @@ const crypto = require('crypto');
 
 const queries = {
     addAccount: function (email) {
-        
+
         db.ref('accounts/' + hash(email)).set({
             manager: false
         }).then(() => console.log(email + "'s account was created!'"));
@@ -20,19 +20,13 @@ const queries = {
         }).then(() => console.log(email + " is no longer a Manager!"));
     },
     isManager: function (email) {
-        /*let data = null;
-        return db.ref('accounts/' + hash(email)).once('value', querySnapShot => {
-          data = querySnapShot.val();
-          console.log("in query func = " + data.manager);
-          return data.manager;
-        });*/
-
         return new Promise(resolve => {
             let data = null;
             db.ref('accounts/' + hash(email)).once('value', querySnapShot => {
-            data = querySnapShot.val();
-            console.log("in query func = " + data.manager);
-            resolve(data.manager);
+                data = querySnapShot.val();
+                if (data == null) {
+                    resolve(false);
+                } else resolve(data.manager);
             });
         })
     }
