@@ -27,9 +27,10 @@ const stockDb = {
     },
 
     updateItem(item){
-        db.ref('items/' + item.itemKey).update({
+        db.ref('items/').set({
+            ref: item.itemKey,
             name: item.description
-        }).then(() => console.log("Item updated"));
+        }).then(() => console.log("Item created"));
     }
 }
 

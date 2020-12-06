@@ -10,8 +10,7 @@ const stockService = {
   },
 
   updateStock(items){
-    console.log("ADBIX")
-    for(item in items){
+    for(var item in items){
       stockDb.updateItem(item);
     }
   }

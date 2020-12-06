@@ -16,13 +16,13 @@ import stockService from "../services/stock";
 
 export default function StockListingScreen({ navigation, route }) {
   const [stock, setStock] = useState([]);
-  const [itemsDb, setItemsDb] = useState([]);
+  //const [itemsDb, setItemsDb] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const { warehouseId, warehouseName, warehouseDescription } = route.params;
   const title = warehouseName + " " + warehouseDescription;
   const accessToken = token.getToken();
   var currentStock;
-  var itemLoc;
+  //var itemLoc;
 
   useEffect(() => {
     const apiUrl =
@@ -42,8 +42,10 @@ export default function StockListingScreen({ navigation, route }) {
       },
     })
       .then((response) => response.json())
-      .then((materials) => setStock(materials))
+      .then((materials) => {setStock(materials)})
       .finally(setLoading(false));
+    
+    //stockService.getItems().then((items) => setItemsDb(items))
   }, []);
   return (
     <View style={styles.main}>
@@ -56,9 +58,6 @@ export default function StockListingScreen({ navigation, route }) {
           <View style={styles.row}>
             <View style={styles.refColumn}>
               <Text style={styles.header}>{"Ref"}</Text>
-            </View>
-            <View style={styles.locColumn}>
-              <Text style={styles.header}>{"Loc"}</Text>
             </View>
             <View style={styles.nameColumn}>
               <Text style={styles.header}>{"Name"}</Text>
@@ -74,14 +73,16 @@ export default function StockListingScreen({ navigation, route }) {
                   currentStock = j.stockBalance;
                 }
               });
+              /*
+              itemsDb.map((itemDb) => {
+                if(i.itemKey == itemDb.ref)
+                itemLoc = itemDb.loc
+              })*/
               return (
                 <View>
                   <View style={styles.row} key={i}>
                     <View style={styles.refColumn}>
                       <Text style={styles.textTable}>{i.itemKey}</Text>
-                    </View>
-                    <View style={styles.locColumn}>
-                      <Text style={styles.textTable}>{""}</Text>
                     </View>
                     <View style={styles.nameColumn}>
                       <Text style={styles.textTable}>{i.description}</Text>
@@ -173,6 +174,6 @@ const styles = StyleSheet.create({
   },
   refColumn: { flexDirection: "column", flex: 0.6 },
   locColumn: { flexDirection: "column", flex: 0.6 },
-  nameColumn: { flexDirection: "column", flex: 1.5 },
+  nameColumn: { flexDirection: "column", flex: 2 },
   stockColumn: { flexDirection: "column", flex: 0.5 },
 });
