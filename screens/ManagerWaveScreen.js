@@ -80,8 +80,8 @@ const wave = [
 
 const pickers = ["picker1", "picker2", "picker3", "picker4", "picker5"]
 
-export default function PickerWaveScreen({ navigation }) {
-  const pickingWave = navigation.getParam('pickingWave');
+export default function PickerWaveScreen({ navigation, route }) {
+  const {pickingWave} = route.params;
   const title = "Picking Wave " + pickingWave.wave;
   const picker = "Picker: ";
   const status = "Status: " + pickingWave.status;

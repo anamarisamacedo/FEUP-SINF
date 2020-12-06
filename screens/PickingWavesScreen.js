@@ -9,8 +9,7 @@ import {
 import GeneralButton from "../components/GeneralButton";
 import Navbar from "../components/Navbar";
 import pickingWaveService from "../services/pickingWaves";
-import AuthProvider from "../navigation/AuthProvider";
-import db from '../db/Database';
+import { AuthProvider } from "../navigation/AuthProvider";
 
 export default function PickingWavesScreen({ navigation }) {
   const title = "Picking Waves";
@@ -44,37 +43,94 @@ export default function PickingWavesScreen({ navigation }) {
             </View>
           </View>
           {pw.map((i) => {
-            if (i.status == "concluded") {
-              nextScreen = "ConcludedWaveScreen";
-            } else if (i.status == "in progress") {
-              nextScreen = "PickerWaveScreen";
-            } else if (i.status == "pending" || i.status == "assigned") {
-              if (db.isManager() == true) {
-                nextScreen = "ManagerWaveScreen";
-              }
-            }
-
             return (
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate(nextScreen, { pickingWave: i })
+              <View>
+                {(!AuthProvider.IsManager &&
+                  (i.status == "pending" || i.status == "assigned") && (
+                    <View>
+                      <View style={styles.row} key={i}>
+                        <View style={styles.waveColumn}>
+                          <Text style={styles.textTable}>{i.wave}</Text>
+                        </View>
+                        <View style={styles.dateColumn}>
+                          <Text style={styles.textTable}>{i.createdDate}</Text>
+                        </View>
+                        <View style={styles.hourColumn}>
+                          <Text style={styles.textTable}>{i.createdHour}</Text>
+                        </View>
+                        <View style={styles.statusColumn}>
+                          <Text style={styles.textTable}>{i.status}</Text>
+                        </View>
+                      </View>
+                    </View>
+                  )) || (i.status == 'concluded' &&
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('ConcludedWaveScreen', { pickingWave: i })
+                    }
+                  >
+                    <View style={styles.row} key={i}>
+                      <View style={styles.waveColumn}>
+                        <Text style={styles.textTable}>{i.wave}</Text>
+                      </View>
+                      <View style={styles.dateColumn}>
+                        <Text style={styles.textTable}>{i.createdDate}</Text>
+                      </View>
+                      <View style={styles.hourColumn}>
+                        <Text style={styles.textTable}>{i.createdHour}</Text>
+                      </View>
+                      <View style={styles.statusColumn}>
+                        <Text style={styles.textTable}>{i.status}</Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                )
+                || (i.status == 'in progress' &&
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('PickerWaveScreen', { pickingWave: i })
+                    }
+                  >
+                    <View style={styles.row} key={i}>
+                      <View style={styles.waveColumn}>
+                        <Text style={styles.textTable}>{i.wave}</Text>
+                      </View>
+                      <View style={styles.dateColumn}>
+                        <Text style={styles.textTable}>{i.createdDate}</Text>
+                      </View>
+                      <View style={styles.hourColumn}>
+                        <Text style={styles.textTable}>{i.createdHour}</Text>
+                      </View>
+                      <View style={styles.statusColumn}>
+                        <Text style={styles.textTable}>{i.status}</Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                )
+                || (
+                  <TouchableOpacity
+                    onPress={() =>
+                      navigation.navigate('ManagerWaveScreen', { pickingWave: i })
+                    }
+                  >
+                    <View style={styles.row} key={i}>
+                      <View style={styles.waveColumn}>
+                        <Text style={styles.textTable}>{i.wave}</Text>
+                      </View>
+                      <View style={styles.dateColumn}>
+                        <Text style={styles.textTable}>{i.createdDate}</Text>
+                      </View>
+                      <View style={styles.hourColumn}>
+                        <Text style={styles.textTable}>{i.createdHour}</Text>
+                      </View>
+                      <View style={styles.statusColumn}>
+                        <Text style={styles.textTable}>{i.status}</Text>
+                      </View>
+                    </View>
+                  </TouchableOpacity>
+                )
                 }
-              >
-                <View style={styles.row} key={i}>
-                  <View style={styles.waveColumn}>
-                    <Text style={styles.textTable}>{i.wave}</Text>
-                  </View>
-                  <View style={styles.dateColumn}>
-                    <Text style={styles.textTable}>{i.createdDate}</Text>
-                  </View>
-                  <View style={styles.hourColumn}>
-                    <Text style={styles.textTable}>{i.createdHour}</Text>
-                  </View>
-                  <View style={styles.statusColumn}>
-                    <Text style={styles.textTable}>{i.status}</Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
+              </View>
             );
           })}
         </View>

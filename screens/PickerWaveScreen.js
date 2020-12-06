@@ -14,7 +14,7 @@ import BackButton from "../components/BackButton";
 import GeneralButton from "../components/GeneralButton";
 import Expandable from "../components/Expandable";
 import Navbar from '../components/Navbar';
-import AuthProvider from "../navigation/AuthProvider";
+import {AuthProvider} from "../navigation/AuthProvider";
 
 const wave = [
   {
@@ -162,10 +162,10 @@ export default function PickerWaveScreen({ navigation, route }) {
       </View>
       <View style={styles.bottomRow}>
         <BackButton onPress={() => navigation.goBack()}/>
-        {() => {
-          if (AuthProvider.isManager == true) {
+        {
+                    !AuthProvider.IsManager && 
         <GeneralButton name="Report" onPress={() => navigation.navigate('PickerInputScreen', {wave, title})}/>
-        }}}
+        }
         </View>
     </View>
   );

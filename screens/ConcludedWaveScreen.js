@@ -15,17 +15,77 @@ import BackButton from "../components/BackButton";
 import GeneralButton from "../components/GeneralButton";
 import Expandable from "../components/Expandable";
 
-
+const wave = [
+  {
+    isExpanded: false,
+    section_name: 'A1',
+    items: [
+      {
+        ref: "10150",
+        loc: "A.1.1.1",
+        name: "AMD Ryzen 5 3600",
+        pqty: "3/3",
+      },
+      {
+        ref: "10151",
+        loc: "A.1.1.2",
+        name: "AMD Ryzen 5 3600X",
+        pqty: "0/4",
+      },
+      {
+        ref: "10152",
+        loc: "A.1.1.3",
+        name: "AMD Ryzen 7 3700",
+        pqty: "2/3",
+      },
+      {
+        ref: "10153",
+        loc: "A.1.1.4",
+        name: "AMD Ryzen 7 3700X",
+        pqty: "2/2",
+      },
+    ]
+  },
+  {
+    isExpanded: false,
+    section_name: 'A2',
+    items: [
+      {
+        ref: "10150",
+        loc: "A.1.1.1",
+        name: "AMD Ryzen 5 3600",
+        pqty: "3/3",
+      },
+      {
+        ref: "10151",
+        loc: "A.1.1.2",
+        name: "AMD Ryzen 5 3600X",
+        pqty: "0/4",
+      },
+      {
+        ref: "10152",
+        loc: "A.1.1.3",
+        name: "AMD Ryzen 7 3700",
+        pqty: "2/3",
+      },
+      {
+        ref: "10153",
+        loc: "A.1.1.4",
+        name: "AMD Ryzen 7 3700X",
+        pqty: "2/2",
+      },
+    ]
+  }
+];
 export default function PickerWaveScreen({ navigation, route }) {
   const {pickingWave } = route.params;
-  console.log(pickingWave.items)
   const title = "Picking Wave " + pickingWave.wave;
   const subtitle = "Picker: " + pickingWave.picker +"                           Status: " + pickingWave.status;
   const creation = pickingWave.createdDate + " " + pickingWave.createdHour;
   const conclusion = pickingWave.concludedDate + " " + pickingWave.concludedHour;
 
   const [value, onChangeText] = useState(pickingWave.report);
-  const [listDataSource, setListDataSource] = useState(pickingWave.items);
+  const [listDataSource, setListDataSource] = useState(wave);
   const multiSelect = true;
 
   if (Platform.OS === 'android') {
@@ -88,13 +148,13 @@ export default function PickerWaveScreen({ navigation, route }) {
                 </TouchableOpacity>
               </View>
               <ScrollView>
-                {(pickingWave.items).map((wave, key) => (
+                {listDataSource.map((wave, key) => (
                   <Expandable
-                    key={wave.defaultWarehouse}
+                    key={wave.section_name}
                     onClickFunction={() => {
                       updateLayout(key);
                     }}
-                    pickingWave={wave}
+                    wave={wave}
                   />
                 ))}
               </ScrollView>
