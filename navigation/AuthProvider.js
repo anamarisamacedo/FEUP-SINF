@@ -3,7 +3,7 @@ import Firebase from 'firebase';
 import queries from '../db/Database';
 
 export const AuthContext = createContext({});
-export const IsManager = false;
+export var IsManager = false;
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);

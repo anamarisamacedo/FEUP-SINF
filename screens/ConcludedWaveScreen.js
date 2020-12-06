@@ -15,88 +15,17 @@ import BackButton from "../components/BackButton";
 import GeneralButton from "../components/GeneralButton";
 import Expandable from "../components/Expandable";
 
-const wave = [
-  {
-    isExpanded: false,
-    section_name: 'A1',
-    items: [
-      {
-        ref: "10150",
-        loc: "A.1.1.1",
-        name: "AMD Ryzen 5 3600",
-        pqty: "3/3",
-      },
-      {
-        ref: "10151",
-        loc: "A.1.1.2",
-        name: "AMD Ryzen 5 3600X",
-        pqty: "0/4",
-      },
-      {
-        ref: "10152",
-        loc: "A.1.1.3",
-        name: "AMD Ryzen 7 3700",
-        pqty: "2/3",
-      },
-      {
-        ref: "10153",
-        loc: "A.1.1.4",
-        name: "AMD Ryzen 7 3700X",
-        pqty: "2/2",
-      },
-    ]
-  },
-  {
-    isExpanded: false,
-    section_name: 'A2',
-    items: [
-      {
-        ref: "10150",
-        loc: "A.1.1.1",
-        name: "AMD Ryzen 5 3600",
-        pqty: "3/3",
-      },
-      {
-        ref: "10151",
-        loc: "A.1.1.2",
-        name: "AMD Ryzen 5 3600X",
-        pqty: "0/4",
-      },
-      {
-        ref: "10152",
-        loc: "A.1.1.3",
-        name: "AMD Ryzen 7 3700",
-        pqty: "2/3",
-      },
-      {
-        ref: "10153",
-        loc: "A.1.1.4",
-        name: "AMD Ryzen 7 3700X",
-        pqty: "2/2",
-      },
-    ]
-  }
-];
 
-const stat = [
-    {
-        picker: "Picker1",
-        creationDate: "20-10-2020 16h59",
-        conclusionDate: "20-10-2020 17h45",
-        status: "Concluded",
-        report: "Qualquer coisa que o picker escreveu no report",
-    },
-];
-
-export default function PickerWaveScreen({ navigation }) {
-  const pickingWave = navigation.getParam('pickingWave');
+export default function PickerWaveScreen({ navigation, route }) {
+  const {pickingWave } = route.params;
+  console.log(pickingWave.items)
   const title = "Picking Wave " + pickingWave.wave;
-  const subtitle = "Picker: " + stat[0].picker +"                           Status: " + stat[0].status;
-  const creation = stat[0].creationDate;
-  const conclusion = stat[0].conclusionDate;
+  const subtitle = "Picker: " + pickingWave.picker +"                           Status: " + pickingWave.status;
+  const creation = pickingWave.createdDate + " " + pickingWave.createdHour;
+  const conclusion = pickingWave.concludedDate + " " + pickingWave.concludedHour;
 
-  const [value, onChangeText] = useState(stat[0].report);
-  const [listDataSource, setListDataSource] = useState(wave);
+  const [value, onChangeText] = useState(pickingWave.report);
+  const [listDataSource, setListDataSource] = useState(pickingWave.items);
   const multiSelect = true;
 
   if (Platform.OS === 'android') {
@@ -159,13 +88,13 @@ export default function PickerWaveScreen({ navigation }) {
                 </TouchableOpacity>
               </View>
               <ScrollView>
-                {listDataSource.map((wave, key) => (
+                {(pickingWave.items).map((wave, key) => (
                   <Expandable
-                    key={wave.section_name}
+                    key={wave.defaultWarehouse}
                     onClickFunction={() => {
                       updateLayout(key);
                     }}
-                    wave={wave}
+                    pickingWave={wave}
                   />
                 ))}
               </ScrollView>
