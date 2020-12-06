@@ -1,7 +1,9 @@
 import React, { createContext, useState } from 'react';
 import Firebase from 'firebase';
+import queries from '../db/Database';
 
 export const AuthContext = createContext({});
+export const IsManager = false;
 
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
@@ -12,6 +14,10 @@ export const AuthProvider = ({ children }) => {
           setUser,
           login: async (email, password) => {
             try {
+              queries.isManager(email).then(response => {
+                AuthProvider.IsManager = response;
+                console.log("User " + email + " is " + (response? "" : "not ") + "a Manager!");
+              });
               await Firebase.auth().signInWithEmailAndPassword(email, password);
             } catch (e) {
               return false;
@@ -31,7 +37,7 @@ export const AuthProvider = ({ children }) => {
             } catch (e) {
               console.error(e);
             }
-          }
+          },
         }}
       >
         {children}

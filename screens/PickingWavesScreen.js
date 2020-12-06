@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View, Dimensions, Button, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity } from "react-native";
 import GeneralButton from "../components/GeneralButton";
 import Navbar from '../components/Navbar';
 
