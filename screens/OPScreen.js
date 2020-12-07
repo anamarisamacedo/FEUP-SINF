@@ -12,6 +12,8 @@ import db from "../db/pickingWaves";
 
 export default function OPScreen({ navigation }) {
   const title = "Outpoint View";
+  const [items, setItems] = useState([]);
+  var itemsMapToArray = [];
   var itemCount = new Map();
   var count;
   useEffect(() => {
@@ -27,9 +29,13 @@ export default function OPScreen({ navigation }) {
         }
       })
     })
-    console.log(itemCount)
+    itemCount.forEach((value,key) => {
+      itemsMapToArray.push({ref: key, qty: value})
     })
+    setItems(itemsMapToArray)
+    console.log(items);
   })
+})
   return (
     <View style={styles.main}>
       <Navbar navigation={navigation} />
@@ -49,8 +55,7 @@ export default function OPScreen({ navigation }) {
               <Text style={[styles.header, {textAlign: 'right'}]}>{"Qtd"}</Text>
             </View>
           </View>
-          {itemCount.forEach((i) => {
-            console.log("I"+i)
+          {items.map((i) => {
             return (
               <View style={styles.row} key={i}>
                 <View style={styles.refColumn}>
