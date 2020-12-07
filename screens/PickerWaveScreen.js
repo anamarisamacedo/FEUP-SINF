@@ -119,6 +119,14 @@ export default function PickerWaveScreen({ navigation, route }) {
     setListDataSource(array);
   };
 
+  const navigateToInput = () => {
+    const temp = [...listDataSource];
+    temp.forEach(item => {
+      item.isExpanded = false;
+    })
+    navigation.navigate('PickerInputScreen', {wave: temp, title})
+  }
+
   return (
     <View style={styles.main}>
       <Navbar navigation={navigation}/>
@@ -163,6 +171,7 @@ export default function PickerWaveScreen({ navigation, route }) {
                       updateLayout(key);
                     }}
                     items={wave}
+                    input={false}
                   />
                 ))}
               </ScrollView>
@@ -174,7 +183,7 @@ export default function PickerWaveScreen({ navigation, route }) {
         <BackButton onPress={() => navigation.goBack()}/>
         {
                     !AuthProvider.IsManager && 
-        <GeneralButton name="Report" onPress={() => navigation.navigate('PickerInputScreen', {wave, title})}/>
+        <GeneralButton name="Report" onPress={navigateToInput}/>
         }
         </View>
     </View>

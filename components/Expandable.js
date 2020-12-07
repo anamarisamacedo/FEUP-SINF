@@ -9,7 +9,7 @@ import {
   TextInput,
 } from 'react-native';
 
-const Expandable = ({items,onClickFunction}) => {
+const Expandable = ({items,onClickFunction,input}) => {
     //Custom Component for the Expandable List
     const [layoutHeight, setLayoutHeight] = useState(0);
 
@@ -42,6 +42,7 @@ const Expandable = ({items,onClickFunction}) => {
           }}>
           {items.items.map((i) => {
             return (
+              !input && 
               <View style={styles.row} key={i}>
                 <View style={styles.refColumn}>
                   <Text style={styles.textTable}>{i.loc}</Text>
@@ -54,6 +55,28 @@ const Expandable = ({items,onClickFunction}) => {
                 </View>
                 <View style={styles.pqtyColumn}>
                   <Text style={styles.textTable}>{i.picked} / {i.qty} </Text>
+                </View>
+              </View> ||
+              input && 
+              <View style={styles.row} key={i}>
+                <View style={styles.refColumn}>
+                  <Text style={styles.textTable}>{i.loc}</Text>
+                </View>
+                <View style={styles.locColumn}>
+                  <Text style={styles.textTable}>{i.ref}</Text>
+                </View>
+                <View style={styles.nameColumn}>
+                  <Text style={styles.textTable}>{i.name}</Text>
+                </View>
+                <View style={styles.pqtyColumn}>
+                  <TextInput
+                    style={styles.quantityInput}
+                    keyboardType="numeric"
+                    onChangeText={(text) => onChangeText(text)}
+                    value={value}
+                    maxLength={10}
+                  />
+                  <Text style={styles.textTable}> / {i.qty}</Text>
                 </View>
               </View>
             );
@@ -94,5 +117,17 @@ export default Expandable;
       refColumn: { flexDirection: "column", flex: 0.6 },
       locColumn: { flexDirection: "column", flex: 0.6 },
       nameColumn: { flexDirection: "column", flex: 1.5 },
-      pqtyColumn: { flexDirection: "column", flex: 0.5 ,},
+      pqtyColumn: { flexDirection: "row", flex: 0.5 ,},
+      quantityInput: {
+        textAlign: 'center',
+        color: "#d3d3d3",
+        fontFamily: "Corbel",
+        fontStyle: "normal",
+        fontSize: 15,
+        borderColor: "lightgrey",
+        borderWidth: 1,
+        flexWrap: "wrap",
+        width: 25,
+        height: 20 
+      },
   });

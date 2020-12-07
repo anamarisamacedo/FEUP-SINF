@@ -18,98 +18,37 @@ import Expandable from "../components/Expandable";
 import Navbar from '../components/Navbar';
 import pickingWaves from "../services/pickingWaves";
 
-const wave = [
-  {
-    isExpanded: false,
-    section_name: 'A1',
-    items: [
-      {
-        ref: "10150",
-        loc: "A.1.1.1",
-        name: "AMD Ryzen 5 3600",
-        pqty: "3/3",
-      },
-      {
-        ref: "10151",
-        loc: "A.1.1.2",
-        name: "AMD Ryzen 5 3600X",
-        pqty: "0/4",
-      },
-      {
-        ref: "10152",
-        loc: "A.1.1.3",
-        name: "AMD Ryzen 7 3700",
-        pqty: "2/3",
-      },
-      {
-        ref: "10153",
-        loc: "A.1.1.4",
-        name: "AMD Ryzen 7 3700X",
-        pqty: "2/2",
-      },
-    ]
-  },
-  {
-    isExpanded: false,
-    section_name: 'A2',
-    items: [
-      {
-        ref: "10150",
-        loc: "A.1.1.1",
-        name: "AMD Ryzen 5 3600",
-        pqty: "3/3",
-      },
-      {
-        ref: "10151",
-        loc: "A.1.1.2",
-        name: "AMD Ryzen 5 3600X",
-        pqty: "0/4",
-      },
-      {
-        ref: "10152",
-        loc: "A.1.1.3",
-        name: "AMD Ryzen 7 3700",
-        pqty: "2/3",
-      },
-      {
-        ref: "10153",
-        loc: "A.1.1.4",
-        name: "AMD Ryzen 7 3700X",
-        pqty: "2/2",
-      },
-    ]
-  }
-];
-
 export default function PickerInputScreen({ navigation, route }) {
   const [value, onChangeText] = useState("Submit any observations or comments here");
 
-  const {title, wave} = route.params;
+  const {wave, title} = route.params;
 
   const [listDataSource, setListDataSource] = useState(wave);
-    const multiSelect = true;
+  const multiSelect = true;
 
-    if (Platform.OS === 'android') {
-      UIManager.setLayoutAnimationEnabledExperimental(true);
+  console.log(wave);
+
+  if (Platform.OS === 'android') {
+    UIManager.setLayoutAnimationEnabledExperimental(true);
+  }
+
+  const updateLayout = (index) => {
+    LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
+    const array = [...listDataSource];
+    if (multiSelect) {
+      // If multiple select is enabled
+      array[index]['isExpanded'] = !array[index]['isExpanded'];
+    } else {
+      // If single select is enabled
+      array.map((value, placeindex) =>
+        placeindex === index
+          ? (array[placeindex]['isExpanded'] =
+              !array[placeindex]['isExpanded'])
+          : (array[placeindex]['isExpanded'] = false),
+      );
     }
-
-    const updateLayout = (index) => {
-      LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
-      const array = [...listDataSource];
-      if (multiSelect) {
-        // If multiple select is enabled
-        array[index]['isExpanded'] = !array[index]['isExpanded'];
-      } else {
-        // If single select is enabled
-        array.map((value, placeindex) =>
-          placeindex === index
-            ? (array[placeindex]['isExpanded'] =
-               !array[placeindex]['isExpanded'])
-            : (array[placeindex]['isExpanded'] = false),
-        );
-      }
-      setListDataSource(array);
-    };
+    setListDataSource(array);
+  };
 
   return (
     <View style={styles.main}>
@@ -153,7 +92,8 @@ export default function PickerInputScreen({ navigation, route }) {
                       onClickFunction={() => {
                         updateLayout(key);
                       }}
-                      wave={wave}
+                      items={wave}
+                      input={true}
                     />
                   ))}
                 </ScrollView>

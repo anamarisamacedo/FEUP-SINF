@@ -176,6 +176,7 @@ export default function PickerWaveScreen({ navigation, route }) {
                     updateLayout(key);
                   }}
                   items={wave}
+                  input={false}
                 />
               ))}
             </ScrollView>

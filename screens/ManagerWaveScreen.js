@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import DropDownPicker from 'react-native-dropdown-picker';
 import {
   StyleSheet,
@@ -19,63 +19,48 @@ const wave = [
   {
     isExpanded: false,
     section_name: 'A1',
-    items: [
-      {
-        ref: "10150",
-        loc: "A.1.1.1",
-        name: "AMD Ryzen 5 3600",
-        pqty: "3/3",
-      },
-      {
-        ref: "10151",
-        loc: "A.1.1.2",
-        name: "AMD Ryzen 5 3600X",
-        pqty: "0/4",
-      },
-      {
-        ref: "10152",
-        loc: "A.1.1.3",
-        name: "AMD Ryzen 7 3700",
-        pqty: "2/3",
-      },
-      {
-        ref: "10153",
-        loc: "A.1.1.4",
-        name: "AMD Ryzen 7 3700X",
-        pqty: "2/2",
-      },
-    ]
+    items: []
   },
   {
     isExpanded: false,
     section_name: 'A2',
-    items: [
-      {
-        ref: "10150",
-        loc: "A.1.1.1",
-        name: "AMD Ryzen 5 3600",
-        pqty: "3/3",
-      },
-      {
-        ref: "10151",
-        loc: "A.1.1.2",
-        name: "AMD Ryzen 5 3600X",
-        pqty: "0/4",
-      },
-      {
-        ref: "10152",
-        loc: "A.1.1.3",
-        name: "AMD Ryzen 7 3700",
-        pqty: "2/3",
-      },
-      {
-        ref: "10153",
-        loc: "A.1.1.4",
-        name: "AMD Ryzen 7 3700X",
-        pqty: "2/2",
-      },
-    ]
-  }
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'A3',
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'B1',
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'B2',
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'B3',
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'C1',
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'C2',
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'C3',
+    items: []
+  },
 ];
 
 const pickers = ["picker1", "picker2", "picker3", "picker4", "picker5"]
@@ -91,6 +76,26 @@ export default function PickerWaveScreen({ navigation, route }) {
   let controller;
 
   const [listDataSource, setListDataSource] = useState(pickingWave.items);
+  const [executeFunc, setExecuteFunc] = useState(true);
+
+  const organizeItems = (items) => {
+    setExecuteFunc(false);
+    const array = [...listDataSource];
+    items.forEach(item => {
+      array.forEach(wave => {
+        if (item.defaultWarehouse == wave.section_name) {
+          if(!wave.items.includes(item))
+            wave.items.push(item);
+        }
+      })
+    });
+    setListDataSource(array);
+  }
+
+  useEffect(() => {
+    if (executeFunc) organizeItems(pickingWave.items);
+  });
+
   const multiSelect = true;
 
   if (Platform.OS === 'android') {
@@ -173,7 +178,8 @@ export default function PickerWaveScreen({ navigation, route }) {
                     onClickFunction={() => {
                       updateLayout(key);
                     }}
-                    wave={wave}
+                    items={wave}
+                    input={false}
                   />
                 ))}
               </ScrollView>
