@@ -30,7 +30,7 @@ export default function OPScreen({ navigation }) {
     })
     setItems(auxItems);
   })
-})
+}, []);
   return (
     <View style={styles.main}>
       <Navbar navigation={navigation} />
