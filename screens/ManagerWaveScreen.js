@@ -63,19 +63,17 @@ const wave = [
   },
 ];
 
-const pickers = ["picker1", "picker2", "picker3", "picker4", "picker5"]
+const pickers = [{label: 'Picker 1', value: 'picker1'},{label: 'Picker 2', value: 'picker2'},{label: 'Picker 3', value: 'picker3'},]
 
-export default function PickerWaveScreen({ navigation, route }) {
+export default function ManagerWaveScreen({ navigation, route }) {
   const {pickingWave} = route.params;
   const title = "Picking Wave " + pickingWave.wave;
   const picker = "Picker: ";
   const status = "Status: " + pickingWave.status;
 
-  const [value, setValue] = useState(null);
-  const [item, setItems] = useState(pickers[0]);
-  let controller;
+  const [item, setItem] = useState(pickers[0]);
 
-  const [listDataSource, setListDataSource] = useState(pickingWave.items);
+  const [listDataSource, setListDataSource] = useState(wave);
   const [executeFunc, setExecuteFunc] = useState(true);
 
   const organizeItems = (items) => {
@@ -126,22 +124,22 @@ export default function PickerWaveScreen({ navigation, route }) {
         <View style={styles.title}>
           <Text style={styles.text}>{title}</Text>
         </View>
-        <View style={styles.subtitle}>
+        <View style={[styles.subtitle, {zIndex: 15}]}>
           <Text style={styles.subtext}>{picker}</Text>
-            <DropDownPicker style={{paddingVertical: 1}}
+            <DropDownPicker style={{paddingVertical: 1, backgroundColor: 'black'}}
                 items={pickers}
-                zIndex={50000}
                 containerStyle={{width: 150, height: 25}}
                 labelStyle={{
                     fontSize: 14,
                     textAlign: 'left',
-                    color: 'black'
+                    color: 'white'
                 }}
-                //dropDownStyle={{backgroundColor: 'black'}}
-                activeLabelStyle={{color: 'black'}}
-                controller={instance => controller = instance}
-                placeholder={item}
-                onChangeItem={item => setValue(item.value)}
+                placeholder= {"Select a picker"}
+                dropDownStyle={{backgroundColor: 'black'}}
+                activeLabelStyle={{color: 'white'}}
+                onChangeItem={(newItem) => {
+                  setItem(newItem);
+                }}
             />
            <Text style={styles.subtext}> {status} </Text>
         </View>

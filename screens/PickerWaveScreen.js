@@ -15,6 +15,7 @@ import GeneralButton from "../components/GeneralButton";
 import Expandable from "../components/Expandable";
 import Navbar from '../components/Navbar';
 import {AuthProvider} from "../navigation/AuthProvider";
+import queries from '../db/Database';
 
 const wave = [
   {
@@ -68,8 +69,9 @@ export default function PickerWaveScreen({ navigation, route }) {
   const {pickingWave} = route.params;
   const title = "Picking Wave " + pickingWave.wave;
   var subtitle;
-  if(AuthProvider.isManager){
-    subtitle="Picker: " + pickingWave.assignedPicker +" Status: " + pickingWave.status;
+
+  if(AuthProvider.IsManager){
+    subtitle="Picker: " + pickingWave.assignedPicker +"       Status: " + pickingWave.status;
   }else 
   {
     subtitle = "Status: " + pickingWave.status;
