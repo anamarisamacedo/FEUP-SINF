@@ -15,7 +15,7 @@ import Moment from 'moment';
 import queries from "../db/Database";
 
 export default function OrderDetails({ navigation, route }) {
-  const {id, orderId, date, client} = route.params;
+  const {id, orderId, date, client, status} = route.params;
 
   console.log(orderId);
 
@@ -41,12 +41,6 @@ export default function OrderDetails({ navigation, route }) {
       .then((order) => {setItems(order.documentLines), setTitle("Order " + order.naturalKey + " " + id)})
       .finally(setLoading(false));
   }, [items, title])
-
-  var status = "X"
-  /*if (client)
-    status = queries.getClientOrderStatus(orderId);
-  else
-    status = queries.getSupplierOrderStatus(orderId);*/
 
   const subtitle = "Date: " + Moment(date).format('YYYY/MM/DD') + " Status: " + status;
 

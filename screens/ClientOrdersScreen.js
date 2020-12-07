@@ -48,28 +48,30 @@ export default function ClientOrdersScreen({ navigation }) {
             </View>
           </View>
           {orders.map((i) => {
-            //var status = queries.getClientOrderStatus(i.id);
-            const status="X";
-            return (
-              <TouchableOpacity
-                onPress={() => navigation.navigate('OrderDetailsScreen', {id: 'Client ' + i.buyerCustomerParty, orderId: i.id, date: i.documentDate, client: true})}
-              >
-                <View style={styles.row} key={i}>
-                  <View style={styles.clientColumn}>
-                    <Text style={styles.textTable}>{i.buyerCustomerParty}</Text>
+            //const status="X";
+            queries.getClientOrderStatus(i.orderId).then(response => {
+                var status = response;
+              return (
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('OrderDetailsScreen', {id: 'Client ' + i.buyerCustomerParty, orderId: i.id, date: i.documentDate, client: true, status: status})}
+                >
+                  <View style={styles.row} key={i}>
+                    <View style={styles.clientColumn}>
+                      <Text style={styles.textTable}>{i.buyerCustomerParty}</Text>
+                    </View>
+                    <View style={styles.orderColumn}>
+                      <Text style={styles.textTable}>{i.naturalKey}</Text>
+                    </View>
+                    <View style={styles.dateColumn}>
+                      <Text style={styles.textTable}>{Moment(i.documentDate).format('YYYY/MM/DD')}</Text>
+                    </View>
+                    <View style={styles.statusColumn}>
+                      <Text style={[styles.textTable, {textAlign: 'right'}]}>{status}</Text>
+                    </View>
                   </View>
-                  <View style={styles.orderColumn}>
-                    <Text style={styles.textTable}>{i.naturalKey}</Text>
-                  </View>
-                  <View style={styles.dateColumn}>
-                    <Text style={styles.textTable}>{Moment(i.documentDate).format('YYYY/MM/DD')}</Text>
-                  </View>
-                  <View style={styles.statusColumn}>
-                    <Text style={[styles.textTable, {textAlign: 'right'}]}>{status}</Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
-            );
+                </TouchableOpacity>
+              );
+            })
           })}
         </View>
       </View>
