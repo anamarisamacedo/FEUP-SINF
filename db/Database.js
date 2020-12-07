@@ -45,7 +45,7 @@ const queries = {
     getClientOrderStatus: function (orderId) {
         return new Promise(resolve => {
             let data = null;
-            db.ref("client_orders").orderByChild("orderId").equalTo("orderId").once('value', querySnapShot => {
+            db.ref("client_orders/" + orderId).once('value', querySnapShot => {
                 data = querySnapShot.val();
                 if (data == null) {
                     resolve(false);
@@ -56,11 +56,11 @@ const queries = {
     getSupplierOrderStatus: function (orderId) {
         return new Promise(resolve => {
             let data = null;
-            db.ref("supplier_orders").orderByChild("orderId").equalTo("orderId").once('value', querySnapShot => {
+            db.ref("supplier_orders/" + orderId).once('value', querySnapShot => {
                 data = querySnapShot.val();
                 if (data == null) {
                     resolve(false);
-                } else resolve(data.status);
+                } else resolve(data[0].status);
             });
         })
     }

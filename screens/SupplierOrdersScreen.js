@@ -49,7 +49,7 @@ export default function SupplierOrdersScreen({ navigation }) {
             </View>
           </View>
           {orders.map((i) => {
-            queries.getClientOrderStatus(i.orderId).then(response => {
+            queries.getClientOrderStatus(i.id).then(response => {
               var status = response;
               return (
                 <TouchableOpacity
