@@ -24,13 +24,14 @@ const Expandable = ({items,onClickFunction}) => {
     }, [items.isExpanded]);
 
     return (
+      items.items.length > 0 && 
       <View>
         <TouchableOpacity
           activeOpacity={0.8}
           onPress={onClickFunction}
           style={styles.header}>
           <Text style={styles.text}>
-            {wave.section_name}
+            {items.section_name}
           </Text>
         </TouchableOpacity>
         <View
@@ -39,7 +40,7 @@ const Expandable = ({items,onClickFunction}) => {
             overflow: 'hidden',
             backgroundColor: 'black',
           }}>
-          {items.map((i) => {
+          {items.items.map((i) => {
             return (
               <View style={styles.row} key={i}>
                 <View style={styles.refColumn}>
@@ -52,7 +53,7 @@ const Expandable = ({items,onClickFunction}) => {
                   <Text style={styles.textTable}>{i.name}</Text>
                 </View>
                 <View style={styles.pqtyColumn}>
-                  <Text style={styles.textTable}>{i.pqty}</Text>
+                  <Text style={styles.textTable}>{i.picked} / {i.qty} </Text>
                 </View>
               </View>
             );
