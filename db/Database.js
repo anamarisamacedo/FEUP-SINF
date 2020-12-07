@@ -9,7 +9,6 @@ const queries = {
         }).then(() => console.log(email + "'s account was created!'"));
     },
     makeManager: function (email) {
-        let hash = crypto.createHash('sha1').update(email).digest('hex');
         db.ref('accounts/' + hash(email)).update({
             manager: true
         }).then(() => console.log(email + " is now a Manager!"));

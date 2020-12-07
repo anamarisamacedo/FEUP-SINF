@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import DropDownPicker from 'react-native-dropdown-picker';
 import {
   StyleSheet,
@@ -19,78 +19,81 @@ const wave = [
   {
     isExpanded: false,
     section_name: 'A1',
-    items: [
-      {
-        ref: "10150",
-        loc: "A.1.1.1",
-        name: "AMD Ryzen 5 3600",
-        pqty: "3/3",
-      },
-      {
-        ref: "10151",
-        loc: "A.1.1.2",
-        name: "AMD Ryzen 5 3600X",
-        pqty: "0/4",
-      },
-      {
-        ref: "10152",
-        loc: "A.1.1.3",
-        name: "AMD Ryzen 7 3700",
-        pqty: "2/3",
-      },
-      {
-        ref: "10153",
-        loc: "A.1.1.4",
-        name: "AMD Ryzen 7 3700X",
-        pqty: "2/2",
-      },
-    ]
+    items: []
   },
   {
     isExpanded: false,
     section_name: 'A2',
-    items: [
-      {
-        ref: "10150",
-        loc: "A.1.1.1",
-        name: "AMD Ryzen 5 3600",
-        pqty: "3/3",
-      },
-      {
-        ref: "10151",
-        loc: "A.1.1.2",
-        name: "AMD Ryzen 5 3600X",
-        pqty: "0/4",
-      },
-      {
-        ref: "10152",
-        loc: "A.1.1.3",
-        name: "AMD Ryzen 7 3700",
-        pqty: "2/3",
-      },
-      {
-        ref: "10153",
-        loc: "A.1.1.4",
-        name: "AMD Ryzen 7 3700X",
-        pqty: "2/2",
-      },
-    ]
-  }
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'A3',
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'B1',
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'B2',
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'B3',
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'C1',
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'C2',
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'C3',
+    items: []
+  },
 ];
 
-const pickers = ["picker1", "picker2", "picker3", "picker4", "picker5"]
+const pickers = [{label: 'Picker 1', value: 'picker1'},{label: 'Picker 2', value: 'picker2'},{label: 'Picker 3', value: 'picker3'},]
 
-export default function PickerWaveScreen({ navigation }) {
-  const pickingWave = navigation.getParam('pickingWave');
+export default function ManagerWaveScreen({ navigation, route }) {
+  const {pickingWave} = route.params;
   const title = "Picking Wave " + pickingWave.wave;
   const picker = "Picker: ";
   const status = "Status: " + pickingWave.status;
 
-  const [value, setValue] = useState(null);
-  const [item, setItems] = useState(pickers[0]);
-  let controller;
+  const [item, setItem] = useState(pickers[0]);
 
   const [listDataSource, setListDataSource] = useState(wave);
+  const [executeFunc, setExecuteFunc] = useState(true);
+
+  const organizeItems = (items) => {
+    setExecuteFunc(false);
+    const array = [...listDataSource];
+    items.forEach(item => {
+      array.forEach(wave => {
+        if (item.defaultWarehouse == wave.section_name) {
+          if(!wave.items.includes(item))
+            wave.items.push(item);
+        }
+      })
+    });
+    setListDataSource(array);
+  }
+
+  useEffect(() => {
+    if (executeFunc) organizeItems(pickingWave.items);
+  });
+
   const multiSelect = true;
 
   if (Platform.OS === 'android') {
@@ -121,22 +124,22 @@ export default function PickerWaveScreen({ navigation }) {
         <View style={styles.title}>
           <Text style={styles.text}>{title}</Text>
         </View>
-        <View style={styles.subtitle}>
+        <View style={[styles.subtitle, {zIndex: 15}]}>
           <Text style={styles.subtext}>{picker}</Text>
-            <DropDownPicker style={{paddingVertical: 1}}
+            <DropDownPicker style={{paddingVertical: 1, backgroundColor: 'black'}}
                 items={pickers}
-                zIndex={50000}
                 containerStyle={{width: 150, height: 25}}
                 labelStyle={{
                     fontSize: 14,
                     textAlign: 'left',
-                    color: 'black'
+                    color: 'white'
                 }}
-                //dropDownStyle={{backgroundColor: 'black'}}
-                activeLabelStyle={{color: 'black'}}
-                controller={instance => controller = instance}
-                placeholder={item}
-                onChangeItem={item => setValue(item.value)}
+                placeholder= {"Select a picker"}
+                dropDownStyle={{backgroundColor: 'black'}}
+                activeLabelStyle={{color: 'white'}}
+                onChangeItem={(newItem) => {
+                  setItem(newItem);
+                }}
             />
            <Text style={styles.subtext}> {status} </Text>
         </View>
@@ -169,11 +172,12 @@ export default function PickerWaveScreen({ navigation }) {
               <ScrollView>
                 {listDataSource.map((wave, key) => (
                   <Expandable
-                    key={wave.section_name}
+                    key={wave.defaultWarehouse}
                     onClickFunction={() => {
                       updateLayout(key);
                     }}
-                    wave={wave}
+                    items={wave}
+                    input={false}
                   />
                 ))}
               </ScrollView>

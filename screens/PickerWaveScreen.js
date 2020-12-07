@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {
   StyleSheet,
   Text,
@@ -14,76 +14,89 @@ import BackButton from "../components/BackButton";
 import GeneralButton from "../components/GeneralButton";
 import Expandable from "../components/Expandable";
 import Navbar from '../components/Navbar';
+import {AuthProvider} from "../navigation/AuthProvider";
+import queries from '../db/Database';
 
 const wave = [
   {
     isExpanded: false,
     section_name: 'A1',
-    items: [
-      {
-        ref: "10150",
-        loc: "A.1.1.1",
-        name: "AMD Ryzen 5 3600",
-        pqty: "3/3",
-      },
-      {
-        ref: "10151",
-        loc: "A.1.1.2",
-        name: "AMD Ryzen 5 3600X",
-        pqty: "0/4",
-      },
-      {
-        ref: "10152",
-        loc: "A.1.1.3",
-        name: "AMD Ryzen 7 3700",
-        pqty: "2/3",
-      },
-      {
-        ref: "10153",
-        loc: "A.1.1.4",
-        name: "AMD Ryzen 7 3700X",
-        pqty: "2/2",
-      },
-    ]
+    items: []
   },
   {
     isExpanded: false,
     section_name: 'A2',
-    items: [
-      {
-        ref: "10150",
-        loc: "A.1.1.1",
-        name: "AMD Ryzen 5 3600",
-        pqty: "3/3",
-      },
-      {
-        ref: "10151",
-        loc: "A.1.1.2",
-        name: "AMD Ryzen 5 3600X",
-        pqty: "0/4",
-      },
-      {
-        ref: "10152",
-        loc: "A.1.1.3",
-        name: "AMD Ryzen 7 3700",
-        pqty: "2/3",
-      },
-      {
-        ref: "10153",
-        loc: "A.1.1.4",
-        name: "AMD Ryzen 7 3700X",
-        pqty: "2/2",
-      },
-    ]
-  }
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'A3',
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'B1',
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'B2',
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'B3',
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'C1',
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'C2',
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'C3',
+    items: []
+  },
 ];
 
 export default function PickerWaveScreen({ navigation, route }) {
   const {pickingWave} = route.params;
   const title = "Picking Wave " + pickingWave.wave;
-  const subtitle = "Picker:                                      Status: " + pickingWave.status;
+  var subtitle;
 
+  if(AuthProvider.IsManager){
+    subtitle="Picker: " + pickingWave.assignedPicker +"       Status: " + pickingWave.status;
+  }else 
+  {
+    subtitle = "Status: " + pickingWave.status;
+  }
   const [listDataSource, setListDataSource] = useState(wave);
+  const [executeFunc, setExecuteFunc] = useState(true);
+
+  const organizeItems = (items) => {
+    setExecuteFunc(false);
+    const array = [...listDataSource];
+    items.forEach(item => {
+      array.forEach(wave => {
+        if (item.defaultWarehouse == wave.section_name) {
+          if(!wave.items.includes(item))
+            wave.items.push(item);
+        }
+      })
+    });
+    setListDataSource(array);
+  }
+
+  useEffect(() => {
+    if (executeFunc) organizeItems(pickingWave.items);
+  });
+
   const multiSelect = true;
 
   if (Platform.OS === 'android') {
@@ -107,6 +120,14 @@ export default function PickerWaveScreen({ navigation, route }) {
     }
     setListDataSource(array);
   };
+
+  const navigateToInput = () => {
+    const temp = [...listDataSource];
+    temp.forEach(item => {
+      item.isExpanded = false;
+    })
+    navigation.navigate('PickerInputScreen', {wave: temp, title})
+  }
 
   return (
     <View style={styles.main}>
@@ -135,7 +156,7 @@ export default function PickerWaveScreen({ navigation, route }) {
           </View>
           <SafeAreaView style={{flex: 1}}>
             <View>
-              <View>
+              <View >
                 <TouchableOpacity>
                   <Text>
                     {multiSelect
@@ -147,11 +168,12 @@ export default function PickerWaveScreen({ navigation, route }) {
               <ScrollView>
                 {listDataSource.map((wave, key) => (
                   <Expandable
-                    key={wave.section_name}
+                    key={wave.defaultWarehouse}
                     onClickFunction={() => {
                       updateLayout(key);
                     }}
-                    wave={wave}
+                    items={wave}
+                    input={false}
                   />
                 ))}
               </ScrollView>
@@ -161,8 +183,11 @@ export default function PickerWaveScreen({ navigation, route }) {
       </View>
       <View style={styles.bottomRow}>
         <BackButton onPress={() => navigation.goBack()}/>
-        <GeneralButton name="Report" onPress={() => navigation.navigate('PickerInputScreen', {wave, title})}/>
-      </View>
+        {
+                    !AuthProvider.IsManager && 
+        <GeneralButton name="Report" onPress={navigateToInput}/>
+        }
+        </View>
     </View>
   );
 }

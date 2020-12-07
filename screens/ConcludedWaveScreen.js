@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,97 +9,104 @@ import {
   ScrollView,
   LayoutAnimation,
   TouchableOpacity,
-  SafeAreaView
+  SafeAreaView,
 } from "react-native";
 import BackButton from "../components/BackButton";
 import GeneralButton from "../components/GeneralButton";
 import Expandable from "../components/Expandable";
+import { AuthProvider } from "../navigation/AuthProvider";
 
 const wave = [
   {
     isExpanded: false,
     section_name: 'A1',
-    items: [
-      {
-        ref: "10150",
-        loc: "A.1.1.1",
-        name: "AMD Ryzen 5 3600",
-        pqty: "3/3",
-      },
-      {
-        ref: "10151",
-        loc: "A.1.1.2",
-        name: "AMD Ryzen 5 3600X",
-        pqty: "0/4",
-      },
-      {
-        ref: "10152",
-        loc: "A.1.1.3",
-        name: "AMD Ryzen 7 3700",
-        pqty: "2/3",
-      },
-      {
-        ref: "10153",
-        loc: "A.1.1.4",
-        name: "AMD Ryzen 7 3700X",
-        pqty: "2/2",
-      },
-    ]
+    items: []
   },
   {
     isExpanded: false,
     section_name: 'A2',
-    items: [
-      {
-        ref: "10150",
-        loc: "A.1.1.1",
-        name: "AMD Ryzen 5 3600",
-        pqty: "3/3",
-      },
-      {
-        ref: "10151",
-        loc: "A.1.1.2",
-        name: "AMD Ryzen 5 3600X",
-        pqty: "0/4",
-      },
-      {
-        ref: "10152",
-        loc: "A.1.1.3",
-        name: "AMD Ryzen 7 3700",
-        pqty: "2/3",
-      },
-      {
-        ref: "10153",
-        loc: "A.1.1.4",
-        name: "AMD Ryzen 7 3700X",
-        pqty: "2/2",
-      },
-    ]
-  }
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'A3',
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'B1',
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'B2',
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'B3',
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'C1',
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'C2',
+    items: []
+  },
+  {
+    isExpanded: false,
+    section_name: 'C3',
+    items: []
+  },
 ];
 
-const stat = [
-    {
-        picker: "Picker1",
-        creationDate: "20-10-2020 16h59",
-        conclusionDate: "20-10-2020 17h45",
-        status: "Concluded",
-        report: "Qualquer coisa que o picker escreveu no report",
-    },
-];
-
-export default function PickerWaveScreen({ navigation }) {
-  const pickingWave = navigation.getParam('pickingWave');
+export default function PickerWaveScreen({ navigation, route }) {
+  const { pickingWave } = route.params;
   const title = "Picking Wave " + pickingWave.wave;
-  const subtitle = "Picker: " + stat[0].picker +"                           Status: " + stat[0].status;
-  const creation = stat[0].creationDate;
-  const conclusion = stat[0].conclusionDate;
+  var subtitle;
+  console.log(AuthProvider.IsManager)
+  if (AuthProvider.isManager) {
+    subtitle =
+      "Picker: " +
+      pickingWave.assignedPicker +
+      " Status: " +
+      pickingWave.status;
+  } else {
+    subtitle = "Status: " + pickingWave.status;
+  }
+  const creation = pickingWave.createdDate + " " + pickingWave.createdHour;
+  const conclusion =
+    pickingWave.concludedDate + " " + pickingWave.concludedHour;
 
-  const [value, onChangeText] = useState(stat[0].report);
+  const [value, onChangeText] = useState(pickingWave.report);
   const [listDataSource, setListDataSource] = useState(wave);
+
+  const [executeFunc, setExecuteFunc] = useState(true);
+
+  const organizeItems = (items) => {
+    setExecuteFunc(false);
+    const array = [...listDataSource];
+    items.forEach((item) => {
+      array.forEach((wave) => {
+        if (item.defaultWarehouse == wave.section_name) {
+          if (!wave.items.includes(item)) wave.items.push(item);
+        }
+      });
+    });
+    setListDataSource(array);
+  };
+
+  useEffect(() => {
+    if (executeFunc) organizeItems(pickingWave.items);
+  });
+
   const multiSelect = true;
 
-  if (Platform.OS === 'android') {
+  if (Platform.OS === "android") {
     UIManager.setLayoutAnimationEnabledExperimental(true);
   }
 
@@ -108,14 +115,13 @@ export default function PickerWaveScreen({ navigation }) {
     const array = [...listDataSource];
     if (multiSelect) {
       // If multiple select is enabled
-      array[index]['isExpanded'] = !array[index]['isExpanded'];
+      array[index]["isExpanded"] = !array[index]["isExpanded"];
     } else {
       // If single select is enabled
       array.map((value, placeindex) =>
         placeindex === index
-          ? (array[placeindex]['isExpanded'] =
-             !array[placeindex]['isExpanded'])
-          : (array[placeindex]['isExpanded'] = false),
+          ? (array[placeindex]["isExpanded"] = !array[placeindex]["isExpanded"])
+          : (array[placeindex]["isExpanded"] = false)
       );
     }
     setListDataSource(array);
@@ -129,61 +135,65 @@ export default function PickerWaveScreen({ navigation }) {
         </View>
         <View style={styles.subtitle}>
           <Text style={styles.subtext}>{subtitle}</Text>
+        </View>
+        <View style={styles.subtitle}>
           <Text style={styles.subtext}>Created: {creation}</Text>
+        </View>
+        <View style={styles.subtitle}>
           <Text style={styles.subtext}>Concluded: {conclusion}</Text>
         </View>
-        <View>
-          <View style={styles.row}>
-            <View style={styles.locColumn}>
-              <Text style={styles.header}>{"Loc"}</Text>
-            </View>
-            <View style={styles.refColumn}>
-              <Text style={styles.header}>{"Ref"}</Text>
-            </View>
-            <View style={styles.nameColumn}>
-              <Text style={styles.header}>{"Name"}</Text>
-            </View>
-            <View style={styles.pqtyColumn}>
-              <Text style={styles.header}>{"P/Qty"}</Text>
-            </View>
+        <View style={styles.rowspace} />
+        <View style={styles.row}>
+          <View style={styles.locColumn}>
+            <Text style={styles.header}>{"Loc"}</Text>
           </View>
-          <SafeAreaView style={{flex: 1}}>
-            <View>
-              <View>
-                <TouchableOpacity>
-                  <Text>
-                    {multiSelect
-                      ? 'Enable Single \n Expand'
-                      : 'Enalble Multiple \n Expand'}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <ScrollView>
-                {listDataSource.map((wave, key) => (
-                  <Expandable
-                    key={wave.section_name}
-                    onClickFunction={() => {
-                      updateLayout(key);
-                    }}
-                    wave={wave}
-                  />
-                ))}
-              </ScrollView>
-            </View>
-          </SafeAreaView>
+          <View style={styles.refColumn}>
+            <Text style={styles.header}>{"Ref"}</Text>
+          </View>
+          <View style={styles.nameColumn}>
+            <Text style={styles.header}>{"Name"}</Text>
+          </View>
+          <View style={styles.pqtyColumn}>
+            <Text style={styles.header}>{"P/Qty"}</Text>
+          </View>
         </View>
+        <SafeAreaView style={{ flex: 1}}>
+          <View>
+            <View>
+              <TouchableOpacity>
+                <Text>
+                  {multiSelect
+                    ? "Enable Single \n Expand"
+                    : "Enalble Multiple \n Expand"}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <ScrollView>
+              {listDataSource.map((wave, key) => (
+                <Expandable
+                  key={wave.defaultWarehouse}
+                  onClickFunction={() => {
+                    updateLayout(key);
+                  }}
+                  items={wave}
+                  input={false}
+                />
+              ))}
+            </ScrollView>
+          </View>
+        </SafeAreaView>
       </View>
       <View style={styles.bottomRow}>
-        <BackButton onPress={() => navigation.goBack()}/>
+        <BackButton onPress={() => navigation.goBack()} />
         <View style={styles.bottomInput}>
-            <TextInput
-              multiline = {true}
-              editable = {false}
-              style={styles.textInput}
-              onChangeText={(text) => onChangeText(text)}
-              value={value}
-            />
-          </View>
+          <TextInput
+            multiline={true}
+            editable={false}
+            style={styles.textInput}
+            onChangeText={(text) => onChangeText(text)}
+            value={value}
+          />
+        </View>
       </View>
     </View>
   );
@@ -210,11 +220,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   bottomInput: {
-      flex: 1,
-      justifyContent: "flex-end",
-      marginBottom: 0,
-      alignItems: "center",
-    },
+    flex: 1,
+    justifyContent: "flex-end",
+    marginBottom: 0,
+    alignItems: "center",
+  },
   list: {
     backgroundColor: "black",
   },
@@ -241,10 +251,12 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   subtitle: {
-    marginBottom: 40,
     flexDirection: "row",
     flexWrap: "wrap",
     alignItems: "flex-start",
+  },
+  rowspace: {
+    marginBottom: 30,
   },
   header: {
     textAlign: "left",
@@ -256,24 +268,24 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   textInput: {
-      width: 150,
-      height: 60,
-      alignItems: "right",
-      backgroundColor:"darkgrey",
-      color: "#d3d3d3",
-      fontFamily: "Corbel",
-      fontStyle: "normal",
-      fontSize: 15,
-      borderColor: "lightgrey",
-      borderWidth: 1,
-      flexWrap: "wrap",
-      multiline: true,
-      numberOfLines: "4",
-      textAlignVertical: "top",
-      placeholderTextColor: "darkgrey",
-      position: "absolute",
-      bottom: 0,
-    },
+    width: 150,
+    height: 60,
+    alignItems: "right",
+    backgroundColor: "darkgrey",
+    color: "#d3d3d3",
+    fontFamily: "Corbel",
+    fontStyle: "normal",
+    fontSize: 15,
+    borderColor: "lightgrey",
+    borderWidth: 1,
+    flexWrap: "wrap",
+    multiline: true,
+    numberOfLines: "4",
+    textAlignVertical: "top",
+    placeholderTextColor: "darkgrey",
+    position: "absolute",
+    bottom: 0,
+  },
   textTable: {
     textAlign: "left",
     color: "#d3d3d3",
@@ -296,13 +308,13 @@ const styles = StyleSheet.create({
   pqtyColumn: { flexDirection: "column", flex: 0.5 },
 
   bottomRow: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      width: "70%",
-      alignSelf: "center",
-      bottom: 40,
-      alignItems: "center",
-      position:"absolute",
-      bottom: 25,
-    },
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "70%",
+    alignSelf: "center",
+    bottom: 40,
+    alignItems: "center",
+    position: "absolute",
+    bottom: 25,
+  },
 });
