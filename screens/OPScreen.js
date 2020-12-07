@@ -13,27 +13,22 @@ import db from "../db/pickingWaves";
 export default function OPScreen({ navigation }) {
   const title = "Outpoint View";
   const [items, setItems] = useState([]);
-  var itemsMapToArray = [];
-  var itemCount = new Map();
+  var auxItems = [];
   var count;
   useEffect(() => {
     db.getPickingWaves().then((pickingWaves) => {
-      
     pickingWaves.map((pw) => {
       (pw.items).map((item) => {
-        if(!itemCount.has(item.ref)){
-          itemCount.set(item.ref, item.picked)
+        if(!auxItems.some(e => e.ref === item.ref)){
+          auxItems.push({ref: item.ref, name: item.name, qty: item.picked})
         }else{
-          count = itemCount.get(item.ref) + item.picked
-          itemCount.set(item.ref, count)
+          var objIndex = auxItems.findIndex((e => e.ref === item.ref));
+          count = auxItems[objIndex].qty + item.picked;
+          auxItems[objIndex].qty = count;
         }
       })
     })
-    itemCount.forEach((value,key) => {
-      itemsMapToArray.push({ref: key, qty: value})
-    })
-    setItems(itemsMapToArray)
-    console.log(items);
+    setItems(auxItems);
   })
 })
   return (
