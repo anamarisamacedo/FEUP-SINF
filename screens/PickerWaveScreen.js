@@ -67,8 +67,13 @@ const wave = [
 export default function PickerWaveScreen({ navigation, route }) {
   const {pickingWave} = route.params;
   const title = "Picking Wave " + pickingWave.wave;
-  const subtitle = "Picker:                                      Status: " + pickingWave.status;
-
+  var subtitle;
+  if(AuthProvider.isManager){
+    subtitle="Picker: " + pickingWave.assignedPicker +" Status: " + pickingWave.status;
+  }else 
+  {
+    subtitle = "Status: " + pickingWave.status;
+  }
   const [listDataSource, setListDataSource] = useState(wave);
   const [executeFunc, setExecuteFunc] = useState(true);
 
@@ -141,7 +146,7 @@ export default function PickerWaveScreen({ navigation, route }) {
           </View>
           <SafeAreaView style={{flex: 1}}>
             <View>
-              <View>
+              <View >
                 <TouchableOpacity>
                   <Text>
                     {multiSelect

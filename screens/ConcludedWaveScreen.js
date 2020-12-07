@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import {
   StyleSheet,
   Text,
@@ -9,11 +9,12 @@ import {
   ScrollView,
   LayoutAnimation,
   TouchableOpacity,
-  SafeAreaView
+  SafeAreaView,
 } from "react-native";
 import BackButton from "../components/BackButton";
 import GeneralButton from "../components/GeneralButton";
 import Expandable from "../components/Expandable";
+import { AuthProvider } from "../navigation/AuthProvider";
 
 const wave = [
   {
@@ -64,11 +65,22 @@ const wave = [
 ];
 
 export default function PickerWaveScreen({ navigation, route }) {
-  const {pickingWave } = route.params;
+  const { pickingWave } = route.params;
   const title = "Picking Wave " + pickingWave.wave;
-  const subtitle = "Picker: " + pickingWave.assignedPicker +"                           Status: " + pickingWave.status;
+  var subtitle;
+  console.log(AuthProvider.IsManager)
+  if (AuthProvider.isManager) {
+    subtitle =
+      "Picker: " +
+      pickingWave.assignedPicker +
+      " Status: " +
+      pickingWave.status;
+  } else {
+    subtitle = "Status: " + pickingWave.status;
+  }
   const creation = pickingWave.createdDate + " " + pickingWave.createdHour;
-  const conclusion = pickingWave.concludedDate + " " + pickingWave.concludedHour;
+  const conclusion =
+    pickingWave.concludedDate + " " + pickingWave.concludedHour;
 
   const [value, onChangeText] = useState(pickingWave.report);
   const [listDataSource, setListDataSource] = useState(wave);
@@ -78,16 +90,15 @@ export default function PickerWaveScreen({ navigation, route }) {
   const organizeItems = (items) => {
     setExecuteFunc(false);
     const array = [...listDataSource];
-    items.forEach(item => {
-      array.forEach(wave => {
+    items.forEach((item) => {
+      array.forEach((wave) => {
         if (item.defaultWarehouse == wave.section_name) {
-          if(!wave.items.includes(item))
-            wave.items.push(item);
+          if (!wave.items.includes(item)) wave.items.push(item);
         }
-      })
+      });
     });
     setListDataSource(array);
-  }
+  };
 
   useEffect(() => {
     if (executeFunc) organizeItems(pickingWave.items);
@@ -95,7 +106,7 @@ export default function PickerWaveScreen({ navigation, route }) {
 
   const multiSelect = true;
 
-  if (Platform.OS === 'android') {
+  if (Platform.OS === "android") {
     UIManager.setLayoutAnimationEnabledExperimental(true);
   }
 
@@ -104,14 +115,13 @@ export default function PickerWaveScreen({ navigation, route }) {
     const array = [...listDataSource];
     if (multiSelect) {
       // If multiple select is enabled
-      array[index]['isExpanded'] = !array[index]['isExpanded'];
+      array[index]["isExpanded"] = !array[index]["isExpanded"];
     } else {
       // If single select is enabled
       array.map((value, placeindex) =>
         placeindex === index
-          ? (array[placeindex]['isExpanded'] =
-             !array[placeindex]['isExpanded'])
-          : (array[placeindex]['isExpanded'] = false),
+          ? (array[placeindex]["isExpanded"] = !array[placeindex]["isExpanded"])
+          : (array[placeindex]["isExpanded"] = false)
       );
     }
     setListDataSource(array);
@@ -125,61 +135,64 @@ export default function PickerWaveScreen({ navigation, route }) {
         </View>
         <View style={styles.subtitle}>
           <Text style={styles.subtext}>{subtitle}</Text>
+        </View>
+        <View style={styles.subtitle}>
           <Text style={styles.subtext}>Created: {creation}</Text>
+        </View>
+        <View style={styles.subtitle}>
           <Text style={styles.subtext}>Concluded: {conclusion}</Text>
         </View>
-        <View>
-          <View style={styles.row}>
-            <View style={styles.locColumn}>
-              <Text style={styles.header}>{"Loc"}</Text>
-            </View>
-            <View style={styles.refColumn}>
-              <Text style={styles.header}>{"Ref"}</Text>
-            </View>
-            <View style={styles.nameColumn}>
-              <Text style={styles.header}>{"Name"}</Text>
-            </View>
-            <View style={styles.pqtyColumn}>
-              <Text style={styles.header}>{"P/Qty"}</Text>
-            </View>
+        <View style={styles.rowspace} />
+        <View style={styles.row}>
+          <View style={styles.locColumn}>
+            <Text style={styles.header}>{"Loc"}</Text>
           </View>
-          <SafeAreaView style={{flex: 1}}>
-            <View>
-              <View>
-                <TouchableOpacity>
-                  <Text>
-                    {multiSelect
-                      ? 'Enable Single \n Expand'
-                      : 'Enalble Multiple \n Expand'}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <ScrollView>
-                {listDataSource.map((wave, key) => (
-                  <Expandable
-                    key={wave.defaultWarehouse}
-                    onClickFunction={() => {
-                      updateLayout(key);
-                    }}
-                    items={wave}
-                  />
-                ))}
-              </ScrollView>
-            </View>
-          </SafeAreaView>
+          <View style={styles.refColumn}>
+            <Text style={styles.header}>{"Ref"}</Text>
+          </View>
+          <View style={styles.nameColumn}>
+            <Text style={styles.header}>{"Name"}</Text>
+          </View>
+          <View style={styles.pqtyColumn}>
+            <Text style={styles.header}>{"P/Qty"}</Text>
+          </View>
         </View>
+        <SafeAreaView style={{ flex: 1}}>
+          <View>
+            <View>
+              <TouchableOpacity>
+                <Text>
+                  {multiSelect
+                    ? "Enable Single \n Expand"
+                    : "Enalble Multiple \n Expand"}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <ScrollView>
+              {listDataSource.map((wave, key) => (
+                <Expandable
+                  key={wave.defaultWarehouse}
+                  onClickFunction={() => {
+                    updateLayout(key);
+                  }}
+                  items={wave}
+                />
+              ))}
+            </ScrollView>
+          </View>
+        </SafeAreaView>
       </View>
       <View style={styles.bottomRow}>
-        <BackButton onPress={() => navigation.goBack()}/>
+        <BackButton onPress={() => navigation.goBack()} />
         <View style={styles.bottomInput}>
-            <TextInput
-              multiline = {true}
-              editable = {false}
-              style={styles.textInput}
-              onChangeText={(text) => onChangeText(text)}
-              value={value}
-            />
-          </View>
+          <TextInput
+            multiline={true}
+            editable={false}
+            style={styles.textInput}
+            onChangeText={(text) => onChangeText(text)}
+            value={value}
+          />
+        </View>
       </View>
     </View>
   );
@@ -206,11 +219,11 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   bottomInput: {
-      flex: 1,
-      justifyContent: "flex-end",
-      marginBottom: 0,
-      alignItems: "center",
-    },
+    flex: 1,
+    justifyContent: "flex-end",
+    marginBottom: 0,
+    alignItems: "center",
+  },
   list: {
     backgroundColor: "black",
   },
@@ -237,10 +250,12 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   subtitle: {
-    marginBottom: 40,
     flexDirection: "row",
     flexWrap: "wrap",
     alignItems: "flex-start",
+  },
+  rowspace: {
+    marginBottom: 30,
   },
   header: {
     textAlign: "left",
@@ -252,24 +267,24 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   textInput: {
-      width: 150,
-      height: 60,
-      alignItems: "right",
-      backgroundColor:"darkgrey",
-      color: "#d3d3d3",
-      fontFamily: "Corbel",
-      fontStyle: "normal",
-      fontSize: 15,
-      borderColor: "lightgrey",
-      borderWidth: 1,
-      flexWrap: "wrap",
-      multiline: true,
-      numberOfLines: "4",
-      textAlignVertical: "top",
-      placeholderTextColor: "darkgrey",
-      position: "absolute",
-      bottom: 0,
-    },
+    width: 150,
+    height: 60,
+    alignItems: "right",
+    backgroundColor: "darkgrey",
+    color: "#d3d3d3",
+    fontFamily: "Corbel",
+    fontStyle: "normal",
+    fontSize: 15,
+    borderColor: "lightgrey",
+    borderWidth: 1,
+    flexWrap: "wrap",
+    multiline: true,
+    numberOfLines: "4",
+    textAlignVertical: "top",
+    placeholderTextColor: "darkgrey",
+    position: "absolute",
+    bottom: 0,
+  },
   textTable: {
     textAlign: "left",
     color: "#d3d3d3",
@@ -292,13 +307,13 @@ const styles = StyleSheet.create({
   pqtyColumn: { flexDirection: "column", flex: 0.5 },
 
   bottomRow: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      width: "70%",
-      alignSelf: "center",
-      bottom: 40,
-      alignItems: "center",
-      position:"absolute",
-      bottom: 25,
-    },
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "70%",
+    alignSelf: "center",
+    bottom: 40,
+    alignItems: "center",
+    position: "absolute",
+    bottom: 25,
+  },
 });
