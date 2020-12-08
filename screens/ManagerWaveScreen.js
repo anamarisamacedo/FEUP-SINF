@@ -14,6 +14,7 @@ import {
 import BackButton from "../components/BackButton";
 import GeneralButton from "../components/GeneralButton";
 import Expandable from "../components/Expandable";
+import pickersService from "../services/picker";
 
 const wave = [
   {
@@ -72,6 +73,13 @@ export default function ManagerWaveScreen({ navigation, route }) {
   const status = "Status: " + pickingWave.status;
 
   const [item, setItem] = useState(pickers[0]);
+
+  const [pickers, setPickers] = useState([]);
+    useEffect(() => {
+      pickersService.getPickers().then((response) => {
+        setPickers(response);
+      });
+    });
 
   const [listDataSource, setListDataSource] = useState(wave);
   const [executeFunc, setExecuteFunc] = useState(true);
@@ -139,6 +147,9 @@ export default function ManagerWaveScreen({ navigation, route }) {
                 activeLabelStyle={{color: 'white'}}
                 onChangeItem={(newItem) => {
                   setItem(newItem);
+                  useEffect(() => {
+                        pickersService.submitPicker(newItem,pickingWave);
+                      });
                 }}
             />
            <Text style={styles.subtext}> {status} </Text>

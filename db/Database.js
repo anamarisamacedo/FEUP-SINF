@@ -4,7 +4,7 @@ const crypto = require('crypto');
 const queries = {
     addAccount: function (email) {
 
-        db.ref('accounts/' + hash(email)).set({
+        db.ref('accounts/' + email.substring(0,email.indexOf("@"))).set({
             manager: false
         }).then(() => console.log(email + "'s account was created!'"));
     },
