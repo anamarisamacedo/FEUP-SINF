@@ -69,7 +69,7 @@ export default function PickerWaveScreen({ navigation, route }) {
   const title = "Picking Wave " + pickingWave.wave;
   var subtitle;
   
-  if (AuthProvider.isManager) {
+  if (AuthProvider.IsManager) {
     subtitle =
       "Picker: " +
       pickingWave.assignedPicker +
