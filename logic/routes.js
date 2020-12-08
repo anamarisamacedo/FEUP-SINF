@@ -13,8 +13,6 @@ var validPoints = new Set(
      OutPoint]
 );
 
-
-
 function permute(xs) {
     let ret = [];
   
@@ -49,9 +47,9 @@ const functions = {
 
         let warehouseDelta = endPoint.charCodeAt(0) - startPoint.charCodeAt(0);
     
-        let verticalDistance = Math.abs(sectionDelta) * L + laneIdDelta * L/3;
+        let verticalDistance = Math.abs(sectionDelta * L + laneIdDelta * L/3);
         let horizontalDistance = (L/2 + C + C + L/2) * Math.max(Math.abs(warehouseDelta), 1);
-    
+
         return verticalDistance + horizontalDistance;
     },
 
@@ -60,53 +58,66 @@ const functions = {
         for (let i = 0; i < route.length - 1; i++) {
             totalDistance += this.calculateDistance(route[i], route[i+1]);
         }
+        totalDistance += this.calculateDistance(EntryPoint, route[0]) 
+                + this.calculateDistance(route[route.length - 1], OutPoint);
         return totalDistance;
     },
 
     findBestRoute: function (points) {
-        console.log(points.length);
+
+        let startTime = performance.now();
         let subarrays = [];
         let currentWh = 'A';
         let startIndex = 0;
         points.sort();
         let bestRoute = points;
-        let minDistance = functions.calculateTotalDistance(points)
-                + this.calculateDistance(EntryPoint, points[0]) 
-                + this.calculateDistance(points[points.length - 1], OutPoint);
+        let minDistance = functions.calculateTotalDistance(points);
+                
         
         for(let i = 0; i < points.length; i++) {
             if(points[i][0] != currentWh) {
-                subarrays.push(permute(points.slice(startIndex, i)));
-                console.log(permute(points.slice(startIndex, i)).length);
+                if(i != 0)
+                    subarrays.push(permute(points.slice(startIndex, i)));
                 startIndex = i;
                 currentWh = points[i][0];
             }
         }
         subarrays.push(permute(points.slice(startIndex, points.length)));
 
-        for(let i = 0; i < 3 - subarrays.length; i++) {
-            subarrays.push(['']);
+
+        let len = subarrays.length;
+        for(let i = 0; i < 3 - len; i++) {
+            subarrays.push([[" "]]);
         }
 
-       
-        let possibleRoutes = subarrays.reduce((a, b) => a.reduce((r, v) => r.concat(b.map(w => [].concat(v, w))), []));
-        possibleRoutes.forEach(possibleRoute => {
-            possibleRoute = possibleRoute.filter(function (elem) {
-                return elem != " ";
-            });
-            console.log(possibleRoute);
-            let firstPoint = possibleRoute[0];
-            let lastPoint = possibleRoute[possibleRoute.length - 1];
+        let OutOfTimeException = {};
 
-            let dist = functions.calculateTotalDistance(possibleRoute)
-                + this.calculateDistance(EntryPoint, firstPoint) 
-                + this.calculateDistance(lastPoint, OutPoint);
-            console.log(dist);
-            if(dist < minDistance) {
-                minDistance = dist;
-                bestRoute = possibleRoute;
+        try {
+        subarrays[0].forEach(elemA =>
+            subarrays[1].forEach(elemB =>
+                subarrays[2].forEach(function(elemC) {
+                    if(performance.now() - startTime > 10000) {
+                        throw OutOfTimeException;
+                    }
+                    let possibleRoute = elemA.concat(elemB).concat(elemC);
+                    possibleRoute = possibleRoute.filter(function (elem) {
+                        return elem != " ";
+                    });
+                    let firstPoint = possibleRoute[0];
+                    let lastPoint = possibleRoute[possibleRoute.length - 1];
+
+                    let dist = functions.calculateTotalDistance(possibleRoute);
+                    if(dist < minDistance) {
+                        minDistance = dist;
+                        bestRoute = possibleRoute;
+                    }
+                })));
+            } catch (e) {
+                if(e != OutOfTimeException) {
+                    throw e;
+                }
             }
-        });
+
 
         console.log("Min distance = " + minDistance);
         console.log("Best route: " + bestRoute);
