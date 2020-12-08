@@ -14,6 +14,7 @@ import {
 import BackButton from "../components/BackButton";
 import GeneralButton from "../components/GeneralButton";
 import Expandable from "../components/Expandable";
+import pickersService from "../services/picker";
 
 const wave = [
   {
@@ -63,7 +64,6 @@ const wave = [
   },
 ];
 
-const pickers = [{label: 'Picker 1', value: 'picker1'},{label: 'Picker 2', value: 'picker2'},{label: 'Picker 3', value: 'picker3'},]
 
 export default function ManagerWaveScreen({ navigation, route }) {
   const {pickingWave} = route.params;
@@ -71,10 +71,21 @@ export default function ManagerWaveScreen({ navigation, route }) {
   const picker = "Picker: ";
   const status = "Status: " + pickingWave.status;
 
-  const [item, setItem] = useState(pickers[0]);
-
-  const [listDataSource, setListDataSource] = useState(wave);
+  const [aux, setAux] = useState([]);
   const [executeFunc, setExecuteFunc] = useState(true);
+    useEffect(() => {
+      pickersService.getPickers().then((response) => {
+        setAux(Object.entries(response));
+      });
+    });
+    const pickers = [];
+    aux.forEach((entry)=>{
+        if(!(((Object.entries(entry[1]))[0])[1]))
+            pickers.push({label: entry[0], value: entry[0]});
+    });
+
+  const [item, setItem] = useState(pickers[0]);
+  const [listDataSource, setListDataSource] = useState(wave);
 
   const organizeItems = (items) => {
     setExecuteFunc(false);
@@ -139,6 +150,7 @@ export default function ManagerWaveScreen({ navigation, route }) {
                 activeLabelStyle={{color: 'white'}}
                 onChangeItem={(newItem) => {
                   setItem(newItem);
+                  pickersService.submitPicker(newItem.value,pickingWave.wave);
                 }}
             />
            <Text style={styles.subtext}> {status} </Text>
