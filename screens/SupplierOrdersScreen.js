@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
     fontFamily: "Corbel",
     fontStyle: "normal",
     fontWeight: "bold",
-    fontSize: 19,
+    fontSize: 23,
   },
   title: {
     marginTop: 50,
@@ -130,7 +130,7 @@ const styles = StyleSheet.create({
     color: "#d3d3d3",
     fontFamily: "Corbel",
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 18,
     flexWrap: "wrap",
     alignItems: "flex-start",
   },

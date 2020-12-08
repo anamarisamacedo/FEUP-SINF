@@ -19,6 +19,7 @@
     "expo-updates": "~0.3.2",
     "firebase": "^8.1.1",
     "moment": "^2.29.1",
+    "popup-ui": "^1.2.2",
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "~0.63.3",

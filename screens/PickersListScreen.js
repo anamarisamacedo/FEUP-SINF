@@ -49,7 +49,7 @@ export default function PickersListScreen({ navigation, route }) {
               <Text style={styles.header}>{"Name"}</Text>
             </View>
             <View style={styles.awColumn}>
-              <Text style={styles.header}>{"Assigned Waves"}</Text>
+              <Text style={styles.headerAw}>{"Assigned Waves"}</Text>
             </View>
           </View>
           {pickersList.map((i) => {
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     fontFamily: "Corbel",
     fontStyle: "normal",
     fontWeight: "bold",
-    fontSize: 19,
+    fontSize: 23,
   },
   title: {
     marginTop: 50,
@@ -104,6 +104,15 @@ const styles = StyleSheet.create({
   },
   header: {
     textAlign: "left",
+    color: "#d3d3d3",
+    fontFamily: "Corbel",
+    fontWeight: "bold",
+    fontSize: 17,
+    flexWrap: "wrap",
+    alignItems: "flex-start",
+  },
+  headerAw: {
+    textAlign: "top",
     color: "#d3d3d3",
     fontFamily: "Corbel",
     fontWeight: "bold",
@@ -129,5 +138,5 @@ const styles = StyleSheet.create({
   },
   codeColumn: { flexDirection: "column", flex: 0.6 },
   nameColumn: { flexDirection: "column", flex: 1.5 },
-  awColumn: { flexDirection: "column", alignItems:'center', flex: 1 },
+  awColumn: { flexDirection: "column", alignItems:'center', flex: 1.1 },
 });

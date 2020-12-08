@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
         color: 'white',
         fontFamily: 'Corbel',
         fontStyle: 'normal',
+        fontSize: 17
     },
     textInput: {
         color: 'white',

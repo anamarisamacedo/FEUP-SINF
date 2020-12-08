@@ -10,11 +10,13 @@ import SupplierOrdersScreen from '../screens/SupplierOrdersScreen';
 import OrderDetailsScreen from '../screens/OrderDetailsScreen';
 import NavigationDrawerStructure from '../components/NavigationDrawerStructure';
 import OPScreen from '../screens/OPScreen';
-import PickersListScren from '../screens/PickersListScreen';
+import PickersListScreen from '../screens/PickersListScreen';
 import GeneratePickingWaveScreen from '../screens/GeneratePickingWaveScreen';
 import PickingWavesScreen from '../screens/PickingWavesScreen';
 import PickerWaveScreen from '../screens/PickerWaveScreen';
 import PickerInputScreen from '../screens/PickerInputScreen';
+import ConcludedWaveScreen from '../screens/ConcludedWaveScreen';
+import ManagerWaveScreen from '../screens/ManagerWaveScreen';
 
 const Drawer = createDrawerNavigator();
 
@@ -30,9 +32,11 @@ export default function HomeStack() {
       <Drawer.Screen name="OPScreen" component={OPScreen} />
       <Drawer.Screen name="PickingWavesScreen" component={PickingWavesScreen} />
       <Drawer.Screen name="GeneratePickingWaveScreen" component={GeneratePickingWaveScreen} />
-      <Drawer.Screen name="PickersListScreen" component={PickersListScren} />
+      <Drawer.Screen name="PickersListScreen" component={PickersListScreen} />
       <Drawer.Screen name="PickerWaveScreen" component={PickerWaveScreen} />
       <Drawer.Screen name="PickerInputScreen" component={PickerInputScreen} />
+      <Drawer.Screen name="ConcludedWaveScreen" component={ConcludedWaveScreen} />
+      <Drawer.Screen name="ManagerWaveScreen" component={ManagerWaveScreen} />
       </Drawer.Navigator>
       
     );

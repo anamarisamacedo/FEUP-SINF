@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Navbar from '../components/Navbar'; 
 import {
   StyleSheet,
@@ -7,32 +7,30 @@ import {
   Dimensions
 } from "react-native";
 import BackButton from "../components/BackButton";
+import db from "../db/pickingWaves";
 
-const opItems = [
-  {
-    ref: "10150",
-    name: "AMD Ryzen 5 3600",
-    qty: "50",
-  },
-  {
-    ref: "10151",
-    name: "AMD Ryzen 5 3600X",
-    qty: "50",
-  },
-  {
-    ref: "10152",
-    name: "AMD Ryzen 4 3600X",
-    qty: "50",
-  },
-  {
-    ref: "10153",
-    name: "AMD Ryzen 2 3600X",
-    qty: "50",
-  },
-];
 
 export default function OPScreen({ navigation }) {
   const title = "Outpoint View";
+  const [items, setItems] = useState([]);
+  var auxItems = [];
+  var count;
+  useEffect(() => {
+    db.getPickingWaves().then((pickingWaves) => {
+    pickingWaves.map((pw) => {
+      (pw.items).map((item) => {
+        if(!auxItems.some(e => e.ref === item.ref)){
+          auxItems.push({ref: item.ref, name: item.name, qty: item.picked})
+        }else{
+          var objIndex = auxItems.findIndex((e => e.ref === item.ref));
+          count = auxItems[objIndex].qty + item.picked;
+          auxItems[objIndex].qty = count;
+        }
+      })
+    })
+    setItems(auxItems);
+  })
+}, []);
   return (
     <View style={styles.main}>
       <Navbar navigation={navigation} />
@@ -52,7 +50,7 @@ export default function OPScreen({ navigation }) {
               <Text style={[styles.header, {textAlign: 'right'}]}>{"Qtd"}</Text>
             </View>
           </View>
-          {opItems.map((i) => {
+          {items.map((i) => {
             return (
               <View style={styles.row} key={i}>
                 <View style={styles.refColumn}>
@@ -104,7 +102,7 @@ const styles = StyleSheet.create({
     fontFamily: "Corbel",
     fontStyle: "normal",
     fontWeight: "bold",
-    fontSize: 19,
+    fontSize: 23,
   },
   title: {
     marginTop: 50,
@@ -120,7 +118,7 @@ const styles = StyleSheet.create({
     color: "#d3d3d3",
     fontFamily: "Corbel",
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 18,
     flexWrap: "wrap",
     alignItems: "flex-start",
   },

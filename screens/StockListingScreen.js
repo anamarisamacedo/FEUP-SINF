@@ -1,26 +1,38 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import {
+  ScrollView,
   StyleSheet,
   Text,
   View,
   Dimensions,
   ActivityIndicator,
+  TouchableOpacity,
 } from "react-native";
 import BackButton from "../components/BackButton";
-import token from '../services/token';
-import jasminConstants from '../services/jasminConstants';
+import token from "../services/token";
+import jasminConstants from "../services/jasminConstants";
+import stockService from "../services/stock";
 
 export default function StockListingScreen({ navigation, route }) {
   const [stock, setStock] = useState([]);
+  //const [itemsDb, setItemsDb] = useState([]);
   const [isLoading, setLoading] = useState(true);
-  const { id, name } = route.params;
-  const title = id + " " + name;
+  const { warehouseId, warehouseName, warehouseDescription } = route.params;
+  const title = warehouseName + " " + warehouseDescription;
   const accessToken = token.getToken();
+  var currentStock;
+  //var itemLoc;
 
   useEffect(() => {
-    const apiUrl = jasminConstants.url + "/api/" + jasminConstants.accountKey + "/" + jasminConstants.subscriptionKey + "/materialscore/materialsitems";
-    
+    const apiUrl =
+      jasminConstants.url +
+      "/api/" +
+      jasminConstants.accountKey +
+      "/" +
+      jasminConstants.subscriptionKey +
+      "/materialscore/materialsitems";
+
     fetch(apiUrl, {
       method: "GET",
       headers: {
@@ -30,8 +42,10 @@ export default function StockListingScreen({ navigation, route }) {
       },
     })
       .then((response) => response.json())
-      .then((materials) => setStock(materials))
+      .then((materials) => {setStock(materials)})
       .finally(setLoading(false));
+    
+    //stockService.getItems().then((items) => setItemsDb(items))
   }, []);
   return (
     <View style={styles.main}>
@@ -40,48 +54,55 @@ export default function StockListingScreen({ navigation, route }) {
         <View style={styles.title}>
           <Text style={styles.text}>{title}</Text>
         </View>
-        {isLoading ? (
-          <ActivityIndicator />
-        ) : (
-          <View>
-            <View style={styles.row}>
-              <View style={styles.refColumn}>
-                <Text style={styles.header}>{"Ref"}</Text>
-              </View>
-              <View style={styles.locColumn}>
-                <Text style={styles.header}>{"Loc"}</Text>
-              </View>
-              <View style={styles.nameColumn}>
-                <Text style={styles.header}>{"Name"}</Text>
-              </View>
-              <View style={styles.stockColumn}>
-                <Text style={styles.header}>{"Stock"}</Text>
-              </View>
+        <View>
+          <View style={styles.row}>
+            <View style={styles.refColumn}>
+              <Text style={styles.header}>{"Ref"}</Text>
             </View>
-            {stock.map((i) => {
-              if(i.defaultWarehouse == id){
-              return (
-                <View style={styles.row} key={i}>
-                  <View style={styles.refColumn}>
-                    <Text style={styles.textTable}>{i.itemKey}</Text>
-                  </View>
-                  <View style={styles.locColumn}>
-                    <Text style={styles.textTable}>{"X"}</Text>
-                  </View>
-                  <View style={styles.nameColumn}>
-                    <Text style={styles.textTable}>{i.description}</Text>
-                  </View>
-                  <View style={styles.stockColumn}>
-              <Text style={styles.textTable}>{"X"}</Text>
-                  </View>
-                </View>
-              )};
-            })}
+            <View style={styles.nameColumn}>
+              <Text style={styles.header}>{"Name"}</Text>
+            </View>
+            <View style={styles.stockColumn}>
+              <Text style={styles.header}>{"Stock"}</Text>
+            </View>
           </View>
-        )}
+          {stock.map((i) => {
+            if (i.defaultWarehouseId == warehouseId) {
+              i.materialsItemWarehouses.map((j) => {
+                if (j.warehouseId == warehouseId) {
+                  currentStock = j.stockBalance;
+                }
+              });
+              /*
+              itemsDb.map((itemDb) => {
+                if(i.itemKey == itemDb.ref)
+                itemLoc = itemDb.loc
+              })*/
+              return (
+                <View>
+                  <View style={styles.row} key={i}>
+                    <View style={styles.refColumn}>
+                      <Text style={styles.textTable}>{i.itemKey}</Text>
+                    </View>
+                    <View style={styles.nameColumn}>
+                      <Text style={styles.textTable}>{i.description}</Text>
+                    </View>
+                    <View style={styles.stockColumn}>
+                      <TouchableOpacity onPress={() => console.log("")}>
+                        <Text style={styles.textTable}>
+                          {currentStock + "/" + i.maxStock}
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                  </View>
+              );
+            }
+          })}
+        </View>
       </View>
       <View style={styles.bottom}>
-        <BackButton onPress={() =>  navigation.goBack()} />
+        <BackButton onPress={() => navigation.goBack()} />
       </View>
     </View>
   );
@@ -104,7 +125,7 @@ const styles = StyleSheet.create({
   bottom: {
     flex: 1,
     justifyContent: "flex-end",
-    marginBottom: 36,
+    marginBottom: 20,
     alignItems: "center",
   },
   list: {
@@ -115,7 +136,7 @@ const styles = StyleSheet.create({
     fontFamily: "Corbel",
     fontStyle: "normal",
     fontWeight: "bold",
-    fontSize: 19,
+    fontSize: 23,
   },
   title: {
     marginTop: 50,
@@ -131,7 +152,7 @@ const styles = StyleSheet.create({
     color: "#d3d3d3",
     fontFamily: "Corbel",
     fontWeight: "bold",
-    fontSize: 16,
+    fontSize: 18,
     flexWrap: "wrap",
     alignItems: "flex-start",
   },
@@ -145,7 +166,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   row: {
-    height: 30,
+    height: 40,
     flexDirection: "row",
     borderBottomWidth: 1,
     borderBottomColor: "darkgray",
@@ -153,6 +174,6 @@ const styles = StyleSheet.create({
   },
   refColumn: { flexDirection: "column", flex: 0.6 },
   locColumn: { flexDirection: "column", flex: 0.6 },
-  nameColumn: { flexDirection: "column", flex: 1.5 },
+  nameColumn: { flexDirection: "column", flex: 2 },
   stockColumn: { flexDirection: "column", flex: 0.5 },
 });
