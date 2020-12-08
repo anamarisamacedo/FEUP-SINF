@@ -45,7 +45,7 @@ export default function PickingWavesScreen({ navigation }) {
           {pw.map((i) => {
             return (
               <View>
-                {(!AuthProvider.IsManager &&
+                {(!AuthProvider.isManager &&
                   (i.status == "pending" || i.status == "assigned") && (
                     <View>
                       <View style={styles.row} key={i}>
@@ -66,7 +66,7 @@ export default function PickingWavesScreen({ navigation }) {
                   )) || (i.status == 'concluded' &&
                   <TouchableOpacity
                     onPress={() =>
-                      navigation.navigate('ConcludedWaveScreen', { pickingWave: i })
+                      navigation.navigate('ConcludedWaveScreen', { pickingWave: i})
                     }
                   >
                     <View style={styles.row} key={i}>
@@ -88,7 +88,7 @@ export default function PickingWavesScreen({ navigation }) {
                 || (i.status == 'in progress' &&
                   <TouchableOpacity
                     onPress={() =>
-                      navigation.navigate('PickerWaveScreen', { pickingWave: i })
+                      navigation.navigate('PickerWaveScreen', { pickingWave: i})
                     }
                   >
                     <View style={styles.row} key={i}>
@@ -110,7 +110,7 @@ export default function PickingWavesScreen({ navigation }) {
                 || (
                   <TouchableOpacity
                     onPress={() =>
-                      navigation.navigate('ManagerWaveScreen', { pickingWave: i })
+                      navigation.navigate('ManagerWaveScreen', { pickingWave: i})
                     }
                   >
                     <View style={styles.row} key={i}>
