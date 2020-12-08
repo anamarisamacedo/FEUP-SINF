@@ -20,7 +20,8 @@ export default function EntryScreen({ navigation }) {
                 <View style={{ marginVertical: 30 }}></View>
                 <GeneralButton name="sign up" onPress={() => navigation.navigate('SignUpScreen')} />
 
-                <GeneralButton name="temp" onPress={() => console.log(Functions.calculateDistance('A11', 'A12'))} />
+                <GeneralButton name="temp" onPress={() => console.log(Functions.findBestRoute
+                    (['A21', 'A31', 'B22', 'B21', 'B11', 'C32']))} />
             </View>
         </View>
     );
