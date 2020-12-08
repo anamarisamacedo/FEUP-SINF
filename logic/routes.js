@@ -70,7 +70,9 @@ const functions = {
         let startIndex = 0;
         points.sort();
         let bestRoute = points;
-        let minDistance = functions.calculateTotalDistance(points);
+        let minDistance = functions.calculateTotalDistance(points)
+                + this.calculateDistance(EntryPoint, points[0]) 
+                + this.calculateDistance(points[points.length - 1], OutPoint);
         
         for(let i = 0; i < points.length; i++) {
             if(points[i][0] != currentWh) {
@@ -82,24 +84,34 @@ const functions = {
         }
         subarrays.push(permute(points.slice(startIndex, points.length)));
 
-        //subarrays[0].forEach(elemA => console.log(elemA));
+        for(let i = 0; i < 3 - subarrays.length; i++) {
+            subarrays.push(['']);
+        }
 
-        subarrays[0].forEach(elemA =>
-            subarrays[1].forEach(elemB =>
-                subarrays[2].forEach(function(elemC) {
-                    let possibleRoute = elemA.concat(elemB).concat(elemC);
-                    let dist = functions.calculateTotalDistance(possibleRoute);
-                    if(dist < minDistance) {
-                        minDistance = dist;
-                        bestRoute = possibleRoute;
-                    }
-                })));
+       
+        let possibleRoutes = subarrays.reduce((a, b) => a.reduce((r, v) => r.concat(b.map(w => [].concat(v, w))), []));
+        possibleRoutes.forEach(possibleRoute => {
+            possibleRoute = possibleRoute.filter(function (elem) {
+                return elem != " ";
+            });
+            console.log(possibleRoute);
+            let firstPoint = possibleRoute[0];
+            let lastPoint = possibleRoute[possibleRoute.length - 1];
+
+            let dist = functions.calculateTotalDistance(possibleRoute)
+                + this.calculateDistance(EntryPoint, firstPoint) 
+                + this.calculateDistance(lastPoint, OutPoint);
+            console.log(dist);
+            if(dist < minDistance) {
+                minDistance = dist;
+                bestRoute = possibleRoute;
+            }
+        });
 
         console.log("Min distance = " + minDistance);
         console.log("Best route: " + bestRoute);
         
         return bestRoute;
-
 
     }
 }
