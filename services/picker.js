@@ -3,7 +3,7 @@ import db from '../db/pickers';
 
 const picker = {
     getPickers(){
-        return db.getPickingWaves();
+        return db.getPickers();
     },
 
     submitPicker(picker, pw){

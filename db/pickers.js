@@ -9,17 +9,18 @@ const pickerQueries = {
                 pickers = querySnapShot.val();
                 if (pickers == null) {
                     resolve(false);
-                } else if(!pickers.manager){
-                    resolve(pickers);
-                }
+                } else resolve(pickers);
             });
         })
     },
 
     submitPicker(picker, pw) {
-        db.ref('pickingWaves/').orderByChild('wave').equalTo(pw).update({
-            assignedPicker: picker
-        }).then(() => console.log("Picker "+ assignedPicker +"has benn assigned."));
+        db.ref('pickingWaves/').orderByChild('wave').equalTo(pw).once('value', function (snapshot){
+            snapshot.forEach(function(child){
+                child.ref.update({assignedPicker:picker});
+                child.ref.update({status:"in progress"});
+                })
+            })
     }
 }
 
