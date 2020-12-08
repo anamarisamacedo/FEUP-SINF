@@ -101,6 +101,7 @@ export default function PickerWaveScreen({ navigation, route }) {
   };
 
   useEffect(() => {
+    console.log(pickingWave)
     if (executeFunc) organizeItems(pickingWave.items);
   });
 
