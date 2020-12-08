@@ -40,6 +40,12 @@ const queries = {
             status: "WFR"
         }).then(() => console.log(orderId + " order was created!'"));
     },
+    updateClientOrder: function (orderId, items) {
+
+        db.ref('client_orders/' + orderId).update({
+            items: items
+        }).then(() => console.log(orderId + " order was updated!'"));
+    },
     getClientOrderStatus: function (orderId) {
         return new Promise(resolve => {
             let data = null;
