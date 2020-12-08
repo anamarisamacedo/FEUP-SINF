@@ -55,7 +55,7 @@ const Expandable = ({ items, onClickFunction, input }) => {
             return (
               (!input && (
                 <View style={styles.row} key={i}>
-                  <View style={styles.locColumn}>
+                  <View style={styles.refColumn}>
                     <Text style={styles.textTable}>{i.ref}</Text>
                   </View>
                   <View style={styles.nameColumn}>
@@ -70,7 +70,7 @@ const Expandable = ({ items, onClickFunction, input }) => {
               )) ||
               (input && (
                 <View style={styles.row} key={i}>
-                  <View style={styles.locColumn}>
+                  <View style={styles.refColumn}>
                     <Text style={styles.textTable}>{i.ref}</Text>
                   </View>
                   <View style={styles.nameColumn}>
