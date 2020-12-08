@@ -14,7 +14,7 @@ import { AuthProvider } from "../navigation/AuthProvider";
 export default function PickingWavesScreen({ navigation }) {
   const title = "Picking Waves";
   const [pw, setPw] = useState([]);
-  var nextScreen;
+  
   useEffect(() => {
     pickingWaveService.getPickingWaves().then((response) => {
       setPw(response);

@@ -15,13 +15,12 @@ import GeneralButton from "../components/GeneralButton";
 import Expandable from "../components/Expandable";
 import Navbar from '../components/Navbar';
 import {AuthProvider} from "../navigation/AuthProvider";
-import queries from '../db/Database';
 
 const wave = [
   {
     isExpanded: false,
     section_name: 'A1',
-    items: []
+    items: [],
   },
   {
     isExpanded: false,
@@ -67,6 +66,7 @@ const wave = [
 
 export default function PickerWaveScreen({ navigation, route }) {
   const {pickingWave} = route.params;
+
   const title = "Picking Wave " + pickingWave.wave;
   var subtitle;
 
@@ -126,7 +126,7 @@ export default function PickerWaveScreen({ navigation, route }) {
     temp.forEach(item => {
       item.isExpanded = false;
     })
-    navigation.navigate('PickerInputScreen', {wave: temp, title})
+    navigation.navigate('PickerInputScreen', {waveID: pickingWave.wave, wave: temp, title})
   }
 
   return (
