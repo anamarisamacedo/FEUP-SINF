@@ -27,7 +27,7 @@ function permute(input) {
     input.splice(i, 0, ch);
     usedChars.pop();
   }
-  return permArr
+  return permArr;
 };
 
 const functions = {
@@ -62,13 +62,16 @@ const functions = {
     },
 
     findBestRoute: function (points) {
+
         let subarrays = [];
         let currentWh = 'A';
         let startIndex = 0;
         points.sort();
+        let bestRoute = [];
+        let minDistance = functions.calculateTotalDistance(points);
+        
         for(let i = 0; i < points.length; i++) {
             if(points[i][0] != currentWh) {
-                console.log(points[i][0] + " is different than " + currentWh);
                 subarrays.push(permute(points.slice(startIndex, i)));
                 startIndex = i;
                 currentWh = points[i][0];
@@ -80,12 +83,17 @@ const functions = {
             subarrays[1].forEach(elemB =>
                 subarrays[2].forEach(function(elemC) {
                     let possibleRoute = elemA.concat(elemB).concat(elemC);
-                    console.log(functions.calculateTotalDistance(possibleRoute));
+                    let dist = functions.calculateTotalDistance(possibleRoute);
+                    if(dist < minDistance) {
+                        minDistance = dist;
+                        bestRoute = possibleRoute;
+                    }
                 })));
 
-        subarrays.forEach(element => console.log(element));
+        //console.log("Min distance = " + minDistance);
+        //console.log("Best route: " + bestRoute);
         
-        return subarrays;
+        return bestRoute;
 
 
     }
