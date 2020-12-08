@@ -21,7 +21,7 @@ export default function EntryScreen({ navigation }) {
                 <GeneralButton name="sign up" onPress={() => navigation.navigate('SignUpScreen')} />
 
                 <GeneralButton name="temp" onPress={() => Functions.findBestRoute
-                    (['A11', 'A32', 'B11', 'B32', 'C11', 'C32'])} />
+                    (['A11', 'A32', 'C11', 'C32'])} />
             </View>
         </View>
     );
