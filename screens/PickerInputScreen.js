@@ -58,9 +58,6 @@ export default function PickerInputScreen({ navigation, route }) {
         <View style={styles.bottomRight}></View>
         <View>
           <View style={styles.row}>
-            <View style={styles.locColumn}>
-              <Text style={styles.header}>{"Loc"}</Text>
-            </View>
             <View style={styles.refColumn}>
               <Text style={styles.header}>{"Ref"}</Text>
             </View>
