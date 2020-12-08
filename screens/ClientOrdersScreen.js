@@ -25,18 +25,15 @@ export default function ClientOrdersScreen({ navigation }) {
       .then((response) => response.json())
       .then((orders) => {setOrders(orders)})
       .finally(setLoading(false));
-  }, [])
 
-  orders.map((i) => {
-    console.log("Id: " + i.id);
-    queries.getClientOrderStatus(i.id).then(response => {
-        console.log("Response: " + response);
-        var aux = status;
-        aux.set(i.id, response);
-        setStatus(aux);
-        console.log("Status: " + status.get(i.id));
-    });
-  });
+      orders.map((i) => {
+        queries.getClientOrderStatus(i.id).then(response => {
+            var aux = status;
+            aux.set(i.id, response);
+            setStatus(aux);
+        });
+      });
+  }, [orders, status]);
 
   return (
     <View style={styles.main}>
@@ -61,7 +58,6 @@ export default function ClientOrdersScreen({ navigation }) {
             </View>
           </View>
           {orders.map((i) => {
-            console.log("Here: " + status.get(i.id));
             return(
               <TouchableOpacity
                 onPress={() => navigation.navigate('OrderDetailsScreen', {id: 'Client ' + i.buyerCustomerParty, orderId: i.id, date: i.documentDate, client: true, status: status.get(i.id)})}

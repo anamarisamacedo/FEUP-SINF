@@ -60,7 +60,7 @@ const queries = {
                 data = querySnapShot.val();
                 if (data == null) {
                     resolve(false);
-                } else resolve(data[0].status);
+                } else resolve(data.status);
             });
         })
     }

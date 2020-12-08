@@ -8,6 +8,7 @@ import queries from "../db/Database";
 
 export default function SupplierOrdersScreen({ navigation }) {
   const [orders, setOrders] = useState([]);
+  const [status, setStatus] = useState(new Map());
   const [isLoading, setLoading] = useState(true);
   const title = "Suppliers' Orders";
   const accessToken = token.getToken();
@@ -25,7 +26,16 @@ export default function SupplierOrdersScreen({ navigation }) {
       .then((response) => response.json())
       .then((orders) => {setOrders(orders)})
       .finally(setLoading(false));
-  }, [])
+
+      orders.map((i) => {
+        queries.getSupplierOrderStatus(i.id).then(response => {
+            var aux = status;
+            aux.set(i.id, response);
+            setStatus(aux);
+        });
+      });
+  }, [orders, status])
+
   return (
     <View style={styles.main}>
       <Navbar navigation={navigation}/>
@@ -49,11 +59,9 @@ export default function SupplierOrdersScreen({ navigation }) {
             </View>
           </View>
           {orders.map((i) => {
-            queries.getClientOrderStatus(i.id).then(response => {
-              var status = response;
               return (
                 <TouchableOpacity
-                  onPress={() => navigation.navigate("OrderDetailsScreen", {id: 'Supplier ' + i.sellerSupplierPartyName, orderId: i.id, date: i.documentDate, client: false, status: status})}
+                  onPress={() => navigation.navigate("OrderDetailsScreen", {id: 'Supplier ' + i.sellerSupplierPartyName, orderId: i.id, date: i.documentDate, client: false, status: status.get(i.id)})}
                 >
                   <View style={styles.row} key={i}>
                     <View style={styles.supplierColumn}>
@@ -66,12 +74,11 @@ export default function SupplierOrdersScreen({ navigation }) {
                       <Text style={styles.textTable}>{Moment(i.documentDate).format('YYYY/MM/DD')}</Text>
                     </View>
                     <View style={styles.statusColumn}>
-                      <Text style={[styles.textTable, {textAlign: 'right'}]}>{status}</Text>
+                      <Text style={[styles.textTable, {textAlign: 'right'}]}>{status.get(i.id)}</Text>
                     </View>
                   </View>
                 </TouchableOpacity>
               );
-            })
           })}
         </View>
       </View>
