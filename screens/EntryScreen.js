@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Dimensions, Image, Text } from 'react-native';
 import { createDrawerNavigator, DrawerActions } from '@react-navigation/drawer';
 import GeneralButton from '../components/GeneralButton';
+import Functions from '../logic/routes';
 import LogoImage from "../images/logo.png";
 
 const Drawer = createDrawerNavigator();
@@ -18,6 +19,8 @@ export default function EntryScreen({ navigation }) {
                 <GeneralButton name="login" onPress={() => navigation.navigate('LoginScreen')} />
                 <View style={{ marginVertical: 30 }}></View>
                 <GeneralButton name="sign up" onPress={() => navigation.navigate('SignUpScreen')} />
+
+                <GeneralButton name="temp" onPress={() => console.log(Functions.calculateDistance('A11', 'A12'))} />
             </View>
         </View>
     );
