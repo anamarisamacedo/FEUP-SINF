@@ -4,24 +4,24 @@ const crypto = require('crypto');
 const queries = {
     addAccount: function (email) {
 
-        db.ref('accounts/' + hash(email)).set({
+        db.ref('accounts/' + getUsername(email)).set({
             manager: false
         }).then(() => console.log(email + "'s account was created!'"));
     },
     makeManager: function (email) {
-        db.ref('accounts/' + hash(email)).update({
+        db.ref('accounts/' + getUsername(email)).update({
             manager: true
         }).then(() => console.log(email + " is now a Manager!"));
     },
     revokeManager: function (email) {
-        db.ref('accounts/' + hash(email)).update({
+        db.ref('accounts/' + getUsername(email)).update({
             manager: false
         }).then(() => console.log(email + " is no longer a Manager!"));
     },
     isManager: function (email) {
         return new Promise(resolve => {
             let data = null;
-            db.ref('accounts/' + hash(email)).once('value', querySnapShot => {
+            db.ref('accounts/' + getUsername(email)).once('value', querySnapShot => {
                 data = querySnapShot.val();
                 if (data == null) {
                     resolve(false);
@@ -65,8 +65,11 @@ const queries = {
     }
 }
 
-function hash(string) {
-    return crypto.createHash('sha1').update(string).digest('hex');
+function getUsername(string) {
+    return replaceDot(string.substring(0,string.indexOf("@")));
+}
+function replaceDot(string) {
+    return string.replace('.','');
 }
 
 export default queries;
