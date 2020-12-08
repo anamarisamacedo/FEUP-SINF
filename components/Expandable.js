@@ -13,6 +13,9 @@ const Expandable = ({items,onClickFunction,input}) => {
     //Custom Component for the Expandable List
     const [layoutHeight, setLayoutHeight] = useState(0);
 
+    /*items.map((i) =>{
+      
+    })*/
     const [value, onChangeText] = useState(0);
 
     useEffect(() => {
@@ -58,6 +61,7 @@ const Expandable = ({items,onClickFunction,input}) => {
                 </View>
               </View> ||
               input && 
+              onChangeText(i.picked) &&
               <View style={styles.row} key={i}>
                 <View style={styles.refColumn}>
                   <Text style={styles.textTable}>{i.loc}</Text>

@@ -15,9 +15,11 @@ const pWqueries = {
     },
 
     submitReport(pw, report) {
-        db.ref('pickingWaves/').orderByChild('wave').equalTo(pw).update({
-            report: report
-        }).then(() => console.log(email + "'s account was created!'"));
+        db.ref('pickingWaves/').orderByChild('wave').equalTo(pw).once('value', function (snapshot) {
+            snapshot.forEach(function(child) {
+              child.ref.update({report: report});
+            })
+        })
     }
 }
 
