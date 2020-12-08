@@ -176,7 +176,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   row: {
-    height: 30,
+    height: 40,
     flexDirection: "row",
     borderBottomWidth: 1,
     borderBottomColor: "darkgray",
