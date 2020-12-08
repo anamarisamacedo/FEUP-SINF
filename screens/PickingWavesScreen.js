@@ -138,6 +138,7 @@ export default function PickingWavesScreen({ navigation }) {
       <View style={styles.bottom}>
         <GeneralButton
           name="Generate Picking Wave"
+          fontSize={14}
           onPress={() => navigation.navigate("GeneratePickingWaveScreen")}
         />
       </View>

@@ -5,7 +5,7 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 const GeneralButton = props => {
   return (
     <TouchableOpacity style={styles.button} onPress={props.onPress}>
-      <Text style={styles.text}>{props.name}</Text>
+      <Text style={[styles.text, { fontSize: props.fontSize }]}>{props.name}</Text>
     </TouchableOpacity>
   );
 }
@@ -26,7 +26,13 @@ const styles = StyleSheet.create({
     fontFamily: 'Corbel',
     fontStyle: 'normal',
     fontSize: 18,
+    padding: 2,
+    textAlign: 'center'
   }
 });
+
+GeneralButton.defaultProps = {
+  fontSize: 18,
+};
 
 export default GeneralButton;
