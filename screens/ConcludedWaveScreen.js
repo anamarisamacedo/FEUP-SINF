@@ -144,9 +144,6 @@ export default function PickerWaveScreen({ navigation, route }) {
         </View>
         <View style={styles.rowspace} />
         <View style={styles.row}>
-          <View style={styles.locColumn}>
-            <Text style={styles.header}>{"Loc"}</Text>
-          </View>
           <View style={styles.refColumn}>
             <Text style={styles.header}>{"Ref"}</Text>
           </View>

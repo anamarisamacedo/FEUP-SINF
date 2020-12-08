@@ -13,10 +13,21 @@ const Expandable = ({items,onClickFunction,input}) => {
     //Custom Component for the Expandable List
     const [layoutHeight, setLayoutHeight] = useState(0);
 
-    /*items.map((i) =>{
-      
-    })*/
-    const [value, onChangeText] = useState(0);
+    //items.map((i) =>{
+      const [value, onChangeText] = useState();
+    //})
+
+    const onCheckLimit = (text, limit) => {
+      const parsedQty = Number.parseInt(text)
+      if (Number.isNaN(parsedQty)) {
+        onChangeText(0)
+      } else if (parsedQty > limit) {
+        onChangeText(limit)
+      } else {
+        onChangeText(parsedQty)
+      }
+    }
+    
 
     useEffect(() => {
       if (items.isExpanded) {
@@ -47,9 +58,6 @@ const Expandable = ({items,onClickFunction,input}) => {
             return (
               !input && 
               <View style={styles.row} key={i}>
-                <View style={styles.refColumn}>
-                  <Text style={styles.textTable}>{i.loc}</Text>
-                </View>
                 <View style={styles.locColumn}>
                   <Text style={styles.textTable}>{i.ref}</Text>
                 </View>
@@ -62,9 +70,6 @@ const Expandable = ({items,onClickFunction,input}) => {
               </View> ||
               input && 
               <View style={styles.row} key={i}>
-                <View style={styles.refColumn}>
-                  <Text style={styles.textTable}>{i.loc}</Text>
-                </View>
                 <View style={styles.locColumn}>
                   <Text style={styles.textTable}>{i.ref}</Text>
                 </View>
@@ -74,10 +79,13 @@ const Expandable = ({items,onClickFunction,input}) => {
                 <View style={styles.pqtyColumn}>
                   <TextInput
                     style={styles.quantityInput}
+                    placeholder={i.picked}
                     keyboardType="numeric"
-                    onChangeText={(text) => onChangeText(text)}
+                    editable
+                    onChangeText={(text) => onCheckLimit(text, i.qty)}
                     value={value}
                     maxLength={10}
+                    key={i}
                   />
                   <Text style={styles.textTable}> / {i.qty}</Text>
                 </View>
