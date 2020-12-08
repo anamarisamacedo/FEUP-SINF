@@ -13,7 +13,21 @@ const Expandable = ({ items, onClickFunction, input }) => {
   //Custom Component for the Expandable List
   const [layoutHeight, setLayoutHeight] = useState(0);
 
-  const [value, onChangeText] = useState();
+    //items.map((i) =>{
+      const [value, onChangeText] = useState();
+    //})
+
+    const onCheckLimit = (text, limit) => {
+      const parsedQty = Number.parseInt(text)
+      if (Number.isNaN(parsedQty)) {
+        onChangeText(0)
+      } else if (parsedQty > limit) {
+        onChangeText(limit)
+      } else {
+        onChangeText(parsedQty)
+      }
+    }
+    
 
   const onCheckLimit = (text, limit) => {
     const parsedQty = Number.parseInt(text);
