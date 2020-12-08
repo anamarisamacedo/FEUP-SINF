@@ -17,8 +17,6 @@ import queries from "../db/Database";
 export default function OrderDetails({ navigation, route }) {
   const {id, orderId, date, client, status} = route.params;
 
-  console.log(orderId);
-
   const [items, setItems] = useState([]);
   const [title, setTitle] = useState("");
   const [isLoading, setLoading] = useState(true);
