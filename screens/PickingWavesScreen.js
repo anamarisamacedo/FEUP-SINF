@@ -9,7 +9,7 @@ import {
 import GeneralButton from "../components/GeneralButton";
 import Navbar from "../components/Navbar";
 import pickingWaveService from "../services/pickingWaves";
-import { AuthProvider, username } from "../navigation/AuthProvider";
+import { AuthProvider } from "../navigation/AuthProvider";
 
 export default function PickingWavesScreen({ navigation }) {
   const title = "Picking Waves";
