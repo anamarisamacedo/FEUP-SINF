@@ -1,5 +1,38 @@
 
 var numOrdersToAnalyze = 3;
+/*var whToInt = {
+    'A11' : 0,
+    'A12' : 1,
+    'A21' : 2,
+    'A22' : 3,
+    'A31' : 4,
+    'A32' : 5,
+    'B11' : 0,
+    'B12' : 1,
+    'B21' : 2,
+    'B22' : 3,
+    'B31' : 4,
+    'B32' : 5,
+    'C11' : 0,
+    'C12' : 1,
+    'C21' : 2,
+    'C22' : 3,
+    'C31' : 4,
+    'C32' : 5
+}*/
+
+var whToInt = {
+    'A1' : 0,
+    'A2' : 1,
+    'A3' : 2,
+    'B1' : 0,
+    'B2' : 1,
+    'B3' : 2,
+    'C1' : 0,
+    'C2' : 1,
+    'C3' : 2,
+}
+
 
 const functions = {
     generatePickingWave: function (orders, numProducts) {
@@ -15,43 +48,53 @@ const functions = {
         }
         orders = orders.slice(0, Math.min(orders.length, Math.max(i + 1, numOrdersToAnalyze)));
 
-        let itemsA = {
+        /*let testArr = [];
+        testArr[0] = 50;
+        testArr[1] = 24;
+        testArr[2] = 35;
+        testArr[5] = 21;
+        console.log(testArr);
+        testArr.sort((a, b) => (a > b) ? -1 : 1);
+        console.log("ARRAY = " + testArr);*/   // TODO: REMOVER VAZIOS!
+
+        let itemsA = [
             /*"A11":
                 {
                     qty: 2,
                     items: [{qty: 2, ref: "aq", orderID: "a12"}]
                 }
-            */}, itemsB = {}, itemsC = {};
+            */], itemsB = [], itemsC = [];
         for(i = 0; i < orders.length; i++) {
             let order = orders[i];
             order.items.forEach(item => {
                 let qtyLeft = item.qty - item.qtyPW;
-                switch(item.loc[0]) {
+                let arrayLocPos = whToInt[item.loc];
+                switch(item.loc[0]) {  
                     case 'A':
-                        if(item.loc in itemsA) {
-                            itemsA[item.loc].qty += qtyLeft;
-                            itemsA[item.loc].items.push({qty: qtyLeft, ref: item.ref, orderID: order.id});
+                        if(typeof itemsA[arrayLocPos] !== 'undefined') {
+                            itemsA[arrayLocPos].qty += qtyLeft;
+                            itemsA[arrayLocPos].items.push({qty: qtyLeft, ref: item.ref, orderID: order.id});
                         }
                         else {
-                            itemsA[item.loc] = {qty: qtyLeft, items: [{qty: qtyLeft, ref: item.ref, orderID: order.id}]};
+                            itemsA[arrayLocPos] = {qty: qtyLeft, items: [{qty: qtyLeft, ref: item.ref, orderID: order.id}]};
                         }
                         break;
                     case 'B':
-                        if(item.loc in itemsB) {
-                            itemsB[item.loc].qty += qtyLeft;
-                            itemsB[item.loc].items.push({qty: qtyLeft, ref: item.ref, orderID: order.id});
+                        if(typeof itemsB[arrayLocPos] !== 'undefined') {
+                            itemsB[arrayLocPos].qty += qtyLeft;
+                            itemsB[arrayLocPos].items.push({qty: qtyLeft, ref: item.ref, orderID: order.id});
                         }
                         else {
-                            itemsB[item.loc] = {qty: qtyLeft, items: [{qty: qtyLeft, ref: item.ref, orderID: order.id}]};
+                            itemsB[arrayLocPos] = {qty: qtyLeft, items: [{qty: qtyLeft, ref: item.ref, orderID: order.id}]};
                         }
                         break;
                     case 'C':
-                        if(item.loc in itemsC) {
-                            itemsC[item.loc].qty += qtyLeft;
-                            itemsC[item.loc].items.push({qty: qtyLeft, ref: item.ref, orderID: order.id});
+                        if(typeof itemsC[arrayLocPos] !== 'undefined') {
+                            itemsC[arrayLocPos].qty += qtyLeft;
+                            itemsC[arrayLocPos].items.push({qty: qtyLeft, ref: item.ref, orderID: order.id});
                         }
                         else {
-                            itemsC[item.loc] = {qty: qtyLeft, items: [{qty: qtyLeft, ref: item.ref, orderID: order.id}]};
+                            itemsC[arrayLocPos] = {qty: qtyLeft, items: [{qty: qtyLeft, ref: item.ref, orderID: order.id}]};
                         }
                         break;
                 }
@@ -63,6 +106,8 @@ const functions = {
         console.log(itemsC);
 
         itemsA.sort((a, b) => (a.qty > b.qty) ? -1 : 1);
+
+        console.log(itemsA);
 
         // numProducts = 25
         // Order 1 : {Item1 x20  ,  Item2 x40}
@@ -81,13 +126,11 @@ const functions = {
         // C32     length 14
         // C21     length 13
 
+
+        // while 0 1 2 3 4 5 6 7
+
         // 25x Item1  
         // B22 - {{ref: ..., orderId: ..},{ref: ..., orderId: ..},{ref: ..., orderId: ..},{ref: ..., orderId: ..}}
-
-
-
-
-        console.log(orders);
     },
     calculatePWRatio: function(items) {
         let qty = 0.0, qtyPW = 0.0;
