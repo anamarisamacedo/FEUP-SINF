@@ -5,6 +5,7 @@ import Navbar from '../components/Navbar';
 import jasminConstants from '../services/jasminConstants';
 import token from '../services/token';
 import queries from "../db/Database";
+import functions from "../logic/pickingWaveGen";
 
 export default function GeneratePickingWaveScreen({ navigation }) {
   const title = "Generate Picking Wave";
@@ -30,13 +31,16 @@ export default function GeneratePickingWaveScreen({ navigation }) {
 
   function updateOrders() {
     console.log(orders);
+    let ordersPw = [];
     orders.forEach(order => {
       let items = [];
       order.documentLines.forEach(item => {
-        items.push({ref: item.salesItem, qty: item.quantity, qtdPW: 0, loc: item.warehouse});
-      })
+        items.push({ref: item.salesItem, qty: item.quantity, qtyPW: 1, loc: item.warehouse});
+      });
+      ordersPw.push({id: order.id, items: items, pwRatio: functions.calculatePWRatio(items)})
       queries.updateClientOrder(order.id, items);
-    })
+    });
+    functions.generatePickingWave(ordersPw, 5);
   }
 
   const onCheckLimit = (text, limit) => {
