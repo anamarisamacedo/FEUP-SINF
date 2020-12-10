@@ -10,8 +10,8 @@ const pickingWaves = {
         return db.getAssociatedPickingWaves(picker);
     },
 
-    submitReport(pw, report){
-        return db.submitReport(pw, report);
+    submitReportAndPicked(pw, report, picked){
+        return db.submitReportAndPicked(pw, report, picked);
     }
 }
 

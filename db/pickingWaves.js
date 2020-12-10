@@ -1,5 +1,4 @@
 import { db } from '../config';
-const crypto = require('crypto');
 
 const pWqueries = {
     getPickingWaves() {
@@ -26,12 +25,22 @@ const pWqueries = {
         })
     },
 
-    submitReport(pw, report) {
+    submitReportAndPicked(pw, report, picked) {
+        console.log(picked)
         db.ref('pickingWaves/').orderByChild('wave').equalTo(pw).once('value', function (snapshot) {
             snapshot.forEach(function(child) {
               child.ref.update({report: report});
+              
             })
         })
+        for (var [key, value] of picked) {
+            /*db.ref('pickingWaves/').orderByChild('wave').equalTo(pw).child('items/').orderByChild('ref').equalTo(key).once('value', function (snapshot) {
+                snapshot.forEach(function(child) {
+                  child.ref.update({picked: value});
+                }
+                )
+            })*/
+          }
     }
 }
 

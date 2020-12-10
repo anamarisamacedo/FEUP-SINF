@@ -1,5 +1,4 @@
 import { db } from '../config';
-const crypto = require('crypto');
 
 const queries = {
     addAccount: function (email) {

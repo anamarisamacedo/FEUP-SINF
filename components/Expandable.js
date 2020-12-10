@@ -9,7 +9,7 @@ import {
   TextInput,
 } from "react-native";
 
-const Expandable = ({ items, onClickFunction, input }) => {
+const Expandable = ({ itemsInput, items, onClickFunction, input }) => {
   //Custom Component for the Expandable List
   const [layoutHeight, setLayoutHeight] = useState(0);
 
@@ -21,12 +21,15 @@ const Expandable = ({ items, onClickFunction, input }) => {
     if (Number.isNaN(parsedQty)) {
       inputs.set(ref, 0);
       onChangeText(inputs);
+      itemsInput.set(ref,0)
     } else if (parsedQty > limit) {
       inputs.set(ref, limit);
       onChangeText(inputs);
+      itemsInput.set(ref,limit)
     } else {
       inputs.set(ref, parsedQty);
       onChangeText(inputs);
+      itemsInput.set(ref,parsedQty)
     }
   };
 
