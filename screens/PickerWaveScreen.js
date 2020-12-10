@@ -84,7 +84,6 @@ export default function PickerWaveScreen({ navigation, route }) {
   }
   const organizeItems = (items) => {
     setExecuteFunc(false);
-    console.log(items);
     const array = [...listDataSource];
     items.forEach((item) => {
       array.forEach((wave) => {
