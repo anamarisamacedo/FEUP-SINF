@@ -40,7 +40,7 @@ export default function GeneratePickingWaveScreen({ navigation }) {
       ordersPw.push({id: order.id, items: items, pwRatio: functions.calculatePWRatio(items)})
       queries.updateClientOrder(order.id, items);
     });
-    functions.generatePickingWave(ordersPw, 5);
+    functions.generatePickingWave(ordersPw, 60);
   }
 
   const onCheckLimit = (text, limit) => {

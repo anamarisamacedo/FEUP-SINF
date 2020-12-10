@@ -107,7 +107,66 @@ const functions = {
 
         itemsA.sort((a, b) => (a.qty > b.qty) ? -1 : 1);
 
-        console.log(itemsA);
+        itemsA = itemsA.filter(elem => {
+            return elem != {};
+        });
+        itemsB = itemsB.filter(elem => {
+            return elem != {};
+        });
+        itemsC = itemsC.filter(elem => {
+            return elem != {};
+        });
+
+        console.log(itemsB);
+
+        let stop = false, stopA = false, stopB = false, stopC = false;
+        let n = 0;
+        i = 0;
+        let numItemsChosen = 0;
+        let qty;
+
+        while(!stop && (!stopA || !stopB || !stopC)) {
+            switch(n % 3) {
+                case 0:
+                    if (i < itemsA.length) {
+                        qty = itemsA[i].qty;
+                        if (numItemsChosen + qty >= numProducts) {
+                            stop = true;
+                            qty = numProducts - numItemsChosen;
+                        } else numItemsChosen += qty;
+                        this.updateDB(qty);
+                    } else {
+                        stopA = true;
+                    }
+                    break;
+                case 1:
+                    if (i < itemsB.length) {
+                        qty = itemsB[i].qty;
+                        if (numItemsChosen + qty >= numProducts) {
+                            stop = true;
+                            qty = numProducts - numItemsChosen;
+                        } else numItemsChosen += qty;
+                        this.updateDB(qty);
+                    } else {
+                        stopB = true;
+                    }
+                    break;
+                case 2:
+                    if (i < itemsC.length) {
+                        qty = itemsC[i].qty;
+                        if (numItemsChosen + qty >= numProducts) {
+                            stop = true;
+                            qty = numProducts - numItemsChosen;
+                        } else numItemsChosen += qty;
+                        this.updateDB(qty);
+                    } else {
+                        stopC = true;
+                    }
+                    i++;
+                    break;
+            }
+            n++;
+        }
 
         // numProducts = 25
         // Order 1 : {Item1 x20  ,  Item2 x40}
@@ -139,6 +198,9 @@ const functions = {
             qtyPW += item.qtyPW; 
         });
         return qtyPW/qty;
+    },
+    updateDB: function(qty) {
+        console.log("Quantity picked: " + qty);
     }
 }
 
