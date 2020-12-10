@@ -1,7 +1,15 @@
-import React, {useState} from "react";
-import { StyleSheet, Text, TextInput, View, Dimensions, Button, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import {
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+  Dimensions,
+  Button,
+  TouchableOpacity,
+} from "react-native";
 import GeneralButton from "../components/GeneralButton";
-import Navbar from '../components/Navbar';
+import Navbar from "../components/Navbar";
 
 const pickingWaves = [
   {
@@ -44,12 +52,22 @@ const pickingWaves = [
 
 export default function GeneratePickingWaveScreen({ navigation }) {
   const title = "Generate Picking Wave";
-  const [productNum,onChangeText] = useState('0');
+  const [value, onChangeText] = useState("0");
+
+  const onCheckLimit = (text, limit) => {
+    const parsedQty = Number.parseInt(text);
+    if (Number.isNaN(parsedQty)) {
+      onChangeText(0);
+    } else if (parsedQty > limit) {
+      onChangeText(limit);
+    } else {
+      onChangeText(parsedQty);
+    }
+  };
 
   return (
-    
     <View style={styles.main}>
-      <Navbar navigation={navigation}/>
+      <Navbar navigation={navigation} />
       <View style={styles.container}>
         <View style={styles.title}>
           <Text style={styles.text}>{title}</Text>
@@ -57,10 +75,21 @@ export default function GeneratePickingWaveScreen({ navigation }) {
       </View>
       <View style={styles.row}>
         <Text style={styles.text2}> Max Number of Products: </Text>
-        <TextInput keyboardType='numeric' style={styles.input} placeholder="0" onChangeText={(text) => onChangeText(text)}/>
+        <TextInput
+          keyboardType="numeric"
+          style={styles.input}
+          placeholder={0}
+          onChangeText={(text) => onCheckLimit(text, 10)}
+          value={value}
+          maxLength={10}
+        />
       </View>
       <View style={styles.bottom}>
-        <GeneralButton name="Generate Picking Wave" fontSize={14} onPress={() => console.log("Pressed generate pw")} />
+        <GeneralButton
+          name="Generate Picking Wave"
+          fontSize={14}
+          onPress={() => console.log("Pressed generate pw")}
+        />
       </View>
     </View>
   );
@@ -124,11 +153,10 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   row: {
-    flexDirection: 'row',
+    flexDirection: "row",
     alignItems: "center",
-    marginTop: '10em',
-    marginLeft: '5em',
-
+    marginTop: "10em",
+    marginLeft: "5em",
   },
   waveColumn: { flexDirection: "column", flex: 0.6 },
   dateColumn: { flexDirection: "column", flex: 0.9 },
@@ -136,24 +164,22 @@ const styles = StyleSheet.create({
   statusColumn: { flexDirection: "column", flex: 0.9 },
 
   text2: {
-      color: "#d3d3d3",
-      fontFamily: "Corbel",
-      fontStyle: "normal",
-      fontWeight: "bold",
-      fontSize: 14,
-
-    },
+    color: "#d3d3d3",
+    fontFamily: "Corbel",
+    fontStyle: "normal",
+    fontWeight: "bold",
+    fontSize: 14,
+  },
 
   input: {
-      borderBottomColor: "lightgray",
-      borderBottomWidth: 1,
-      width: 50,
-      color: "#d3d3d3",
-      fontFamily: "Corbel",
-      fontStyle: "normal",
-      fontWeight: "bold",
-      fontSize: 14,
-      textAlign: "center",
-
-    },
+    borderBottomColor: "lightgray",
+    borderBottomWidth: 1,
+    width: 50,
+    color: "#d3d3d3",
+    fontFamily: "Corbel",
+    fontStyle: "normal",
+    fontWeight: "bold",
+    fontSize: 14,
+    textAlign: "center",
+  },
 });

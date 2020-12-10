@@ -9,20 +9,27 @@ import {
   TextInput,
 } from "react-native";
 
-const Expandable = ({ items, onClickFunction, input }) => {
+const Expandable = ({ itemsInput, items, onClickFunction, input }) => {
   //Custom Component for the Expandable List
   const [layoutHeight, setLayoutHeight] = useState(0);
 
-  const [value, onChangeText] = useState();
+  const [value, onChangeText] = useState(new Map());
+  var inputs = new Map()
 
-  const onCheckLimit = (text, limit) => {
+  const onCheckLimit = (text, limit, ref) => {
     const parsedQty = Number.parseInt(text);
     if (Number.isNaN(parsedQty)) {
-      onChangeText(0);
+      inputs.set(ref, 0);
+      onChangeText(inputs);
+      itemsInput.set(ref,0)
     } else if (parsedQty > limit) {
-      onChangeText(limit);
+      inputs.set(ref, limit);
+      onChangeText(inputs);
+      itemsInput.set(ref,limit)
     } else {
-      onChangeText(parsedQty);
+      inputs.set(ref, parsedQty);
+      onChangeText(inputs);
+      itemsInput.set(ref,parsedQty)
     }
   };
 
@@ -82,8 +89,8 @@ const Expandable = ({ items, onClickFunction, input }) => {
                       placeholder={i.picked}
                       keyboardType="numeric"
                       editable
-                      onChangeText={(text) => onCheckLimit(text, i.qty)}
-                      value={value}
+                      onChangeText={(text) => onCheckLimit(text, i.qty, i.ref)}
+                      value={value.get(i.ref)}
                       maxLength={10}
                       key={i}
                     />

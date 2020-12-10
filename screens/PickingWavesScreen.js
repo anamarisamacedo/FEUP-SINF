@@ -9,7 +9,7 @@ import {
 import GeneralButton from "../components/GeneralButton";
 import Navbar from "../components/Navbar";
 import pickingWaveService from "../services/pickingWaves";
-import { AuthProvider, username } from "../navigation/AuthProvider";
+import { AuthProvider } from "../navigation/AuthProvider";
 
 export default function PickingWavesScreen({ navigation }) {
   const title = "Picking Waves";
@@ -17,12 +17,12 @@ export default function PickingWavesScreen({ navigation }) {
   var username;
   useEffect(() => {
     username = AuthProvider.Username;
-    if (AuthProvider.IsManager) {
+    //if (AuthProvider.IsManager) {
       pickingWaveService.getPickingWaves().then((response) => {
         
         setPw(response);
       });
-    } else {
+    /*} else {
       pickingWaveService
         .getAssociatedPickingWaves(username)
         .then((response) => {
@@ -32,7 +32,7 @@ export default function PickingWavesScreen({ navigation }) {
             setPw([response[Object.keys(response)[0]]])
           }
           });
-    }
+    }*/
   });
   return (
     <View style={styles.main}>

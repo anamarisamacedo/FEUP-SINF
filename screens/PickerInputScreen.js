@@ -9,8 +9,7 @@ import {
   TouchableOpacity,
   LayoutAnimation,
   ScrollView,
-  Platform,
-  Button,
+  Platform, Alert
 } from "react-native";
 import BackButton from "../components/BackButton";
 import GeneralButton from "../components/GeneralButton";
@@ -20,9 +19,8 @@ import pickingWaves from "../services/pickingWaves";
 
 export default function PickerInputScreen({ navigation, route }) {
   const [value, onChangeText] = useState("Submit any observations or comments here");
-
   const {waveID, wave, title} = route.params;
-
+  const [itemsInput, setItemsInput] = useState(new Map());
   const [listDataSource, setListDataSource] = useState(wave);
   const multiSelect = true;
 
@@ -47,6 +45,21 @@ export default function PickerInputScreen({ navigation, route }) {
     }
     setListDataSource(array);
   };
+
+  const reporAlert = () => 
+  Alert.alert(
+    "Alert Title",
+    "My Alert Msg",
+    [
+      {
+        text: "Cancel",
+        onPress: () => console.log("Cancel Pressed"),
+        style: "cancel"
+      },
+      { text: "OK", onPress: () => console.log("OK Pressed") }
+    ],
+    { cancelable: false }
+  );
 
   return (
     <View style={styles.main}>
@@ -82,7 +95,7 @@ export default function PickerInputScreen({ navigation, route }) {
                 </View>
                 <ScrollView>
                   {listDataSource.map((wave, key) => (
-                    <Expandable
+                    <Expandable itemsInput={itemsInput}
                       key={wave.section_name}
                       onClickFunction={() => {
                         updateLayout(key);
@@ -106,7 +119,7 @@ export default function PickerInputScreen({ navigation, route }) {
       </View>
       <View style={styles.bottomRow}>
         <BackButton onPress={() => navigation.goBack()} />
-        <GeneralButton name="Submit" onPress={() => pickingWaves.submitReport(waveID, value)}/>
+        <GeneralButton name="Submit" onPress={() => {pickingWaves.submitReportAndPicked(waveID, value, itemsInput), navigation.navigate("PickingWavesScreen")}}/>
       </View>
     </View>
   );
