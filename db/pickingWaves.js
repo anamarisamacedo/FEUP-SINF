@@ -34,9 +34,8 @@ const pWqueries = {
             })
         })
         for (var [key, value] of pickedItems) {
-            db.ref('pickingWaves/').orderByChild('wave').equalTo(pw).once('value', function (snapshot) {
+            db.ref('pickingWaves/').orderByChild('wave').equalTo(pw).child('items').orderByChild('ref').equalTo(key).once('value', function (snapshot) {
                 snapshot.forEach(function(child) {
-                    child.child('items').orderByChild('ref').equalTo(key)
                     child.ref.update({picked: value});
                 }
                 )
