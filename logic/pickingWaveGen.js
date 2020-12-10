@@ -36,6 +36,7 @@ var whToInt = {
 
 const functions = {
     generatePickingWave: function (orders, numProducts) {
+        console.log(orders);
         orders.sort((a, b) => (a.pwRatio > b.pwRatio) ? -1 : 1);
         let i = 0, totalNumProducts = 0;
         for(i = 0; i < orders.length; i++) {

@@ -46,6 +46,24 @@ const queries = {
             items: items
         }).then(() => console.log(orderId + " order was updated!'"));
     },
+    getClientOrdersQtyPW: function() {
+        return new Promise(resolve => {
+            db.ref("client_orders/").once('value', querySnapShot => {
+                let orders = querySnapShot.val();
+                let ordersQtyPw = {};
+                for (let order in orders) {
+                    if (orders[order].status != "WFP") {
+                        let items = {};
+                        for (let item in orders[order].items) {
+                            items[item] = orders[order].items[item];
+                        }
+                        ordersQtyPw[order] = items;
+                    }
+                }
+                resolve(ordersQtyPw);
+            });
+        })
+    },
     getClientOrderStatus: function (orderId) {
         return new Promise(resolve => {
             let data = null;

@@ -11,10 +11,13 @@ export default function GeneratePickingWaveScreen({ navigation }) {
   const title = "Generate Picking Wave";
   const [value, onChangeText] = useState("0");
   const [orders, setOrders] = useState([]); 
-  const [callFunction, setCallFunction] = useState(true);
+  const [ordersQtyPw, setOrdersQtyPw] = useState({});
   const accessToken = token.getToken();
 
   useEffect(() => {
+    queries.getClientOrdersQtyPW().then(orders => {
+      setOrdersQtyPw(orders);
+    });
     const apiUrl = jasminConstants.url +"/api/" + jasminConstants.accountKey + "/" + jasminConstants.subscriptionKey + "/sales/orders";
     fetch(apiUrl, {
       method: "GET",
@@ -32,10 +35,11 @@ export default function GeneratePickingWaveScreen({ navigation }) {
     orders.forEach(order => {
       let items = [];
       order.documentLines.forEach(item => {
-        items.push({ref: item.salesItem, qty: item.quantity, qtyPW: 1, loc: item.warehouse});
+        let qtyPW = order.id in ordersQtyPw ? ordersQtyPw[order.id][items.salesItem] : 0;
+        items.push({ref: item.salesItem, qty: item.quantity, qtyPW: qtyPW, loc: item.warehouse});
       });
       ordersPw.push({id: order.id, items: items, pwRatio: functions.calculatePWRatio(items)});
-      queries.updateClientOrder(order.id, items);
+      //queries.updateClientOrder(order.id, items);
     });
     functions.generatePickingWave(ordersPw, 100);
   }
