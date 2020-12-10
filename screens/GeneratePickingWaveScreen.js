@@ -60,7 +60,7 @@ export default function GeneratePickingWaveScreen({ navigation }) {
         <TextInput keyboardType='numeric' style={styles.input} placeholder="0" onChangeText={(text) => onChangeText(text)}/>
       </View>
       <View style={styles.bottom}>
-        <GeneralButton name="Generate Picking Wave" onPress={() => console.log("Pressed generate pw")} />
+        <GeneralButton name="Generate Picking Wave" fontSize={14} onPress={() => console.log("Pressed generate pw")} />
       </View>
     </View>
   );

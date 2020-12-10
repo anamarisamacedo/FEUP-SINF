@@ -21,12 +21,10 @@ import pickingWaves from "../services/pickingWaves";
 export default function PickerInputScreen({ navigation, route }) {
   const [value, onChangeText] = useState("Submit any observations or comments here");
 
-  const {wave, title} = route.params;
+  const {waveID, wave, title} = route.params;
 
   const [listDataSource, setListDataSource] = useState(wave);
   const multiSelect = true;
-
-  console.log(wave);
 
   if (Platform.OS === 'android') {
     UIManager.setLayoutAnimationEnabledExperimental(true);
@@ -60,9 +58,6 @@ export default function PickerInputScreen({ navigation, route }) {
         <View style={styles.bottomRight}></View>
         <View>
           <View style={styles.row}>
-            <View style={styles.locColumn}>
-              <Text style={styles.header}>{"Loc"}</Text>
-            </View>
             <View style={styles.refColumn}>
               <Text style={styles.header}>{"Ref"}</Text>
             </View>
@@ -111,7 +106,7 @@ export default function PickerInputScreen({ navigation, route }) {
       </View>
       <View style={styles.bottomRow}>
         <BackButton onPress={() => navigation.goBack()} />
-        <GeneralButton name="Submit" onPress={() => pickingWaves.submitReport(value)}/>
+        <GeneralButton name="Submit" onPress={() => pickingWaves.submitReport(waveID, value)}/>
       </View>
     </View>
   );

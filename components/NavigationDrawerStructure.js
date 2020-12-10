@@ -59,7 +59,7 @@ const NavigationDrawerStructure = props => {
                     </View>
                 </TouchableHighlight>
                 {
-                    AuthProvider.IsManager && 
+                    //AuthProvider.IsManager && 
                     <TouchableHighlight onPress={() => props.navigation.navigate('GeneratePickingWaveScreen')}>
                         <View style={styles.line}>
                             <Text style={styles.text}>

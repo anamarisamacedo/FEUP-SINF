@@ -1,12 +1,27 @@
 import React, { useState, useEffect } from "react";
 
 var request = require("request");
-const tempToken = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IkFEM0Q1RDJERjM4OTZBMDUwMzYwNzVDQkNFNDc0RDJBMjI4MUVCM0UiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJyVDFkTGZPSmFnVURZSFhMemtkTktpS0I2ejQifQ.eyJuYmYiOjE2MDc0MjYwMjIsImV4cCI6MTYwNzQ0MDQyMiwiaXNzIjoiaHR0cHM6Ly9pZGVudGl0eS5wcmltYXZlcmFic3MuY29tIiwiYXVkIjpbImh0dHBzOi8vaWRlbnRpdHkucHJpbWF2ZXJhYnNzLmNvbS9yZXNvdXJjZXMiLCJqYXNtaW4iXSwiY2xpZW50X2lkIjoiU0lORjA0WUFQUCIsInNjb3BlIjpbImFwcGxpY2F0aW9uIl19.pErPKJkxY5fUOxztUk1k17fXqQA2XNXQ2m-AfCC9n__CzpTCVMxm8lQNFRCrVpNBx_LyBB4iS19o4kmoedb4WufP2Dhg-fuc4rJDu_OzNntPi2L-hvwaGm9piRu8ITL_ub0wAlGSef7e3xXYXwJlgY4NIDLZm0U63ziby-UKmSUqmjrGgR80VZ8iJ6JZQZn63XEphesQXTbXfKlhtgpKdg2Se6aEfcLTUSZ0W03noZCAVasTMBM_p6kBkLV3hgDJ_KvJUCN_xpWGD4yjg4LRK1HM_ri-NI8oIdozMD0IbaWjwM2TGHFMwjgNm8bhnLzMD7CASJLHEJ0_cGSkFlaNRQ';
+const tempToken = 'eyJhbGciOiJSUzI1NiIsImtpZCI6IkFEM0Q1RDJERjM4OTZBMDUwMzYwNzVDQkNFNDc0RDJBMjI4MUVCM0UiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJyVDFkTGZPSmFnVURZSFhMemtkTktpS0I2ejQifQ.eyJuYmYiOjE2MDc1Mjg4NzksImV4cCI6MTYwNzU0MzI3OSwiaXNzIjoiaHR0cHM6Ly9pZGVudGl0eS5wcmltYXZlcmFic3MuY29tIiwiYXVkIjpbImh0dHBzOi8vaWRlbnRpdHkucHJpbWF2ZXJhYnNzLmNvbS9yZXNvdXJjZXMiLCJqYXNtaW4iXSwiY2xpZW50X2lkIjoiU0lORjA0WUFQUCIsInNjb3BlIjpbImFwcGxpY2F0aW9uIl19.S5jPxmTRWEITvKfa8FMzuMN9KtALs4dyxsLoKXTOPVgXfwYa9CdfP3FSZijMzEHvOSTxKKQLe_zPadbelvWRs5NBmDNPIoloQ47eS_efX27NktYA8DfAZwMYtNYIkaeyH54pkgWLyuKWPOXISAuY0TzUpvnkOKPHtNElvJWc_EpZi9akTU7kVHg-iSZbJE9M_3CbCI06TgJVyzXCq_vbdGRB5RZLvrbc9feWp4SLZFlXmSp-uoX_xJ_nRvkRj4m0PQLLizhz9L0x97AFwxBccnI6IPi7E_vsImMBpw9oUQqGoH8jFaHUh-zj-jKIT98ZtiZHWvnIEA7hd25K7sJTPQ';
 var finalToken = '';
 
-const token = {
+const functions = require('firebase-functions');
+const express = require('express');
+const cors = require('cors');
+const app = express();
 
+const token = {
   loginPrimavera(){
+
+    // Automatically allow cross-origin requests
+    app.use(cors({ origin: true }));
+
+    app.post('https://identity.primaverabss.com/connect/token', (req, res) => {
+      res.end("Received POST request!");  
+    });
+
+// Expose Express API as a single Cloud Function:
+exports.widgets = functions.https.onRequest(app);
+
     /*const options = {
       method: 'POST',
       url: 'https://identity.primaverabss.com/connect/token',

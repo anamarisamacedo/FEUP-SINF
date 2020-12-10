@@ -62,6 +62,9 @@ const queries = {
                 } else resolve(data.status);
             });
         })
+    },
+    getUsername: function(email){
+        return getUsername(email);
     }
 }
 

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -8,98 +8,102 @@ import {
   ScrollView,
   LayoutAnimation,
   TouchableOpacity,
-  SafeAreaView
+  SafeAreaView,
 } from "react-native";
 import BackButton from "../components/BackButton";
 import GeneralButton from "../components/GeneralButton";
 import Expandable from "../components/Expandable";
-import Navbar from '../components/Navbar';
-import {AuthProvider} from "../navigation/AuthProvider";
-import queries from '../db/Database';
+import Navbar from "../components/Navbar";
+import { AuthProvider } from "../navigation/AuthProvider";
 
 const wave = [
   {
     isExpanded: false,
-    section_name: 'A1',
-    items: []
+    section_name: "A1",
+    items: [],
   },
   {
     isExpanded: false,
-    section_name: 'A2',
-    items: []
+    section_name: "A2",
+    items: [],
   },
   {
     isExpanded: false,
-    section_name: 'A3',
-    items: []
+    section_name: "A3",
+    items: [],
   },
   {
     isExpanded: false,
-    section_name: 'B1',
-    items: []
+    section_name: "B1",
+    items: [],
   },
   {
     isExpanded: false,
-    section_name: 'B2',
-    items: []
+    section_name: "B2",
+    items: [],
   },
   {
     isExpanded: false,
-    section_name: 'B3',
-    items: []
+    section_name: "B3",
+    items: [],
   },
   {
     isExpanded: false,
-    section_name: 'C1',
-    items: []
+    section_name: "C1",
+    items: [],
   },
   {
     isExpanded: false,
-    section_name: 'C2',
-    items: []
+    section_name: "C2",
+    items: [],
   },
   {
     isExpanded: false,
-    section_name: 'C3',
-    items: []
+    section_name: "C3",
+    items: [],
   },
 ];
 
 export default function PickerWaveScreen({ navigation, route }) {
-  const {pickingWave} = route.params;
-  const title = "Picking Wave " + pickingWave.wave;
-  var subtitle;
+  const { pickingWave } = route.params;
 
-  if(AuthProvider.IsManager){
-    subtitle="Picker: " + pickingWave.assignedPicker +"       Status: " + pickingWave.status;
-  }else 
-  {
-    subtitle = "Status: " + pickingWave.status;
-  }
   const [listDataSource, setListDataSource] = useState(wave);
   const [executeFunc, setExecuteFunc] = useState(true);
 
+  const title = "Picking Wave " + pickingWave.wave;
+  var subtitle;
+
+  if (AuthProvider.IsManager) {
+    subtitle =
+      "Picker: " +
+      pickingWave.assignedPicker +
+      "       Status: " +
+      pickingWave.status;
+  } else {
+    subtitle = "Status: " + pickingWave.status;
+  }
   const organizeItems = (items) => {
     setExecuteFunc(false);
+    console.log(items);
     const array = [...listDataSource];
-    items.forEach(item => {
-      array.forEach(wave => {
+    items.forEach((item) => {
+      array.forEach((wave) => {
         if (item.defaultWarehouse == wave.section_name) {
-          if(!wave.items.includes(item))
-            wave.items.push(item);
+          if (!wave.items.includes(item)) wave.items.push(item);
         }
-      })
+      });
     });
     setListDataSource(array);
-  }
+    console.log(array);
+  };
 
   useEffect(() => {
-    if (executeFunc) organizeItems(pickingWave.items);
+    if (executeFunc) organizeItems(pickingWave.items)
   });
 
   const multiSelect = true;
 
-  if (Platform.OS === 'android') {
+  if (Platform.OS === "android") {
     UIManager.setLayoutAnimationEnabledExperimental(true);
   }
 
@@ -108,14 +112,13 @@ export default function PickerWaveScreen({ navigation, route }) {
     const array = [...listDataSource];
     if (multiSelect) {
       // If multiple select is enabled
-      array[index]['isExpanded'] = !array[index]['isExpanded'];
+      array[index]["isExpanded"] = !array[index]["isExpanded"];
     } else {
       // If single select is enabled
       array.map((value, placeindex) =>
         placeindex === index
-          ? (array[placeindex]['isExpanded'] =
-             !array[placeindex]['isExpanded'])
-          : (array[placeindex]['isExpanded'] = false),
+          ? (array[placeindex]["isExpanded"] = !array[placeindex]["isExpanded"])
+          : (array[placeindex]["isExpanded"] = false)
       );
     }
     setListDataSource(array);
@@ -123,15 +126,19 @@ export default function PickerWaveScreen({ navigation, route }) {
 
   const navigateToInput = () => {
     const temp = [...listDataSource];
-    temp.forEach(item => {
+    temp.forEach((item) => {
       item.isExpanded = false;
-    })
-    navigation.navigate('PickerInputScreen', {wave: temp, title})
-  }
+    });
+    navigation.navigate("PickerInputScreen", {
+      waveID: pickingWave.wave,
+      wave: temp,
+      title,
+    });
+  };
 
   return (
     <View style={styles.main}>
-      <Navbar navigation={navigation}/>
+      <Navbar navigation={navigation} />
       <View style={styles.container}>
         <View style={styles.title}>
           <Text style={styles.text}>{title}</Text>
@@ -141,9 +148,6 @@ export default function PickerWaveScreen({ navigation, route }) {
         </View>
         <View>
           <View style={styles.row}>
-            <View style={styles.locColumn}>
-              <Text style={styles.header}>{"Loc"}</Text>
-            </View>
             <View style={styles.refColumn}>
               <Text style={styles.header}>{"Ref"}</Text>
             </View>
@@ -154,14 +158,14 @@ export default function PickerWaveScreen({ navigation, route }) {
               <Text style={styles.header}>{"P/Qty"}</Text>
             </View>
           </View>
-          <SafeAreaView style={{flex: 1}}>
+          <SafeAreaView style={{ flex: 1 }}>
             <View>
-              <View >
+              <View>
                 <TouchableOpacity>
                   <Text>
                     {multiSelect
-                      ? 'Enable Single \n Expand'
-                      : 'Enalble Multiple \n Expand'}
+                      ? "Enable Single \n Expand"
+                      : "Enalble Multiple \n Expand"}
                   </Text>
                 </TouchableOpacity>
               </View>
@@ -182,12 +186,13 @@ export default function PickerWaveScreen({ navigation, route }) {
         </View>
       </View>
       <View style={styles.bottomRow}>
-        <BackButton onPress={() => navigation.goBack()}/>
-        {
-                    !AuthProvider.IsManager && 
-        <GeneralButton name="Report" onPress={navigateToInput}/>
-        }
-        </View>
+        <BackButton
+          onPress={() => { navigation.goBack();}}
+        />
+        {!AuthProvider.IsManager && (
+          <GeneralButton name="Report" onPress={navigateToInput} />
+        )}
+      </View>
     </View>
   );
 }
@@ -274,13 +279,13 @@ const styles = StyleSheet.create({
   pqtyColumn: { flexDirection: "column", flex: 0.5 },
 
   bottomRow: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      width: "70%",
-      alignSelf: "center",
-      bottom: 40,
-      alignItems: "center",
-      position:"absolute",
-      bottom: 25,
-    },
+    flexDirection: "row",
+    justifyContent: "space-between",
+    width: "70%",
+    alignSelf: "center",
+    bottom: 40,
+    alignItems: "center",
+    position: "absolute",
+    bottom: 25,
+  },
 });

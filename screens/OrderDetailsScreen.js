@@ -17,8 +17,6 @@ import queries from "../db/Database";
 export default function OrderDetails({ navigation, route }) {
   const {id, orderId, date, client, status} = route.params;
 
-  console.log(orderId);
-
   const [items, setItems] = useState([]);
   const [title, setTitle] = useState("");
   const [isLoading, setLoading] = useState(true);
@@ -178,7 +176,7 @@ const styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   row: {
-    height: 30,
+    height: 40,
     flexDirection: "row",
     borderBottomWidth: 1,
     borderBottomColor: "darkgray",

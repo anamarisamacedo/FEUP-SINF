@@ -14,10 +14,24 @@ const pWqueries = {
         })
     },
 
+    getAssociatedPickingWaves(picker) {
+        return new Promise(resolve => {
+            let pw = null;
+            db.ref('pickingWaves/').orderByChild('assignedPicker').equalTo(picker).once('value', querySnapShot => {
+                pw = querySnapShot.val();
+                if (pw == null) {
+                    resolve(false);
+                } else resolve(pw);
+            });
+        })
+    },
+
     submitReport(pw, report) {
-        db.ref('pickingWaves/').orderByChild('wave').equalTo(pw).update({
-            report: report
-        }).then(() => console.log(email + "'s account was created!'"));
+        db.ref('pickingWaves/').orderByChild('wave').equalTo(pw).once('value', function (snapshot) {
+            snapshot.forEach(function(child) {
+              child.ref.update({report: report});
+            })
+        })
     }
 }
 

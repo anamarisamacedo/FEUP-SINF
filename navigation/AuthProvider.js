@@ -4,7 +4,7 @@ import queries from '../db/Database';
 
 export const AuthContext = createContext({});
 export var isManager = false;
-
+export var username;
 export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     return (
@@ -17,6 +17,7 @@ export const AuthProvider = ({ children }) => {
               queries.isManager(email).then(response => {
                 AuthProvider.IsManager = response;
                 console.log("User " + email + " is " + (response? "" : "not ") + "a Manager!");
+                AuthProvider.Username = queries.getUsername(email);
               });
               await Firebase.auth().signInWithEmailAndPassword(email, password);
             } catch (e) {
