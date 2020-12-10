@@ -73,28 +73,28 @@ const functions = {
                     case 'A':
                         if(typeof itemsA[arrayLocPos] !== 'undefined') {
                             itemsA[arrayLocPos].qty += qtyLeft;
-                            itemsA[arrayLocPos].items.push({qty: qtyLeft, ref: item.ref, orderID: order.id});
+                            itemsA[arrayLocPos].items.push({wh: item.loc, oldQtyPW: item.qtyPW, qty: qtyLeft, ref: item.ref, orderID: order.id});
                         }
                         else {
-                            itemsA[arrayLocPos] = {qty: qtyLeft, items: [{qty: qtyLeft, ref: item.ref, orderID: order.id}]};
+                            itemsA[arrayLocPos] = {qty: qtyLeft, items: [{wh: item.loc, oldQtyPW: item.qtyPW, qty: qtyLeft, ref: item.ref, orderID: order.id}]};
                         }
                         break;
                     case 'B':
                         if(typeof itemsB[arrayLocPos] !== 'undefined') {
                             itemsB[arrayLocPos].qty += qtyLeft;
-                            itemsB[arrayLocPos].items.push({qty: qtyLeft, ref: item.ref, orderID: order.id});
+                            itemsB[arrayLocPos].items.push({wh: item.loc, oldQtyPW: item.qtyPW, qty: qtyLeft, ref: item.ref, orderID: order.id});
                         }
                         else {
-                            itemsB[arrayLocPos] = {qty: qtyLeft, items: [{qty: qtyLeft, ref: item.ref, orderID: order.id}]};
+                            itemsB[arrayLocPos] = {qty: qtyLeft, items: [{wh: item.loc, oldQtyPW: item.qtyPW, qty: qtyLeft, ref: item.ref, orderID: order.id}]};
                         }
                         break;
                     case 'C':
                         if(typeof itemsC[arrayLocPos] !== 'undefined') {
                             itemsC[arrayLocPos].qty += qtyLeft;
-                            itemsC[arrayLocPos].items.push({qty: qtyLeft, ref: item.ref, orderID: order.id});
+                            itemsC[arrayLocPos].items.push({wh: item.loc, oldQtyPW: item.qtyPW, qty: qtyLeft, ref: item.ref, orderID: order.id});
                         }
                         else {
-                            itemsC[arrayLocPos] = {qty: qtyLeft, items: [{qty: qtyLeft, ref: item.ref, orderID: order.id}]};
+                            itemsC[arrayLocPos] = {qty: qtyLeft, items: [{wh: item.loc, oldQtyPW: item.qtyPW, qty: qtyLeft, ref: item.ref, orderID: order.id}]};
                         }
                         break;
                 }
@@ -106,6 +106,8 @@ const functions = {
         console.log(itemsC);
 
         itemsA.sort((a, b) => (a.qty > b.qty) ? -1 : 1);
+        itemsB.sort((a, b) => (a.qty > b.qty) ? -1 : 1);
+        itemsC.sort((a, b) => (a.qty > b.qty) ? -1 : 1);
 
         itemsA = itemsA.filter(elem => {
             return elem != {};
@@ -129,36 +131,42 @@ const functions = {
             switch(n % 3) {
                 case 0:
                     if (i < itemsA.length) {
-                        qty = itemsA[i].qty;
-                        if (numItemsChosen + qty >= numProducts) {
-                            stop = true;
-                            qty = numProducts - numItemsChosen;
-                        } else numItemsChosen += qty;
-                        this.updateDB(qty);
+                        itemsA[i].items.forEach(item => {
+                            qty = item.qty;
+                            if (numItemsChosen + qty >= numProducts) {
+                                stop = true;
+                                item.qty = numProducts - numItemsChosen;
+                            } else numItemsChosen += qty;
+                            this.updateOrder(item);
+                        });
                     } else {
                         stopA = true;
                     }
                     break;
                 case 1:
                     if (i < itemsB.length) {
-                        qty = itemsB[i].qty;
-                        if (numItemsChosen + qty >= numProducts) {
-                            stop = true;
-                            qty = numProducts - numItemsChosen;
-                        } else numItemsChosen += qty;
-                        this.updateDB(qty);
+                        itemsB[i].items.forEach(item => {
+                            qty = item.qty;
+                            if (numItemsChosen + qty >= numProducts) {
+                                stop = true;
+                                qty = numProducts - numItemsChosen;
+                            } else numItemsChosen += qty;
+                            this.updateOrder(item);
+                        });
                     } else {
                         stopB = true;
                     }
                     break;
                 case 2:
                     if (i < itemsC.length) {
-                        qty = itemsC[i].qty;
-                        if (numItemsChosen + qty >= numProducts) {
-                            stop = true;
-                            qty = numProducts - numItemsChosen;
-                        } else numItemsChosen += qty;
-                        this.updateDB(qty);
+                        itemsC[i].items.forEach(item => {
+                            qty = item.qty;
+                            if (numItemsChosen + qty >= numProducts) {
+                                stop = true;
+                                qty = numProducts - numItemsChosen;
+                            } else numItemsChosen += qty;
+                            this.updateOrder(item);
+                        });
                     } else {
                         stopC = true;
                     }
@@ -199,8 +207,17 @@ const functions = {
         });
         return qtyPW/qty;
     },
-    updateDB: function(qty) {
-        console.log("Quantity picked: " + qty);
+    /*
+        {
+            wh: item.loc, 
+            oldQtyPW: item.qtyPW, 
+            qty: qtyLeft, 
+            ref: item.ref, 
+            orderID: order.id
+        }
+    */
+    updateOrder: function(item) {
+        
     }
 }
 

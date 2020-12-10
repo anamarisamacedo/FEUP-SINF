@@ -15,8 +15,6 @@ export default function GeneratePickingWaveScreen({ navigation }) {
   const accessToken = token.getToken();
 
   useEffect(() => {
-    if (!callFunction) return;
-    setCallFunction(false);
     const apiUrl = jasminConstants.url +"/api/" + jasminConstants.accountKey + "/" + jasminConstants.subscriptionKey + "/sales/orders";
     fetch(apiUrl, {
       method: "GET",
@@ -30,17 +28,16 @@ export default function GeneratePickingWaveScreen({ navigation }) {
   })
 
   function updateOrders() {
-    console.log(orders);
     let ordersPw = [];
     orders.forEach(order => {
       let items = [];
       order.documentLines.forEach(item => {
         items.push({ref: item.salesItem, qty: item.quantity, qtyPW: 1, loc: item.warehouse});
       });
-      ordersPw.push({id: order.id, items: items, pwRatio: functions.calculatePWRatio(items)})
+      ordersPw.push({id: order.id, items: items, pwRatio: functions.calculatePWRatio(items)});
       queries.updateClientOrder(order.id, items);
     });
-    functions.generatePickingWave(ordersPw, 60);
+    functions.generatePickingWave(ordersPw, 100);
   }
 
   const onCheckLimit = (text, limit) => {
