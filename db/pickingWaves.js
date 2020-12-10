@@ -25,22 +25,20 @@ const pWqueries = {
         })
     },
 
-    submitReportAndPicked(pw, report, pickedItems) {
-        console.log(pickedItems)
-        db.ref('pickingWaves/').orderByChild('wave').equalTo(pw).child('items').orderByChild('ref').equalTo(ref).once('value', function (snapshot) {
+    submitReportAndPicked(pw, report, picked) {
+        db.ref('pickingWaves/').orderByChild('wave').equalTo(pw).once('value', function (snapshot) {
             snapshot.forEach(function(child) {
+                for (var [key, value] of picked) {
+                    child.child('items/').forEach((item) =>{
+                        if(item.val().ref == key){
+                            item.ref.update({picked: value})
+                        }
+                    });
+                    }
               child.ref.update({report: report});
               
             })
         })
-        for (var [key, value] of pickedItems) {
-            db.ref('pickingWaves/').orderByChild('wave').equalTo(pw).child('items').orderByChild('ref').equalTo(key).once('value', function (snapshot) {
-                snapshot.forEach(function(child) {
-                    child.ref.update({picked: value});
-                }
-                )
-            })
-          }
     }
 }
 
