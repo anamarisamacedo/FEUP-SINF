@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Navbar from '../components/Navbar';
 import {
   StyleSheet,
@@ -7,32 +7,32 @@ import {
   Dimensions
 } from "react-native";
 import BackButton from "../components/BackButton";
-
-const pickersList = [
-  {
-    code: "001",
-    name: "Trevor Crime Noah",
-    assignedWaves: "2",
-  },
-  {
-    code: "002",
-    name: "Veronica Mars",
-    assignedWaves: "3",
-  },
-  {
-    code: "003",
-    name: "Sherlock Holmes",
-    assignedWaves: "0",
-  },
-  {
-    code: "004",
-    name: "Paul McCartney",
-    assignedWaves: "5",
-  },
-];
+import pickersService from "../services/picker";
+import pickingWaves from "../services/pickingWaves";
 
 export default function PickersListScreen({ navigation, route }) {
   const title = "Pickers";
+
+  const [aux, setAux] = useState([]);
+  const [waves, setWaves] = useState([]);
+  var pickers = [];
+    const [executeFunc, setExecuteFunc] = useState(true);
+      useEffect(() => {
+        pickersService.getPickers().then((response) => {
+          setAux(Object.entries(response));
+        });
+
+        aux.forEach((entry)=>{
+          if(!(((Object.entries(entry[1]))[0])[1])){
+              pickingWaves
+                  .getPWNum(entry[0])
+                  .then((response) => {
+                      pickers.push({name: entry[0],assignedWaves: response});
+                });
+          }
+          });
+      });
+      console.log(pickers);
   return (
     <View style={styles.main}>
       <Navbar navigation={navigation} />
@@ -42,9 +42,6 @@ export default function PickersListScreen({ navigation, route }) {
         </View>
         <View>
           <View style={styles.row}>
-            <View style={styles.codeColumn}>
-              <Text style={styles.header}>{"Code"}</Text>
-            </View>
             <View style={styles.nameColumn}>
               <Text style={styles.header}>{"Name"}</Text>
             </View>
@@ -52,12 +49,9 @@ export default function PickersListScreen({ navigation, route }) {
               <Text style={styles.headerAw}>{"Assigned Waves"}</Text>
             </View>
           </View>
-          {pickersList.map((i) => {
+          {pickers.map((i) => {
             return (
               <View style={styles.row} key={i}>
-                <View style={styles.codeColumn}>
-                  <Text style={styles.textTable}>{i.code}</Text>
-                </View>
                 <View style={styles.nameColumn}>
                   <Text style={styles.textTable}>{i.name}</Text>
                 </View>

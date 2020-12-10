@@ -26,6 +26,16 @@ const pWqueries = {
         })
     },
 
+    getPWNum(picker) {
+        return new Promise(resolve => {
+            let pw = null;
+            db.ref('pickingWaves/').orderByChild('assignedPicker').equalTo(picker).once('value', querySnapShot => {
+                pw = querySnapShot.numChildren();
+                resolve(pw);
+            });
+        })
+    },
+
     submitReport(pw, report) {
         db.ref('pickingWaves/').orderByChild('wave').equalTo(pw).once('value', function (snapshot) {
             snapshot.forEach(function(child) {

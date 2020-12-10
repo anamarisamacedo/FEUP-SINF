@@ -10,6 +10,10 @@ const pickingWaves = {
         return db.getAssociatedPickingWaves(picker);
     },
 
+    getPWNum(picker){
+        return db.getPWNum(picker);
+    },
+
     submitReport(pw, report){
         return db.submitReport(pw, report);
     }
