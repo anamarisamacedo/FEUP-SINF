@@ -4,7 +4,7 @@ const pickerQueries = {
     getPickers() {
         return new Promise(resolve => {
             let pickers = null;
-            db.ref('accounts/').once('value', querySnapShot => {
+            db.ref('accounts/').orderByChild('manager').equalTo(false).once('value', querySnapShot => {
                 pickers = querySnapShot.val();
                 if (pickers == null) {
                     resolve(false);

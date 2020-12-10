@@ -1,11 +1,6 @@
-import React, {useState, useEffect} from "react";
-import Navbar from '../components/Navbar';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Dimensions
-} from "react-native";
+import React, { useState, useEffect } from "react";
+import Navbar from "../components/Navbar";
+import { StyleSheet, Text, View, Dimensions } from "react-native";
 import BackButton from "../components/BackButton";
 import pickersService from "../services/picker";
 import pickingWaves from "../services/pickingWaves";
@@ -13,26 +8,23 @@ import pickingWaves from "../services/pickingWaves";
 export default function PickersListScreen({ navigation, route }) {
   const title = "Pickers";
 
-  const [aux, setAux] = useState([]);
   const [waves, setWaves] = useState([]);
   var pickers = [];
-    const [executeFunc, setExecuteFunc] = useState(true);
-      useEffect(() => {
-        pickersService.getPickers().then((response) => {
-          setAux(Object.entries(response));
-        });
-
-        aux.forEach((entry)=>{
-          if(!(((Object.entries(entry[1]))[0])[1])){
-              pickingWaves
-                  .getPWNum(entry[0])
-                  .then((response) => {
-                      pickers.push({name: entry[0],assignedWaves: response});
-                });
-          }
+  useEffect(() => {
+    pickersService.getPickers().then((response) => {
+      var bar = new Promise((resolve, reject) => {
+        Object.entries(response).forEach((entry, index, array) => {
+          pickingWaves.getPWNum(entry[0]).then((response2) => {
+            pickers.push({ name: entry[0], assignedWaves: response2 });
+            if (index === array.length - 1) resolve();
           });
+        });
       });
-      console.log(pickers);
+      bar.then(() => {
+        setWaves(pickers);
+      });
+    });
+  });
   return (
     <View style={styles.main}>
       <Navbar navigation={navigation} />
@@ -49,7 +41,7 @@ export default function PickersListScreen({ navigation, route }) {
               <Text style={styles.headerAw}>{"Assigned Waves"}</Text>
             </View>
           </View>
-          {pickers.map((i) => {
+          {waves.map((i) => {
             return (
               <View style={styles.row} key={i}>
                 <View style={styles.nameColumn}>
@@ -75,7 +67,7 @@ const styles = StyleSheet.create({
   },
   container: {
     justifyContent: "space-evenly",
-    marginHorizontal: 15
+    marginHorizontal: 15,
   },
   list: {
     backgroundColor: "black",
@@ -132,5 +124,5 @@ const styles = StyleSheet.create({
   },
   codeColumn: { flexDirection: "column", flex: 0.6 },
   nameColumn: { flexDirection: "column", flex: 1.5 },
-  awColumn: { flexDirection: "column", alignItems:'center', flex: 1.1 },
+  awColumn: { flexDirection: "column", alignItems: "center", flex: 1.1 },
 });
