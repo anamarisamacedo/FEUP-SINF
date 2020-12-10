@@ -28,9 +28,13 @@ export default function ClientOrdersScreen({ navigation }) {
 
       orders.map((i) => {
         queries.getClientOrderStatus(i.id).then(response => {
-            var aux = status;
-            aux.set(i.id, response);
-            setStatus(aux);
+          if (response == false){
+            queries.addClientOrder(i.id);
+            response = 'WFP';
+          }
+          var aux = status;
+          aux.set(i.id, response);
+          setStatus(aux);
         });
       });
   }, [orders, status]);

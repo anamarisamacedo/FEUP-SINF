@@ -29,6 +29,10 @@ export default function SupplierOrdersScreen({ navigation }) {
 
       orders.map((i) => {
         queries.getSupplierOrderStatus(i.id).then(response => {
+            if (response == false){
+              queries.addSupplierOrder(i.id);
+              response = 'WFR';
+            }
             var aux = status;
             aux.set(i.id, response);
             setStatus(aux);
