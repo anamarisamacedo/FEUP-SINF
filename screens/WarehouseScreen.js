@@ -2,28 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { StyleSheet, View, Dimensions } from 'react-native';
 import WarehouseButton from '../components/WarehouseButton';
 import Navbar from '../components/Navbar';
-import token from "../services/token";
-import jasminConstants from "../services/jasminConstants";
 
 export default function WarehouseScreen({ navigation }) {
-    const [warehouses, setWarehouses] = useState([]);
-    const [isLoading, setLoading] = useState(true);
-    const accessToken = token.getToken();
-    useEffect(() => {
-        const apiUrl = jasminConstants.url + "/api/" + jasminConstants.accountKey + "/" + jasminConstants.subscriptionKey + "/materialscore/warehouses";
- 
-        fetch(apiUrl, {
-          method: "GET",
-          headers: {
-            Accept: "application/json",
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + accessToken,
-          },
-        })
-          .then((response) => response.json())
-          .then((respWarehouses) => {setWarehouses(respWarehouses) })
-          .finally(setLoading(false));
-      }, []);
     return (
         <View style={styles.main}>
             <Navbar navigation={navigation}/>
@@ -43,7 +23,7 @@ export default function WarehouseScreen({ navigation }) {
                     <WarehouseButton id="B3" name="RAM" onPress={() => navigation.navigate('StockListingScreen', {warehouseId: 'a2dd6d80-0829-eb11-8441-0003ff245b52', warehouseName: 'B3', warehouseDescription: 'RAM'})} />
                     <WarehouseButton id="C3" name="PSU" onPress={() => navigation.navigate('StockListingScreen', {warehouseId: '1884bcf9-0829-eb11-8441-0003ff290dc5', warehouseName: 'C3', warehouseDescription: 'PSU'})}/>
                 </View>
-                <View style={[styles.row, { marginTop: 50 }]}>
+                <View style={[styles.row, { marginTop: 30 }]}>
                     <WarehouseButton id="OP" name="" onPress={() => navigation.navigate('OPScreen')} />
                 </View>
             </View>
@@ -67,6 +47,6 @@ const styles = StyleSheet.create({
         marginVertical: 15,
     },
     warehouseBtns: {
-        marginTop: 180
+        marginTop: 80
     }
 });
