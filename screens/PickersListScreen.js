@@ -25,6 +25,7 @@ export default function PickersListScreen({ navigation, route }) {
       });
     });
   });
+  console.log(waves);
   return (
     <View style={styles.main}>
       <Navbar navigation={navigation} />
@@ -41,30 +42,6 @@ export default function PickersListScreen({ navigation, route }) {
               <Text style={styles.headerAw}>{"Assigned Waves"}</Text>
             </View>
           </View>
-<<<<<<< HEAD
-          <ScrollView
-            automaticallyAdjustContentInsets={false}
-            onScroll={() => { console.log('onScroll!'); }}
-            scrollEventThrottle={200}
-            style={styles.scrollView}
-          >
-            {pickersList.map((i) => {
-              return (
-                <View style={styles.row} key={i}>
-                  <View style={styles.codeColumn}>
-                    <Text style={styles.textTable}>{i.code}</Text>
-                  </View>
-                  <View style={styles.nameColumn}>
-                    <Text style={styles.textTable}>{i.name}</Text>
-                  </View>
-                  <View style={styles.awColumn}>
-                    <Text style={styles.textTable}>{i.assignedWaves}</Text>
-                  </View>
-                </View>
-              );
-            })}
-          </ScrollView>
-=======
           {waves.map((i) => {
             return (
               <View style={styles.row} key={i}>
@@ -77,7 +54,6 @@ export default function PickersListScreen({ navigation, route }) {
               </View>
             );
           })}
->>>>>>> picker-input-db
         </View>
       </View>
     </View>
@@ -149,10 +125,5 @@ const styles = StyleSheet.create({
   },
   codeColumn: { flexDirection: "column", flex: 0.6 },
   nameColumn: { flexDirection: "column", flex: 1.5 },
-<<<<<<< HEAD
-  awColumn: { flexDirection: "column", alignItems:'center', flex: 1.1 },
-  scrollView: {height: Dimensions.get('window').height - 300}
-=======
   awColumn: { flexDirection: "column", alignItems: "center", flex: 1.1 },
->>>>>>> picker-input-db
 });

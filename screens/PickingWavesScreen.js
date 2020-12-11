@@ -34,11 +34,7 @@ export default function PickingWavesScreen({ navigation }) {
           }
           });
     }
-<<<<<<< HEAD
-  }});
-=======
   });
->>>>>>> picker-input-db
   return (
     <View style={styles.main}>
       <Navbar navigation={navigation} />
