@@ -129,6 +129,7 @@ const functions = {
         let qty;
 
         while(!stop && (!stopA || !stopB || !stopC)) {
+            console.log("NUM ITEMS CHOSEN, NUM PRODUCTS = " + numItemsChosen + "   " + numProducts);
             switch(n % 3) {
                 case 0:
                     if (i < itemsA.length) {
@@ -136,7 +137,8 @@ const functions = {
                             qty = item.qty;
                             if (numItemsChosen + qty >= numProducts) {
                                 stop = true;
-                                item.qty = numProducts - numItemsChosen;
+                                qty = numProducts - numItemsChosen;
+                                item.qty = qty;
                             } else numItemsChosen += qty;
                             queries.updateOrder(item);
                         });
@@ -151,6 +153,7 @@ const functions = {
                             if (numItemsChosen + qty >= numProducts) {
                                 stop = true;
                                 qty = numProducts - numItemsChosen;
+                                item.qty = qty;
                             } else numItemsChosen += qty;
                             queries.updateOrder(item);
                         });
@@ -165,6 +168,7 @@ const functions = {
                             if (numItemsChosen + qty >= numProducts) {
                                 stop = true;
                                 qty = numProducts - numItemsChosen;
+                                item.qty = qty;
                             } else numItemsChosen += qty;
                             queries.updateOrder(item);
                         });
