@@ -3,7 +3,7 @@ import pwQueries from "../db/pickingWaves";
 
 
 var numOrdersToAnalyze = 3;
-/*var whToInt = {
+var whToInt = {
     'A11' : 0,
     'A12' : 1,
     'A21' : 2,
@@ -22,9 +22,9 @@ var numOrdersToAnalyze = 3;
     'C22' : 3,
     'C31' : 4,
     'C32' : 5
-}*/
+}
 
-var whToInt = {
+/*var whToInt = {
     'A1': 0,
     'A2': 1,
     'A3': 2,
@@ -34,7 +34,7 @@ var whToInt = {
     'C1': 0,
     'C2': 1,
     'C3': 2,
-}
+}*/
 
 
 const functions = {

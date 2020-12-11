@@ -19,48 +19,93 @@ import {AuthProvider} from "../navigation/AuthProvider";
 const wave = [
   {
     isExpanded: false,
-    section_name: 'A1',
-    items: []
+    section_name: "A11",
+    items: [],
   },
   {
     isExpanded: false,
-    section_name: 'A2',
-    items: []
+    section_name: "A12",
+    items: [],
   },
   {
     isExpanded: false,
-    section_name: 'A3',
-    items: []
+    section_name: "A21",
+    items: [],
   },
   {
     isExpanded: false,
-    section_name: 'B1',
-    items: []
+    section_name: "A22",
+    items: [],
   },
   {
     isExpanded: false,
-    section_name: 'B2',
-    items: []
+    section_name: "A31",
+    items: [],
   },
   {
     isExpanded: false,
-    section_name: 'B3',
-    items: []
+    section_name: "A32",
+    items: [],
   },
   {
     isExpanded: false,
-    section_name: 'C1',
-    items: []
+    section_name: "B11",
+    items: [],
   },
   {
     isExpanded: false,
-    section_name: 'C2',
-    items: []
+    section_name: "B12",
+    items: [],
   },
   {
     isExpanded: false,
-    section_name: 'C3',
-    items: []
+    section_name: "B21",
+    items: [],
+  },
+  {
+    isExpanded: false,
+    section_name: "B22",
+    items: [],
+  },
+  {
+    isExpanded: false,
+    section_name: "B31",
+    items: [],
+  },
+  {
+    isExpanded: false,
+    section_name: "B32",
+    items: [],
+  },
+  {
+    isExpanded: false,
+    section_name: "C11",
+    items: [],
+  },
+  {
+    isExpanded: false,
+    section_name: "C12",
+    items: [],
+  },
+  {
+    isExpanded: false,
+    section_name: "C21",
+    items: [],
+  },
+  {
+    isExpanded: false,
+    section_name: "C22",
+    items: [],
+  },
+  {
+    isExpanded: false,
+    section_name: "C31",
+    items: [],
+  },
+  {
+    isExpanded: false,
+    section_name: "C32",
+    items: [],
   },
 ];
 
