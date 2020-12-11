@@ -1,58 +1,52 @@
-import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-  Dimensions,
-  Button,
-  TouchableOpacity,
-} from "react-native";
+import React, {useEffect, useState} from "react";
+import { StyleSheet, Text, TextInput, View, Dimensions, Button, TouchableOpacity, InteractionManager } from "react-native";
 import GeneralButton from "../components/GeneralButton";
-import Navbar from "../components/Navbar";
-
-const pickingWaves = [
-  {
-    wave: "00124",
-    date: "22-10-2020",
-    hour: "08:21",
-    status: "in progress",
-  },
-  {
-    wave: "00125",
-    date: "22-10-2020",
-    hour: "08:21",
-    status: "in progress",
-  },
-  {
-    wave: "00122",
-    date: "22-10-2020",
-    hour: "08:21",
-    status: "concluded",
-  },
-  {
-    wave: "00121",
-    date: "22-10-2020",
-    hour: "08:21",
-    status: "in progress",
-  },
-  {
-    wave: "00120",
-    date: "22-10-2020",
-    hour: "08:21",
-    status: "concluded",
-  },
-  {
-    wave: "00126",
-    date: "22-10-2020",
-    hour: "08:21",
-    status: "in progress",
-  },
-];
+import Navbar from '../components/Navbar';
+import jasminConstants from '../services/jasminConstants';
+import token from '../services/token';
+import queries from "../db/Database";
+import functions from "../logic/pickingWaveGen";
 
 export default function GeneratePickingWaveScreen({ navigation }) {
   const title = "Generate Picking Wave";
   const [value, onChangeText] = useState("0");
+  const [orders, setOrders] = useState([]); 
+  const [ordersQtyPw, setOrdersQtyPw] = useState({});
+  const [execFunc, setExecFunc] = useState(true);
+  const accessToken = token.getToken();
+
+  useEffect(() => {
+    if (execFunc) {
+      setExecFunc(false);
+      queries.getClientOrdersQtyPW().then(orders => {
+        setOrdersQtyPw(orders);
+      });
+      const apiUrl = jasminConstants.url +"/api/" + jasminConstants.accountKey + "/" + jasminConstants.subscriptionKey + "/sales/orders";
+      fetch(apiUrl, {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: "Bearer " + accessToken
+        }})
+        .then((response) => response.json())
+        .then((orders) => {setOrders(orders)})
+    }
+  })
+
+  function generatePW() {
+    let ordersPw = [];
+    orders.forEach(order => {
+      let items = [];
+      order.documentLines.forEach(item => {
+        let qtyPW = (order.id in ordersQtyPw && typeof ordersQtyPw[order.id][item.salesItem] !== 'undefined')? ordersQtyPw[order.id][item.salesItem] : 0;
+        items.push({ref: item.salesItem, qty: item.quantity, qtyPW: qtyPW, loc: item.warehouse, name: item.salesItemDescription});
+      });
+      ordersPw.push({id: order.id, items: items, pwRatio: functions.calculatePWRatio(items)});
+    });
+    functions.generatePickingWave(ordersPw, value);
+    navigation.navigate('PickingWavesScreen');
+  }
 
   const onCheckLimit = (text, limit) => {
     const parsedQty = Number.parseInt(text);
@@ -88,7 +82,7 @@ export default function GeneratePickingWaveScreen({ navigation }) {
         <GeneralButton
           name="Generate Picking Wave"
           fontSize={14}
-          onPress={() => console.log("Pressed generate pw")}
+          onPress={() => generatePW()}
         />
       </View>
     </View>
