@@ -78,7 +78,7 @@ export default function ManagerWaveScreen({ navigation, route }) {
         setAux(Object.entries(response));
       });
     });
-    const pickers = [];
+    let pickers = [];
     aux.forEach((entry)=>{
         if(!(((Object.entries(entry[1]))[0])[1]))
             pickers.push({label: entry[0], value: entry[0]});

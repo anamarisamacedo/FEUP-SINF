@@ -18,7 +18,6 @@ export default function PickingWavesScreen({ navigation }) {
   var username;
   useEffect(() => {
     username = AuthProvider.Username;
-    if(typeof username !== 'undefined'){
     if (AuthProvider.IsManager) {
       pickingWaveService.getPickingWaves().then((response) => {
         
@@ -35,7 +34,11 @@ export default function PickingWavesScreen({ navigation }) {
           }
           });
     }
+<<<<<<< HEAD
   }});
+=======
+  });
+>>>>>>> picker-input-db
   return (
     <View style={styles.main}>
       <Navbar navigation={navigation} />

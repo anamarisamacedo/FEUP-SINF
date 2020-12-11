@@ -1,39 +1,30 @@
-import React from "react";
-import Navbar from '../components/Navbar';
-import {
-  StyleSheet,
-  Text,
-  View,
-  Dimensions,
-  ScrollView
-} from "react-native";
+import React, { useState, useEffect } from "react";
+import Navbar from "../components/Navbar";
+import { StyleSheet, Text, View, Dimensions } from "react-native";
 import BackButton from "../components/BackButton";
-
-const pickersList = [
-  {
-    code: "001",
-    name: "Trevor Crime Noah",
-    assignedWaves: "2",
-  },
-  {
-    code: "002",
-    name: "Veronica Mars",
-    assignedWaves: "3",
-  },
-  {
-    code: "003",
-    name: "Sherlock Holmes",
-    assignedWaves: "0",
-  },
-  {
-    code: "004",
-    name: "Paul McCartney",
-    assignedWaves: "5",
-  },
-];
+import pickersService from "../services/picker";
+import pickingWaves from "../services/pickingWaves";
 
 export default function PickersListScreen({ navigation, route }) {
   const title = "Pickers";
+
+  const [waves, setWaves] = useState([]);
+  var pickers = [];
+  useEffect(() => {
+    pickersService.getPickers().then((response) => {
+      var bar = new Promise((resolve, reject) => {
+        Object.entries(response).forEach((entry, index, array) => {
+          pickingWaves.getPWNum(entry[0]).then((response2) => {
+            pickers.push({ name: entry[0], assignedWaves: response2 });
+            if (index === array.length - 1) resolve();
+          });
+        });
+      });
+      bar.then(() => {
+        setWaves(pickers);
+      });
+    });
+  });
   return (
     <View style={styles.main}>
       <Navbar navigation={navigation} />
@@ -43,9 +34,6 @@ export default function PickersListScreen({ navigation, route }) {
         </View>
         <View>
           <View style={styles.row}>
-            <View style={styles.codeColumn}>
-              <Text style={styles.header}>{"Code"}</Text>
-            </View>
             <View style={styles.nameColumn}>
               <Text style={styles.header}>{"Name"}</Text>
             </View>
@@ -53,6 +41,7 @@ export default function PickersListScreen({ navigation, route }) {
               <Text style={styles.headerAw}>{"Assigned Waves"}</Text>
             </View>
           </View>
+<<<<<<< HEAD
           <ScrollView
             automaticallyAdjustContentInsets={false}
             onScroll={() => { console.log('onScroll!'); }}
@@ -75,6 +64,20 @@ export default function PickersListScreen({ navigation, route }) {
               );
             })}
           </ScrollView>
+=======
+          {waves.map((i) => {
+            return (
+              <View style={styles.row} key={i}>
+                <View style={styles.nameColumn}>
+                  <Text style={styles.textTable}>{i.name}</Text>
+                </View>
+                <View style={styles.awColumn}>
+                  <Text style={styles.textTable}>{i.assignedWaves}</Text>
+                </View>
+              </View>
+            );
+          })}
+>>>>>>> picker-input-db
         </View>
       </View>
     </View>
@@ -89,7 +92,7 @@ const styles = StyleSheet.create({
   },
   container: {
     justifyContent: "space-evenly",
-    marginHorizontal: 15
+    marginHorizontal: 15,
   },
   list: {
     backgroundColor: "black",
@@ -146,6 +149,10 @@ const styles = StyleSheet.create({
   },
   codeColumn: { flexDirection: "column", flex: 0.6 },
   nameColumn: { flexDirection: "column", flex: 1.5 },
+<<<<<<< HEAD
   awColumn: { flexDirection: "column", alignItems:'center', flex: 1.1 },
   scrollView: {height: Dimensions.get('window').height - 300}
+=======
+  awColumn: { flexDirection: "column", alignItems: "center", flex: 1.1 },
+>>>>>>> picker-input-db
 });
