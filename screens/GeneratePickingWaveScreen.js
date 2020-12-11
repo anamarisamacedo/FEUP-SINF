@@ -12,22 +12,26 @@ export default function GeneratePickingWaveScreen({ navigation }) {
   const [value, onChangeText] = useState("0");
   const [orders, setOrders] = useState([]); 
   const [ordersQtyPw, setOrdersQtyPw] = useState({});
+  const [execFunc, setExecFunc] = useState(true);
   const accessToken = token.getToken();
 
   useEffect(() => {
-    queries.getClientOrdersQtyPW().then(orders => {
-      setOrdersQtyPw(orders);
-    });
-    const apiUrl = jasminConstants.url +"/api/" + jasminConstants.accountKey + "/" + jasminConstants.subscriptionKey + "/sales/orders";
-    fetch(apiUrl, {
-      method: "GET",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: "Bearer " + accessToken
-      }})
-      .then((response) => response.json())
-      .then((orders) => {setOrders(orders)})
+    if (execFunc) {
+      setExecFunc(false);
+      queries.getClientOrdersQtyPW().then(orders => {
+        setOrdersQtyPw(orders);
+      });
+      const apiUrl = jasminConstants.url +"/api/" + jasminConstants.accountKey + "/" + jasminConstants.subscriptionKey + "/sales/orders";
+      fetch(apiUrl, {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: "Bearer " + accessToken
+        }})
+        .then((response) => response.json())
+        .then((orders) => {setOrders(orders)})
+    }
   })
 
   function updateOrders() {
@@ -40,7 +44,7 @@ export default function GeneratePickingWaveScreen({ navigation }) {
       });
       ordersPw.push({id: order.id, items: items, pwRatio: functions.calculatePWRatio(items)});
     });
-    functions.generatePickingWave(ordersPw, 100);
+    functions.generatePickingWave(ordersPw, value);
   }
 
   const onCheckLimit = (text, limit) => {

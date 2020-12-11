@@ -70,8 +70,8 @@ const pWqueries = {
                 status: 'pending',
                 wave: nextId,
                 assignedPicker: 'None',
-                createDate: dayStr,
-                createHour: hourStr,
+                createdDate: dayStr,
+                createdHour: hourStr,
                 concludedDate: ' - ',
                 concludedHour: ' - ',
                 report: ""

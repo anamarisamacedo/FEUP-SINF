@@ -41,7 +41,8 @@ const functions = {
     generatePickingWave: function (orders, numProducts) {
         console.log(orders);
         orders.sort((a, b) => (a.pwRatio > b.pwRatio) ? -1 : 1);
-        let i = 0, totalNumProducts = 0;
+        let i = 0,
+            totalNumProducts = 0;
         for (i = 0; i < orders.length; i++) {
             orders[i].items.forEach(item => {
                 totalNumProducts += item.qty - item.qtyPW;
@@ -52,7 +53,9 @@ const functions = {
         }
         orders = orders.slice(0, Math.min(orders.length, Math.max(i + 1, numOrdersToAnalyze)));
 
-        let itemsA = [], itemsB = [], itemsC = [];
+        let itemsA = [],
+            itemsB = [],
+            itemsC = [];
 
         for (i = 0; i < orders.length; i++) {
             let order = orders[i];
@@ -63,28 +66,76 @@ const functions = {
                     case 'A':
                         if (typeof itemsA[arrayLocPos] !== 'undefined') {
                             itemsA[arrayLocPos].qty += qtyLeft;
-                            itemsA[arrayLocPos].items.push({ wh: item.loc, oldQtyPW: item.qtyPW, qty: qtyLeft, ref: item.ref, orderID: order.id, name: item.name });
-                        }
-                        else {
-                            itemsA[arrayLocPos] = { qty: qtyLeft, items: [{ wh: item.loc, oldQtyPW: item.qtyPW, qty: qtyLeft, ref: item.ref, orderID: order.id, name: item.name }] };
+                            itemsA[arrayLocPos].items.push({
+                                wh: item.loc,
+                                oldQtyPW: item.qtyPW,
+                                qty: qtyLeft,
+                                ref: item.ref,
+                                orderID: order.id,
+                                name: item.name
+                            });
+                        } else {
+                            itemsA[arrayLocPos] = {
+                                qty: qtyLeft,
+                                items: [{
+                                    wh: item.loc,
+                                    oldQtyPW: item.qtyPW,
+                                    qty: qtyLeft,
+                                    ref: item.ref,
+                                    orderID: order.id,
+                                    name: item.name
+                                }]
+                            };
                         }
                         break;
                     case 'B':
                         if (typeof itemsB[arrayLocPos] !== 'undefined') {
                             itemsB[arrayLocPos].qty += qtyLeft;
-                            itemsB[arrayLocPos].items.push({ wh: item.loc, oldQtyPW: item.qtyPW, qty: qtyLeft, ref: item.ref, orderID: order.id, name: item.name });
-                        }
-                        else {
-                            itemsB[arrayLocPos] = { qty: qtyLeft, items: [{ wh: item.loc, oldQtyPW: item.qtyPW, qty: qtyLeft, ref: item.ref, orderID: order.id, name: item.name }] };
+                            itemsB[arrayLocPos].items.push({
+                                wh: item.loc,
+                                oldQtyPW: item.qtyPW,
+                                qty: qtyLeft,
+                                ref: item.ref,
+                                orderID: order.id,
+                                name: item.name
+                            });
+                        } else {
+                            itemsB[arrayLocPos] = {
+                                qty: qtyLeft,
+                                items: [{
+                                    wh: item.loc,
+                                    oldQtyPW: item.qtyPW,
+                                    qty: qtyLeft,
+                                    ref: item.ref,
+                                    orderID: order.id,
+                                    name: item.name
+                                }]
+                            };
                         }
                         break;
                     case 'C':
                         if (typeof itemsC[arrayLocPos] !== 'undefined') {
                             itemsC[arrayLocPos].qty += qtyLeft;
-                            itemsC[arrayLocPos].items.push({ wh: item.loc, oldQtyPW: item.qtyPW, qty: qtyLeft, ref: item.ref, orderID: order.id, name: item.name });
-                        }
-                        else {
-                            itemsC[arrayLocPos] = { qty: qtyLeft, items: [{ wh: item.loc, oldQtyPW: item.qtyPW, qty: qtyLeft, ref: item.ref, orderID: order.id, name: item.name }] };
+                            itemsC[arrayLocPos].items.push({
+                                wh: item.loc,
+                                oldQtyPW: item.qtyPW,
+                                qty: qtyLeft,
+                                ref: item.ref,
+                                orderID: order.id,
+                                name: item.name
+                            });
+                        } else {
+                            itemsC[arrayLocPos] = {
+                                qty: qtyLeft,
+                                items: [{
+                                    wh: item.loc,
+                                    oldQtyPW: item.qtyPW,
+                                    qty: qtyLeft,
+                                    ref: item.ref,
+                                    orderID: order.id,
+                                    name: item.name
+                                }]
+                            };
                         }
                         break;
                 }
@@ -109,7 +160,10 @@ const functions = {
             return elem != {};
         });
 
-        let stop = false, stopA = false, stopB = false, stopC = false;
+        let stop = false,
+            stopA = false,
+            stopB = false,
+            stopC = false;
         let n = 0;
         i = 0;
         let numItemsChosen = 0;
@@ -121,14 +175,22 @@ const functions = {
                 case 0:
                     if (i < itemsA.length) {
                         itemsA[i].items.forEach(item => {
-                            qty = item.qty;
-                            if (numItemsChosen + qty >= numProducts) {
-                                stop = true;
-                                qty = numProducts - numItemsChosen;
-                                item.qty = qty;
-                            } else numItemsChosen += qty;
-                            selectedItems.push({defaultWarehouse: item.wh, name: item.name, picked: 0, qty: item.qty, ref: item.ref});
-                            queries.updateOrder(item);
+                            if (!stop && item.qty != 0) {
+                                qty = item.qty;
+                                if (numItemsChosen + qty >= numProducts) {
+                                    stop = true;
+                                    qty = numProducts - numItemsChosen;
+                                    item.qty = qty;
+                                } else numItemsChosen += qty;
+                                selectedItems.push({
+                                    defaultWarehouse: item.wh,
+                                    name: item.name,
+                                    picked: 0,
+                                    qty: item.qty,
+                                    ref: item.ref
+                                });
+                                queries.updateOrder(item);
+                            }
                         });
                     } else {
                         stopA = true;
@@ -137,14 +199,22 @@ const functions = {
                 case 1:
                     if (i < itemsB.length) {
                         itemsB[i].items.forEach(item => {
-                            qty = item.qty;
-                            if (numItemsChosen + qty >= numProducts) {
-                                stop = true;
-                                qty = numProducts - numItemsChosen;
-                                item.qty = qty;
-                            } else numItemsChosen += qty;
-                            selectedItems.push({defaultWarehouse: item.wh, name: item.name, picked: 0, qty: item.qty, ref: item.ref});
-                            queries.updateOrder(item);
+                            if (!stop && item.qty != 0) {
+                                qty = item.qty;
+                                if (numItemsChosen + qty >= numProducts) {
+                                    stop = true;
+                                    qty = numProducts - numItemsChosen;
+                                    item.qty = qty;
+                                } else numItemsChosen += qty;
+                                selectedItems.push({
+                                    defaultWarehouse: item.wh,
+                                    name: item.name,
+                                    picked: 0,
+                                    qty: item.qty,
+                                    ref: item.ref
+                                });
+                                queries.updateOrder(item);
+                            }
                         });
                     } else {
                         stopB = true;
@@ -153,14 +223,22 @@ const functions = {
                 case 2:
                     if (i < itemsC.length) {
                         itemsC[i].items.forEach(item => {
-                            qty = item.qty;
-                            if (numItemsChosen + qty >= numProducts) {
-                                stop = true;
-                                qty = numProducts - numItemsChosen;
-                                item.qty = qty;
-                            } else numItemsChosen += qty;
-                            selectedItems.push({defaultWarehouse: item.wh, name: item.name, picked: 0, qty: item.qty, ref: item.ref});
-                            queries.updateOrder(item);
+                            if (!stop && item.qty != 0) {
+                                qty = item.qty;
+                                if (numItemsChosen + qty >= numProducts) {
+                                    stop = true;
+                                    qty = numProducts - numItemsChosen;
+                                    item.qty = qty;
+                                } else numItemsChosen += qty;
+                                selectedItems.push({
+                                    defaultWarehouse: item.wh,
+                                    name: item.name,
+                                    picked: 0,
+                                    qty: item.qty,
+                                    ref: item.ref
+                                });
+                                queries.updateOrder(item);
+                            }
                         });
                     } else {
                         stopC = true;
@@ -174,7 +252,8 @@ const functions = {
         pwQueries.addPickingWave(selectedItems);
     },
     calculatePWRatio: function (items) {
-        let qty = 0.0, qtyPW = 0.0;
+        let qty = 0.0,
+            qtyPW = 0.0;
         items.forEach(item => {
             qty += item.qty;
             qtyPW += item.qtyPW;
