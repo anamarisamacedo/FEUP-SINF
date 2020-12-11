@@ -81,8 +81,14 @@ const queries = {
             });
         })
     },
-    updateOrder: function (item) {
+    sleep : function (ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+      },
+    updateOrder: async function (item) {
+        await queries.sleep(2000);
         if(item.oldQtyPW != 0) {
+            console.log("OLD " + item.oldQtyPW);
+            console.log("QTY " + item.qty);
             db.ref('client_orders/' + item.orderID + "/items/" + item.ref).update({
                 qtyPW: item.oldQtyPW + item.qty
             });

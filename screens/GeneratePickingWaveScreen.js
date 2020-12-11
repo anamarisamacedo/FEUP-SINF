@@ -31,14 +31,14 @@ export default function GeneratePickingWaveScreen({ navigation }) {
   })
 
   function updateOrders() {
-    console.log(ordersQtyPw);
     let ordersPw = [];
     orders.forEach(order => {
       let items = [];
       order.documentLines.forEach(item => {
-        let qtyPW = order.id in ordersQtyPw ? ordersQtyPw[order.id][items.salesItem] : 0;
+        let qtyPW = (order.id in ordersQtyPw && typeof ordersQtyPw[order.id][item.salesItem] !== 'undefined')? ordersQtyPw[order.id][item.salesItem] : 0;
         items.push({ref: item.salesItem, qty: item.quantity, qtyPW: qtyPW, loc: item.warehouse});
       });
+      console.log(ordersQtyPw);
       ordersPw.push({id: order.id, items: items, pwRatio: functions.calculatePWRatio(items)});
       //queries.updateClientOrder(order.id, items);
     });
