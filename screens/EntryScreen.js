@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, View, Dimensions, Image, Text } from 'react-native';
 import { createDrawerNavigator, DrawerActions } from '@react-navigation/drawer';
 import GeneralButton from '../components/GeneralButton';
+import Functions from '../logic/routes';
 import LogoImage from "../images/logo.png";
 
 const Drawer = createDrawerNavigator();

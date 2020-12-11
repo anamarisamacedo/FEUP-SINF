@@ -27,18 +27,63 @@ const pWqueries = {
 
     submitReportAndPicked(pw, report, picked) {
         db.ref('pickingWaves/').orderByChild('wave').equalTo(pw).once('value', function (snapshot) {
-            snapshot.forEach(function(child) {
+            snapshot.forEach(function (child) {
                 for (var [key, value] of picked) {
-                    child.child('items/').forEach((item) =>{
-                        if(item.val().ref == key){
-                            item.ref.update({picked: value})
+                    child.child('items/').forEach((item) => {
+                        if (item.val().ref == key) {
+                            item.ref.update({ picked: value })
                         }
                     });
-                    }
-              child.ref.update({report: report});
-              
+                }
+                child.ref.update({ report: report });
+
             })
         })
+    },
+
+    getNextPWId() {
+        return new Promise(resolve => {
+            db.ref('pickingWaves/').once('value', querySnapShot => {
+                let id = 0;
+                if (querySnapShot.val() != null) {
+                    id = querySnapShot.val().length;
+                }
+                console.log("Size of array of queries = " + id);
+                resolve(id);
+            });
+        });
+    },
+
+    addPickingWave: function (items) {
+        return new Promise(() => {
+            this.getNextPWId().then(nextId => {
+                let today = new Date();
+                let dd = String(today.getDate()).padStart(2, '0');
+                if (dd.length == 1) {
+                    dd = "0" + dd;
+                }
+                let mm = String(today.getMonth() + 1).padStart(2, '0');
+                if (mm.length == 1) {
+                    mm = "0" + mm;
+                }
+                let yyyy = today.getFullYear();
+
+                let dayStr = dd + '/' + mm + '/' + yyyy;
+                let hourStr = (today.getHours() < 10 ? "0" : "") + today.getHours() + ":" + (today.getMinutes() < 10 ? "0" : "") + today.getMinutes();
+                console.log(items);
+                db.ref('pickingWaves/' + nextId).set({
+                    items: items,
+                    status: 'pending',
+                    wave: nextId,
+                    assignedPicker: 'None',
+                    createdDate: dayStr,
+                    createdHour: hourStr,
+                    concludedDate: ' - ',
+                    concludedHour: ' - ',
+                    report: ""
+                }).then(() => console.log("Picking wave " + nextId + " has been created!"));
+            });
+        });
     }
 }
 
