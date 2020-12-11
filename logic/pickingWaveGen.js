@@ -39,6 +39,7 @@ var whToInt = {
 
 const functions = {
     generatePickingWave: function (orders, numProducts) {
+        
         console.log(orders);
         orders.sort((a, b) => (a.pwRatio > b.pwRatio) ? -1 : 1);
         let i = 0,
@@ -248,8 +249,9 @@ const functions = {
             }
             n++;
         }
-
-        pwQueries.addPickingWave(selectedItems);
+        return new Promise(resolve => {
+            resolve(pwQueries.addPickingWave(selectedItems).then(() => {}));
+        });
     },
     calculatePWRatio: function (items) {
         let qty = 0.0,

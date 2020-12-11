@@ -34,7 +34,7 @@ export default function GeneratePickingWaveScreen({ navigation }) {
     }
   })
 
-  function updateOrders() {
+  function generatePW() {
     let ordersPw = [];
     orders.forEach(order => {
       let items = [];
@@ -45,6 +45,7 @@ export default function GeneratePickingWaveScreen({ navigation }) {
       ordersPw.push({id: order.id, items: items, pwRatio: functions.calculatePWRatio(items)});
     });
     functions.generatePickingWave(ordersPw, value);
+    navigation.navigate('PickingWavesScreen');
   }
 
   const onCheckLimit = (text, limit) => {
@@ -81,7 +82,7 @@ export default function GeneratePickingWaveScreen({ navigation }) {
         <GeneralButton
           name="Generate Picking Wave"
           fontSize={14}
-          onPress={() => updateOrders()}
+          onPress={() => generatePW()}
         />
       </View>
     </View>
