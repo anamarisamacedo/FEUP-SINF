@@ -4,7 +4,8 @@ import {
   Text,
   View,
   Dimensions,
-  ActivityIndicator
+  ActivityIndicator,
+  ScrollView
 } from "react-native";
 
 import BackButton from "../components/BackButton";
@@ -71,30 +72,37 @@ export default function OrderDetails({ navigation, route }) {
                   <Text style={[styles.header, {textAlign: 'center'}]}>{"P/Qty"}</Text>
                 </View>
               </View>
-              {items.map((i) => {
-                var item = i.salesItem;
-                var itemDescription = i.salesItemDescription
-                if (!client){
-                  item = i.purchasesItem;
-                  itemDescription = i.purchasesItemDescription;
-                }  
-                return (
-                  <View style={styles.row} key={i}>
-                    <View style={styles.refColumn}>
-                      <Text style={styles.textTable}>{item}</Text>
+              <ScrollView
+                automaticallyAdjustContentInsets={false}
+                onScroll={() => { console.log('onScroll!'); }}
+                scrollEventThrottle={200}
+                style={styles.scrollView}
+              >
+                {items.map((i) => {
+                  var item = i.salesItem;
+                  var itemDescription = i.salesItemDescription
+                  if (!client){
+                    item = i.purchasesItem;
+                    itemDescription = i.purchasesItemDescription;
+                  }  
+                  return (
+                    <View style={styles.row} key={i}>
+                      <View style={styles.refColumn}>
+                        <Text style={styles.textTable}>{item}</Text>
+                      </View>
+                      <View style={styles.locColumn}>
+                        <Text style={styles.textTable}>{i.warehouse}</Text>
+                      </View>
+                      <View style={styles.nameColumn}>
+                        <Text style={styles.textTable}>{itemDescription}</Text>
+                      </View>
+                      <View style={styles.pqtyColumn}>
+                        <Text style={[styles.textTable, {textAlign: 'center'}]}>{i.quantity}</Text>
+                      </View>
                     </View>
-                    <View style={styles.locColumn}>
-                      <Text style={styles.textTable}>{i.warehouse}</Text>
-                    </View>
-                    <View style={styles.nameColumn}>
-                      <Text style={styles.textTable}>{itemDescription}</Text>
-                    </View>
-                    <View style={styles.pqtyColumn}>
-                      <Text style={[styles.textTable, {textAlign: 'center'}]}>{i.quantity}</Text>
-                    </View>
-                  </View>
-                );
-              })}
+                  );
+                })}
+              </ScrollView>
             </View>
           )}
         </View>
@@ -186,4 +194,5 @@ const styles = StyleSheet.create({
   locColumn: { flexDirection: "column", flex: 0.6 },
   nameColumn: { flexDirection: "column", flex: 1.5 },
   pqtyColumn: { flexDirection: "column", flex: 0.5 },
+  scrollView: {height: Dimensions.get('window').height - 400}
 });

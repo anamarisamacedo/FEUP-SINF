@@ -1,5 +1,5 @@
 import React, { useState, useEffect} from "react";
-import { StyleSheet, Text, View, Dimensions, Button, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Dimensions, ScrollView, TouchableOpacity } from "react-native";
 import Navbar from '../components/Navbar';
 import token from '../services/token';
 import Moment from 'moment';
@@ -62,7 +62,12 @@ export default function SupplierOrdersScreen({ navigation }) {
               <Text style={[styles.header, {textAlign: 'right'}]}>{"Status"}</Text>
             </View>
           </View>
-          {orders.map((i) => {
+          <ScrollView
+          automaticallyAdjustContentInsets={false}
+          onScroll={() => { console.log('onScroll!'); }}
+          scrollEventThrottle={200}
+          style={styles.scrollView}>
+            {orders.map((i) => {
               return (
                 <TouchableOpacity
                   onPress={() => navigation.navigate("OrderDetailsScreen", {id: 'Supplier ' + i.sellerSupplierPartyName, orderId: i.id, date: i.documentDate, client: false, status: status.get(i.id)})}
@@ -83,7 +88,8 @@ export default function SupplierOrdersScreen({ navigation }) {
                   </View>
                 </TouchableOpacity>
               );
-          })}
+            })}
+          </ScrollView>
         </View>
       </View>
     </View>
@@ -158,4 +164,5 @@ const styles = StyleSheet.create({
   orderColumn: { flexDirection: "column", flex: 1 },
   dateColumn: { flexDirection: "column", flex: 0.8 },
   statusColumn: { flexDirection: "column", flex: 0.8 },
+  scrollView: {height: Dimensions.get('window').height - 300}
 });

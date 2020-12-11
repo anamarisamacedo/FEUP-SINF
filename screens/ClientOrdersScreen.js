@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Dimensions, Button, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity, ScrollView} from "react-native";
 import Navbar from '../components/Navbar';
 import token from '../services/token';
 import Moment from 'moment';
@@ -61,28 +61,34 @@ export default function ClientOrdersScreen({ navigation }) {
               <Text style={[styles.header, {textAlign: 'right'}]}>{"Status"}</Text>
             </View>
           </View>
-          {orders.map((i) => {
-            return(
-              <TouchableOpacity
-                onPress={() => navigation.navigate('OrderDetailsScreen', {id: 'Client ' + i.buyerCustomerParty, orderId: i.id, date: i.documentDate, client: true, status: status.get(i.id)})}
-              >
-                <View style={styles.row} key={i}>
-                  <View style={styles.clientColumn}>
-                    <Text style={styles.textTable}>{i.buyerCustomerParty}</Text>
+          <ScrollView
+          automaticallyAdjustContentInsets={false}
+          onScroll={() => { console.log('onScroll!'); }}
+          scrollEventThrottle={200}
+          style={styles.scrollView}>
+            {orders.map((i) => {
+              return(
+                <TouchableOpacity
+                  onPress={() => navigation.navigate('OrderDetailsScreen', {id: 'Client ' + i.buyerCustomerParty, orderId: i.id, date: i.documentDate, client: true, status: status.get(i.id)})}
+                >
+                  <View style={styles.row} key={i}>
+                    <View style={styles.clientColumn}>
+                      <Text style={styles.textTable}>{i.buyerCustomerParty}</Text>
+                    </View>
+                    <View style={styles.orderColumn}>
+                      <Text style={styles.textTable}>{i.naturalKey}</Text>
+                    </View>
+                    <View style={styles.dateColumn}>
+                      <Text style={styles.textTable}>{Moment(i.documentDate).format('YYYY/MM/DD')}</Text>
+                    </View>
+                    <View style={styles.statusColumn}>
+                      <Text style={[styles.textTable, {textAlign: 'right'}]}>{status.get(i.id)}</Text>
+                    </View>
                   </View>
-                  <View style={styles.orderColumn}>
-                    <Text style={styles.textTable}>{i.naturalKey}</Text>
-                  </View>
-                  <View style={styles.dateColumn}>
-                    <Text style={styles.textTable}>{Moment(i.documentDate).format('YYYY/MM/DD')}</Text>
-                  </View>
-                  <View style={styles.statusColumn}>
-                    <Text style={[styles.textTable, {textAlign: 'right'}]}>{status.get(i.id)}</Text>
-                  </View>
-                </View>
-              </TouchableOpacity>
+                </TouchableOpacity>
               );
-          })}
+            })}
+          </ScrollView> 
         </View>
       </View>
     </View>
@@ -157,4 +163,5 @@ const styles = StyleSheet.create({
   orderColumn: { flexDirection: "column", flex: 1 },
   dateColumn: { flexDirection: "column", flex: 0.8 },
   statusColumn: { flexDirection: "column", flex: 0.9 },
+  scrollView: {height: Dimensions.get('window').height - 300}
 });

@@ -178,7 +178,12 @@ export default function ManagerWaveScreen({ navigation, route }) {
                   </Text>
                 </TouchableOpacity>
               </View>
-              <ScrollView>
+              <ScrollView
+                automaticallyAdjustContentInsets={false}
+                onScroll={() => { console.log('onScroll!'); }}
+                scrollEventThrottle={200}
+                style={styles.scrollView}
+              >
                 {listDataSource.map((wave, key) => (
                   <Expandable
                     key={wave.defaultWarehouse}
@@ -291,4 +296,5 @@ const styles = StyleSheet.create({
       position:"absolute",
       bottom: 25,
     },
+    scrollView: {height: Dimensions.get('window').height - 300}
 });

@@ -93,7 +93,12 @@ export default function PickerInputScreen({ navigation, route }) {
                     </Text>
                   </TouchableOpacity>
                 </View>
-                <ScrollView>
+                <ScrollView
+                  automaticallyAdjustContentInsets={false}
+                  onScroll={() => { console.log('onScroll!'); }}
+                  scrollEventThrottle={200}
+                  style={styles.scrollView}
+                >
                   {listDataSource.map((wave, key) => (
                     <Expandable itemsInput={itemsInput}
                       key={wave.section_name}
@@ -237,4 +242,5 @@ const styles = StyleSheet.create({
   locColumn: { flexDirection: "column", flex: 0.6 },
   nameColumn: { flexDirection: "column", flex: 1.5 },
   pqtyColumn: { flexDirection: "column", flex: 0.5 },
+  scrollView: {height: Dimensions.get('window').height - 300}
 });

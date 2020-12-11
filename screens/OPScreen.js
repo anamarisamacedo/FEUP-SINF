@@ -4,7 +4,8 @@ import {
   StyleSheet,
   Text,
   View,
-  Dimensions
+  Dimensions,
+  ScrollView
 } from "react-native";
 import BackButton from "../components/BackButton";
 import db from "../db/pickingWaves";
@@ -50,21 +51,28 @@ export default function OPScreen({ navigation }) {
               <Text style={[styles.header, {textAlign: 'right'}]}>{"Qtd"}</Text>
             </View>
           </View>
-          {items.map((i) => {
-            return (
-              <View style={styles.row} key={i}>
-                <View style={styles.refColumn}>
-                  <Text style={styles.textTable}>{i.ref}</Text>
+          <ScrollView
+            automaticallyAdjustContentInsets={false}
+            onScroll={() => { console.log('onScroll!'); }}
+            scrollEventThrottle={200}
+            style={styles.scrollView}
+          >
+            {items.map((i) => {
+              return (
+                <View style={styles.row} key={i}>
+                  <View style={styles.refColumn}>
+                    <Text style={styles.textTable}>{i.ref}</Text>
+                  </View>
+                  <View style={styles.nameColumn}>
+                    <Text style={styles.textTable}>{i.name}</Text>
+                  </View>
+                  <View style={styles.qtyColumn}>
+                    <Text style={[styles.textTable, {textAlign: 'right'}]}>{i.qty}</Text>
+                  </View>
                 </View>
-                <View style={styles.nameColumn}>
-                  <Text style={styles.textTable}>{i.name}</Text>
-                </View>
-                <View style={styles.qtyColumn}>
-                  <Text style={[styles.textTable, {textAlign: 'right'}]}>{i.qty}</Text>
-                </View>
-              </View>
-            );
-          })}
+              );
+            })}
+          </ScrollView>
         </View>
       </View>
       <View style={styles.bottom}>
@@ -141,4 +149,6 @@ const styles = StyleSheet.create({
   refColumn: { flexDirection: "column", flex: 0.8 },
   nameColumn: { flexDirection: "column", flex: 1.5 },
   qtyColumn: { flexDirection: "column", flex: 0.7 },
+  scrollView: {height: Dimensions.get('window').height - 300}
+
 });

@@ -6,7 +6,6 @@ import {
   Text,
   View,
   Dimensions,
-  ActivityIndicator,
   TouchableOpacity,
 } from "react-native";
 import BackButton from "../components/BackButton";
@@ -66,39 +65,46 @@ export default function StockListingScreen({ navigation, route }) {
               <Text style={styles.header}>{"Stock"}</Text>
             </View>
           </View>
-          {stock.map((i) => {
-            if (i.defaultWarehouseId == warehouseId) {
-              i.materialsItemWarehouses.map((j) => {
-                if (j.warehouseId == warehouseId) {
-                  currentStock = j.stockBalance;
-                }
-              });
-              /*
-              itemsDb.map((itemDb) => {
-                if(i.itemKey == itemDb.ref)
-                itemLoc = itemDb.loc
-              })*/
-              return (
-                <View>
-                  <View style={styles.row} key={i}>
-                    <View style={styles.refColumn}>
-                      <Text style={styles.textTable}>{i.itemKey}</Text>
+          <ScrollView
+            automaticallyAdjustContentInsets={false}
+            onScroll={() => { console.log('onScroll!'); }}
+            scrollEventThrottle={200}
+            style={styles.scrollView}
+          >
+            {stock.map((i) => {
+              if (i.defaultWarehouseId == warehouseId) {
+                i.materialsItemWarehouses.map((j) => {
+                  if (j.warehouseId == warehouseId) {
+                    currentStock = j.stockBalance;
+                  }
+                });
+                /*
+                itemsDb.map((itemDb) => {
+                  if(i.itemKey == itemDb.ref)
+                  itemLoc = itemDb.loc
+                })*/
+                return (
+                  <View>
+                    <View style={styles.row} key={i}>
+                      <View style={styles.refColumn}>
+                        <Text style={styles.textTable}>{i.itemKey}</Text>
+                      </View>
+                      <View style={styles.nameColumn}>
+                        <Text style={styles.textTable}>{i.description}</Text>
+                      </View>
+                      <View style={styles.stockColumn}>
+                        <TouchableOpacity onPress={() => console.log("")}>
+                          <Text style={styles.textTable}>
+                            {currentStock + "/" + i.maxStock}
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
                     </View>
-                    <View style={styles.nameColumn}>
-                      <Text style={styles.textTable}>{i.description}</Text>
                     </View>
-                    <View style={styles.stockColumn}>
-                      <TouchableOpacity onPress={() => console.log("")}>
-                        <Text style={styles.textTable}>
-                          {currentStock + "/" + i.maxStock}
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                  </View>
-              );
-            }
-          })}
+                );
+              }
+            })}
+            </ScrollView>
         </View>
       </View>
       <View style={styles.bottom}>
@@ -176,4 +182,5 @@ const styles = StyleSheet.create({
   locColumn: { flexDirection: "column", flex: 0.6 },
   nameColumn: { flexDirection: "column", flex: 2 },
   stockColumn: { flexDirection: "column", flex: 0.5 },
+  scrollView: {height: Dimensions.get('window').height - 400}
 });

@@ -4,7 +4,8 @@ import {
   StyleSheet,
   Text,
   View,
-  Dimensions
+  Dimensions,
+  ScrollView
 } from "react-native";
 import BackButton from "../components/BackButton";
 
@@ -52,21 +53,28 @@ export default function PickersListScreen({ navigation, route }) {
               <Text style={styles.headerAw}>{"Assigned Waves"}</Text>
             </View>
           </View>
-          {pickersList.map((i) => {
-            return (
-              <View style={styles.row} key={i}>
-                <View style={styles.codeColumn}>
-                  <Text style={styles.textTable}>{i.code}</Text>
+          <ScrollView
+            automaticallyAdjustContentInsets={false}
+            onScroll={() => { console.log('onScroll!'); }}
+            scrollEventThrottle={200}
+            style={styles.scrollView}
+          >
+            {pickersList.map((i) => {
+              return (
+                <View style={styles.row} key={i}>
+                  <View style={styles.codeColumn}>
+                    <Text style={styles.textTable}>{i.code}</Text>
+                  </View>
+                  <View style={styles.nameColumn}>
+                    <Text style={styles.textTable}>{i.name}</Text>
+                  </View>
+                  <View style={styles.awColumn}>
+                    <Text style={styles.textTable}>{i.assignedWaves}</Text>
+                  </View>
                 </View>
-                <View style={styles.nameColumn}>
-                  <Text style={styles.textTable}>{i.name}</Text>
-                </View>
-                <View style={styles.awColumn}>
-                  <Text style={styles.textTable}>{i.assignedWaves}</Text>
-                </View>
-              </View>
-            );
-          })}
+              );
+            })}
+          </ScrollView>
         </View>
       </View>
     </View>
@@ -139,4 +147,5 @@ const styles = StyleSheet.create({
   codeColumn: { flexDirection: "column", flex: 0.6 },
   nameColumn: { flexDirection: "column", flex: 1.5 },
   awColumn: { flexDirection: "column", alignItems:'center', flex: 1.1 },
+  scrollView: {height: Dimensions.get('window').height - 300}
 });
