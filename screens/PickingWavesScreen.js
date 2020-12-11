@@ -17,6 +17,8 @@ export default function PickingWavesScreen({ navigation }) {
   var username;
   useEffect(() => {
     username = AuthProvider.Username;
+    if(typeof username !== 'undefined'){
+      console.log("XXSDCVSF")
     if (AuthProvider.IsManager) {
       pickingWaveService.getPickingWaves().then((response) => {
         
@@ -33,7 +35,7 @@ export default function PickingWavesScreen({ navigation }) {
           }
           });
     }
-  });
+  }});
   return (
     <View style={styles.main}>
       <Navbar navigation={navigation} />
@@ -59,7 +61,7 @@ export default function PickingWavesScreen({ navigation }) {
           {pw.map((i) => {
             return (
               <View>
-                {(!AuthProvider.IsManager &&
+                {typeof i !=='undefined' && ((!AuthProvider.IsManager &&
                   (i.status == "pending" || i.status == "assigned") && (
                     <View>
                       <View style={styles.row} key={i}>
@@ -77,7 +79,7 @@ export default function PickingWavesScreen({ navigation }) {
                         </View>
                       </View>
                     </View>
-                  )) ||
+                  )) || 
                   (i.status == "concluded" && (
                     <TouchableOpacity
                       onPress={() =>
@@ -148,7 +150,7 @@ export default function PickingWavesScreen({ navigation }) {
                         </View>
                       </View>
                     </TouchableOpacity>
-                  )}
+                  ))}
               </View>
             );
           })}
