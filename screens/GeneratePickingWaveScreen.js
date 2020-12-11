@@ -31,6 +31,7 @@ export default function GeneratePickingWaveScreen({ navigation }) {
   })
 
   function updateOrders() {
+    console.log(ordersQtyPw);
     let ordersPw = [];
     orders.forEach(order => {
       let items = [];

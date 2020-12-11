@@ -1,3 +1,5 @@
+import queries from "../db/Database";
+
 
 var numOrdersToAnalyze = 3;
 /*var whToInt = {
@@ -119,9 +121,7 @@ const functions = {
         itemsC = itemsC.filter(elem => {
             return elem != {};
         });
-
-        console.log(itemsB);
-
+        
         let stop = false, stopA = false, stopB = false, stopC = false;
         let n = 0;
         i = 0;
@@ -138,7 +138,7 @@ const functions = {
                                 stop = true;
                                 item.qty = numProducts - numItemsChosen;
                             } else numItemsChosen += qty;
-                            this.updateOrder(item);
+                            queries.updateOrder(item);
                         });
                     } else {
                         stopA = true;
@@ -152,7 +152,7 @@ const functions = {
                                 stop = true;
                                 qty = numProducts - numItemsChosen;
                             } else numItemsChosen += qty;
-                            this.updateOrder(item);
+                            queries.updateOrder(item);
                         });
                     } else {
                         stopB = true;
@@ -166,7 +166,7 @@ const functions = {
                                 stop = true;
                                 qty = numProducts - numItemsChosen;
                             } else numItemsChosen += qty;
-                            this.updateOrder(item);
+                            queries.updateOrder(item);
                         });
                     } else {
                         stopC = true;
@@ -208,18 +208,7 @@ const functions = {
         });
         return qtyPW/qty;
     },
-    /*
-        {
-            wh: item.loc, 
-            oldQtyPW: item.qtyPW, 
-            qty: qtyLeft, 
-            ref: item.ref, 
-            orderID: order.id
-        }
-    */
-    updateOrder: function(item) {
-        
-    }
+    
 }
 
 export default functions;

@@ -31,7 +31,8 @@ const queries = {
     addClientOrder: function (orderId) {
 
         db.ref('client_orders/' + orderId).set({
-            status: "WFP"
+            status: "WFP",
+            items: {}
         }).then(() => console.log(orderId + " order was created!'"));
     },
     addSupplierOrder: function (orderId) {
@@ -40,13 +41,7 @@ const queries = {
             status: "WFR"
         }).then(() => console.log(orderId + " order was created!'"));
     },
-    updateClientOrder: function (orderId, items) {
-
-        db.ref('client_orders/' + orderId).update({
-            items: items
-        }).then(() => console.log(orderId + " order was updated!'"));
-    },
-    getClientOrdersQtyPW: function() {
+    getClientOrdersQtyPW: function () {
         return new Promise(resolve => {
             db.ref("client_orders/").once('value', querySnapShot => {
                 let orders = querySnapShot.val();
@@ -55,14 +50,14 @@ const queries = {
                     if (orders[order].status != "WFP") {
                         let items = {};
                         for (let item in orders[order].items) {
-                            items[item] = orders[order].items[item];
+                            items[item] = orders[order].items[item].qtyPW;
                         }
                         ordersQtyPw[order] = items;
                     }
                 }
                 resolve(ordersQtyPw);
             });
-        })
+        });
     },
     getClientOrderStatus: function (orderId) {
         return new Promise(resolve => {
@@ -86,16 +81,30 @@ const queries = {
             });
         })
     },
-    getUsername: function(email){
+    updateOrder: function (item) {
+        if(item.oldQtyPW != 0) {
+            db.ref('client_orders/' + item.orderID + "/items/" + item.ref).update({
+                qtyPW: item.oldQtyPW + item.qty
+            });
+        } else {
+            db.ref('client_orders/' + item.orderID).update({
+                status: "Picking"
+            });
+            db.ref('client_orders/' + item.orderID + "/items/" + item.ref).set({
+                qtyPW: item.qty
+            });
+        }
+    },
+    getUsername: function (email) {
         return getUsername(email);
     }
 }
 
 function getUsername(string) {
-    return replaceDot(string.substring(0,string.indexOf("@")));
+    return replaceDot(string.substring(0, string.indexOf("@")));
 }
 function replaceDot(string) {
-    return string.replace('.','');
+    return string.replace('.', '');
 }
 
 export default queries;
