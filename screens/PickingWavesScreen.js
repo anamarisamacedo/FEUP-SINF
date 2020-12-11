@@ -18,7 +18,6 @@ export default function PickingWavesScreen({ navigation }) {
   useEffect(() => {
     username = AuthProvider.Username;
     if(typeof username !== 'undefined'){
-      console.log("XXSDCVSF")
     if (AuthProvider.IsManager) {
       pickingWaveService.getPickingWaves().then((response) => {
         
