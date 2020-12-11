@@ -39,7 +39,45 @@ const pWqueries = {
               
             })
         })
-    }
+    },
+
+    getNextPWId() {
+        return new Promise(resolve => {
+            db.ref('pickingWaves/').once('value', querySnapShot => {
+                let id = 0;
+                if(querySnapShot.val() != null) {
+                    id = querySnapShot.val().length;
+                }
+                console.log("Size of array of queries = " + id);
+                resolve(id);
+            });
+        });
+    },
+
+    addPickingWave: function (items) {
+        this.getNextPWId().then(nextId => {
+
+            let today = new Date();
+            let dd = String(today.getDate()).padStart(2, '0');
+            let mm = String(today.getMonth() + 1).padStart(2, '0'); 
+            let yyyy = today.getFullYear();
+
+            let dayStr = dd + '/' + mm + '/' + yyyy;
+            let hourStr = today.getHours() + ":" + today.getMinutes();
+            console.log(items);
+            db.ref('pickingWaves/' + nextId).set({
+                items: items,
+                status: 'pending',
+                wave: nextId,
+                assignedPicker: 'None',
+                createDate: dayStr,
+                createHour: hourStr,
+                concludedDate: ' - ',
+                concludedHour: ' - ',
+                report: ""
+            }).then(() => console.log("Picking wave " + nextId + " has been created!"));
+        });
+    },
 }
 
 export default pWqueries;
