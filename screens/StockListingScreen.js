@@ -13,8 +13,6 @@ import token from "../services/token";
 import jasminConstants from "../services/jasminConstants";
 import { useIsFocused } from "@react-navigation/native";
 
-
-
 export default function StockListingScreen({ navigation, route }) {
   const [stock, setStock] = useState([]);
   //const [itemsDb, setItemsDb] = useState([]);

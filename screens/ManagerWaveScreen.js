@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import DropDownPicker from 'react-native-dropdown-picker';
 import {
   StyleSheet,
@@ -12,9 +12,9 @@ import {
   SafeAreaView
 } from "react-native";
 import BackButton from "../components/BackButton";
-import GeneralButton from "../components/GeneralButton";
 import Expandable from "../components/Expandable";
 import pickersService from "../services/picker";
+import { useIsFocused } from "@react-navigation/native";
 
 const wave = [
   {
@@ -109,46 +109,45 @@ const wave = [
   },
 ];
 
-
 export default function ManagerWaveScreen({ navigation, route }) {
-  const {pickingWave} = route.params;
+  const { pickingWave } = route.params;
   const title = "Picking Wave " + pickingWave.wave;
   const picker = "Picker: ";
   const status = "Status: " + pickingWave.status;
 
   const [aux, setAux] = useState([]);
-  const [executeFunc, setExecuteFunc] = useState(true);
-    useEffect(() => {
-      pickersService.getPickers().then((response) => {
-        setAux(Object.entries(response));
-      });
+
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    console.log("Manager PW screen loaded!");
+    pickersService.getPickers().then((response) => {
+      setAux(Object.entries(response));
     });
-    let pickers = [];
-    aux.forEach((entry)=>{
-        if(!(((Object.entries(entry[1]))[0])[1]))
-            pickers.push({label: entry[0], value: entry[0]});
-    });
+    organizeItems(pickingWave.items);
+  }, [isFocused]);
+
+  let pickers = [];
+  aux.forEach((entry) => {
+    if (!(((Object.entries(entry[1]))[0])[1]))
+      pickers.push({ label: entry[0], value: entry[0] });
+  });
 
   const [item, setItem] = useState(pickers[0]);
   const [listDataSource, setListDataSource] = useState(wave);
 
   const organizeItems = (items) => {
-    setExecuteFunc(false);
     const array = [...listDataSource];
     items.forEach(item => {
       array.forEach(wave => {
         if (item.defaultWarehouse == wave.section_name) {
-          if(!wave.items.includes(item))
+          if (!wave.items.includes(item))
             wave.items.push(item);
         }
       })
     });
     setListDataSource(array);
   }
-
-  useEffect(() => {
-    if (executeFunc) organizeItems(pickingWave.items);
-  });
 
   const multiSelect = true;
 
@@ -167,7 +166,7 @@ export default function ManagerWaveScreen({ navigation, route }) {
       array.map((value, placeindex) =>
         placeindex === index
           ? (array[placeindex]['isExpanded'] =
-             !array[placeindex]['isExpanded'])
+            !array[placeindex]['isExpanded'])
           : (array[placeindex]['isExpanded'] = false),
       );
     }
@@ -180,25 +179,25 @@ export default function ManagerWaveScreen({ navigation, route }) {
         <View style={styles.title}>
           <Text style={styles.text}>{title}</Text>
         </View>
-        <View style={[styles.subtitle, {zIndex: 15}]}>
+        <View style={[styles.subtitle, { zIndex: 15 }]}>
           <Text style={styles.subtext}>{picker}</Text>
-            <DropDownPicker style={{paddingVertical: 1, backgroundColor: 'black'}}
-                items={pickers}
-                containerStyle={{width: 150, height: 25}}
-                labelStyle={{
-                    fontSize: 14,
-                    textAlign: 'left',
-                    color: 'white'
-                }}
-                placeholder= {"Select a picker"}
-                dropDownStyle={{backgroundColor: 'black'}}
-                activeLabelStyle={{color: 'white'}}
-                onChangeItem={(newItem) => {
-                  setItem(newItem);
-                  pickersService.submitPicker(newItem.value,pickingWave.wave);
-                }}
-            />
-           <Text style={styles.subtext}> {status} </Text>
+          <DropDownPicker style={{ paddingVertical: 1, backgroundColor: 'black' }}
+            items={pickers}
+            containerStyle={{ width: 150, height: 25 }}
+            labelStyle={{
+              fontSize: 14,
+              textAlign: 'left',
+              color: 'white'
+            }}
+            placeholder={"Select a picker"}
+            dropDownStyle={{ backgroundColor: 'black' }}
+            activeLabelStyle={{ color: 'white' }}
+            onChangeItem={(newItem) => {
+              setItem(newItem);
+              pickersService.submitPicker(newItem.value, pickingWave.wave);
+            }}
+          />
+          <Text style={styles.subtext}> {status} </Text>
         </View>
         <View>
           <View style={styles.row}>
@@ -212,7 +211,7 @@ export default function ManagerWaveScreen({ navigation, route }) {
               <Text style={styles.header}>{"P/Qty"}</Text>
             </View>
           </View>
-          <SafeAreaView style={{flex: 1}}>
+          <SafeAreaView style={{ flex: 1 }}>
             <View>
               <View>
                 <TouchableOpacity>
@@ -245,7 +244,7 @@ export default function ManagerWaveScreen({ navigation, route }) {
         </View>
       </View>
       <View style={styles.bottomRow}>
-        <BackButton onPress={() => navigation.goBack()}/>
+        <BackButton onPress={() => navigation.goBack()} />
       </View>
     </View>
   );
@@ -333,13 +332,13 @@ const styles = StyleSheet.create({
   pqtyColumn: { flexDirection: "column", flex: 0.5 },
 
   bottomRow: {
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignSelf: "center",
-      bottom: 40,
-      alignItems: "center",
-      position:"absolute",
-      bottom: 25,
-    },
-    scrollView: {height: Dimensions.get('window').height - 300}
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignSelf: "center",
+    bottom: 40,
+    alignItems: "center",
+    position: "absolute",
+    bottom: 25,
+  },
+  scrollView: { height: Dimensions.get('window').height - 300 }
 });

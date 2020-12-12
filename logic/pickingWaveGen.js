@@ -24,19 +24,6 @@ var whToInt = {
     'C32' : 5
 }
 
-/*var whToInt = {
-    'A1': 0,
-    'A2': 1,
-    'A3': 2,
-    'B1': 0,
-    'B2': 1,
-    'B3': 2,
-    'C1': 0,
-    'C2': 1,
-    'C3': 2,
-}*/
-
-
 const functions = {
     generatePickingWave: function (orders, numProducts) {
 

@@ -15,6 +15,8 @@ import GeneralButton from "../components/GeneralButton";
 import Expandable from "../components/Expandable";
 import Navbar from "../components/Navbar";
 import { AuthProvider } from "../navigation/AuthProvider";
+import { useIsFocused } from "@react-navigation/native";
+
 
 const wave = [
   {
@@ -113,7 +115,6 @@ export default function PickerWaveScreen({ navigation, route }) {
   const { pickingWave } = route.params;
 
   const [listDataSource, setListDataSource] = useState(wave);
-  const [executeFunc, setExecuteFunc] = useState(true);
 
   const title = "Picking Wave " + pickingWave.wave;
   var subtitle;
@@ -128,7 +129,6 @@ export default function PickerWaveScreen({ navigation, route }) {
     subtitle = "Status: " + pickingWave.status;
   }
   const organizeItems = (items) => {
-    setExecuteFunc(false);
     const array = [...listDataSource];
     items.forEach((item) => {
       array.forEach((wave) => {
@@ -138,12 +138,14 @@ export default function PickerWaveScreen({ navigation, route }) {
       });
     });
     setListDataSource(array);
-    console.log(array);
   };
 
+  const isFocused = useIsFocused();
+
   useEffect(() => {
-    if (executeFunc) organizeItems(pickingWave.items)
-  });
+    console.log("Picker PW screen loaded!");
+    organizeItems(pickingWave.items)
+  }, [isFocused]);
 
   const multiSelect = true;
 

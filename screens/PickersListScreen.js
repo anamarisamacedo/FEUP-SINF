@@ -1,16 +1,21 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "../components/Navbar";
 import { StyleSheet, Text, View, Dimensions } from "react-native";
-import BackButton from "../components/BackButton";
 import pickersService from "../services/picker";
 import pickingWaves from "../services/pickingWaves";
+import { useIsFocused } from "@react-navigation/native";
+
 
 export default function PickersListScreen({ navigation, route }) {
   const title = "Pickers";
 
   const [waves, setWaves] = useState([]);
   var pickers = [];
+
+  const isFocused = useIsFocused();
+
   useEffect(() => {
+    console.log("Picker listing page loaded!");
     pickersService.getPickers().then((response) => {
       var bar = new Promise((resolve, reject) => {
         Object.entries(response).forEach((entry, index, array) => {
@@ -24,7 +29,7 @@ export default function PickersListScreen({ navigation, route }) {
         setWaves(pickers);
       });
     });
-  });
+  }, [isFocused]);
   console.log(waves);
   return (
     <View style={styles.main}>

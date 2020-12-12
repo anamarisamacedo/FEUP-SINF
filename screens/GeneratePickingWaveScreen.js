@@ -1,48 +1,50 @@
-import React, {useEffect, useState} from "react";
-import { StyleSheet, Text, TextInput, View, Dimensions} from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, Text, TextInput, View, Dimensions } from "react-native";
 import GeneralButton from "../components/GeneralButton";
 import Navbar from '../components/Navbar';
 import jasminConstants from '../services/jasminConstants';
 import token from '../services/token';
 import queries from "../db/Database";
 import functions from "../logic/pickingWaveGen";
+import { useIsFocused } from "@react-navigation/native";
+
 
 export default function GeneratePickingWaveScreen({ navigation }) {
   const title = "Generate Picking Wave";
   const [value, onChangeText] = useState("0");
-  const [orders, setOrders] = useState([]); 
+  const [orders, setOrders] = useState([]);
   const [ordersQtyPw, setOrdersQtyPw] = useState({});
-  const [execFunc, setExecFunc] = useState(true);
   const accessToken = token.getToken();
 
+  const isFocused = useIsFocused();
+
   useEffect(() => {
-    if (execFunc) {
-      setExecFunc(false);
-      queries.getClientOrdersQtyPW().then(orders => {
-        setOrdersQtyPw(orders);
-      });
-      const apiUrl = jasminConstants.url +"/api/" + jasminConstants.accountKey + "/" + jasminConstants.subscriptionKey + "/sales/orders";
-      fetch(apiUrl, {
-        method: "GET",
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-          Authorization: "Bearer " + accessToken
-        }})
-        .then((response) => response.json())
-        .then((orders) => {setOrders(orders)})
-    }
-  })
+    console.log("Generate PW page loaded!");
+    queries.getClientOrdersQtyPW().then(orders => {
+      setOrdersQtyPw(orders);
+    });
+    const apiUrl = jasminConstants.url + "/api/" + jasminConstants.accountKey + "/" + jasminConstants.subscriptionKey + "/sales/orders";
+    fetch(apiUrl, {
+      method: "GET",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        Authorization: "Bearer " + accessToken
+      }
+    })
+      .then((response) => response.json())
+      .then((orders) => { setOrders(orders) })
+  }, [isFocused]);
 
   function generatePW() {
     let ordersPw = [];
     orders.forEach(order => {
       let items = [];
       order.documentLines.forEach(item => {
-        let qtyPW = (order.id in ordersQtyPw && typeof ordersQtyPw[order.id][item.salesItem] !== 'undefined')? ordersQtyPw[order.id][item.salesItem] : 0;
-        items.push({ref: item.salesItem, qty: item.quantity, qtyPW: qtyPW, loc: item.warehouse, name: item.salesItemDescription});
+        let qtyPW = (order.id in ordersQtyPw && typeof ordersQtyPw[order.id][item.salesItem] !== 'undefined') ? ordersQtyPw[order.id][item.salesItem] : 0;
+        items.push({ ref: item.salesItem, qty: item.quantity, qtyPW: qtyPW, loc: item.warehouse, name: item.salesItemDescription });
       });
-      ordersPw.push({id: order.id, items: items, pwRatio: functions.calculatePWRatio(items), date: order.createdOn});
+      ordersPw.push({ id: order.id, items: items, pwRatio: functions.calculatePWRatio(items), date: order.createdOn });
     });
     functions.generatePickingWave(ordersPw, value);
     navigation.navigate('PickingWavesScreen');
