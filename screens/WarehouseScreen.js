@@ -24,7 +24,7 @@ export default function WarehouseScreen({ navigation }) {
                     <WarehouseButton id="C3" name="PSU" onPress={() => navigation.navigate('StockListingScreen', {warehouseId: '1884bcf9-0829-eb11-8441-0003ff290dc5', warehouseName: 'C3', warehouseDescription: 'PSU'})}/>
                 </View>
                 <View style={[styles.row, { marginTop: 30 }]}>
-                    <WarehouseButton id="OP" name="" onPress={() => navigation.navigate('OPScreen')} />
+                    <WarehouseButton id="OP" name="" onPress={() => navigation.navigate('StockListingScreen', {warehouseId: 'afc2f33c-c4c3-4a6a-9fea-9e2cc6a4dba6', warehouseName: 'OP', warehouseDescription: 'OutPoint'})}/>
                 </View>
             </View>
         </View>

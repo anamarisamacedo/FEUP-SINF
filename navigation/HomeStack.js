@@ -9,7 +9,6 @@ import ClientOrdersScreen from '../screens/ClientOrdersScreen';
 import SupplierOrdersScreen from '../screens/SupplierOrdersScreen';
 import OrderDetailsScreen from '../screens/OrderDetailsScreen';
 import NavigationDrawerStructure from '../components/NavigationDrawerStructure';
-import OPScreen from '../screens/OPScreen';
 import PickersListScreen from '../screens/PickersListScreen';
 import GeneratePickingWaveScreen from '../screens/GeneratePickingWaveScreen';
 import PickingWavesScreen from '../screens/PickingWavesScreen';
@@ -29,7 +28,6 @@ export default function HomeStack() {
       <Drawer.Screen name="ClientOrdersScreen" component={ClientOrdersScreen} />
       <Drawer.Screen name="SupplierOrdersScreen" component={SupplierOrdersScreen} />
       <Drawer.Screen name="OrderDetailsScreen" component={OrderDetailsScreen} />
-      <Drawer.Screen name="OPScreen" component={OPScreen} />
       <Drawer.Screen name="PickingWavesScreen" component={PickingWavesScreen} />
       <Drawer.Screen name="GeneratePickingWaveScreen" component={GeneratePickingWaveScreen} />
       <Drawer.Screen name="PickersListScreen" component={PickersListScreen} />

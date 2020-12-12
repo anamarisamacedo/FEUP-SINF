@@ -15,13 +15,11 @@ import stockService from "../services/stock";
 
 export default function StockListingScreen({ navigation, route }) {
   const [stock, setStock] = useState([]);
-  //const [itemsDb, setItemsDb] = useState([]);
   const [isLoading, setLoading] = useState(true);
   const { warehouseId, warehouseName, warehouseDescription } = route.params;
   const title = warehouseName + " " + warehouseDescription;
   const accessToken = token.getToken();
-  var currentStock;
-  //var itemLoc;
+  var currentStock=0;
 
   useEffect(() => {
     const apiUrl =
@@ -41,10 +39,10 @@ export default function StockListingScreen({ navigation, route }) {
       },
     })
       .then((response) => response.json())
-      .then((materials) => {setStock(materials)})
+      .then((materials) => {
+        setStock(materials);
+      })
       .finally(setLoading(false));
-    
-    //stockService.getItems().then((items) => setItemsDb(items))
   }, []);
   return (
     <View style={styles.main}>
@@ -67,22 +65,57 @@ export default function StockListingScreen({ navigation, route }) {
           </View>
           <ScrollView
             automaticallyAdjustContentInsets={false}
-            onScroll={() => { console.log('onScroll!'); }}
+            onScroll={() => {
+              console.log("onScroll!");
+            }}
             scrollEventThrottle={200}
             style={styles.scrollView}
           >
             {stock.map((i) => {
-              if (i.defaultWarehouse == (warehouseName + "1") || i.defaultWarehouse == (warehouseName + "2")) {
+              var opItems=false;
+              if (warehouseName == "OP") {
                 i.materialsItemWarehouses.map((j) => {
-                  if (j.warehouse == i.defaultWarehouse) {
+                  if (j.warehouse == warehouseName) {
+                    opItems=true;
                     currentStock = j.stockBalance;
                   }
                 });
-                /*
-                itemsDb.map((itemDb) => {
-                  if(i.itemKey == itemDb.ref)
-                  itemLoc = itemDb.loc
-                })*/
+                if(opItems==true){
+                return (
+                  <View>
+                    <View style={styles.row} key={i}>
+                      <View style={styles.refColumn}>
+                        <Text style={styles.textTable}>{i.itemKey}</Text>
+                      </View>
+                      <View style={styles.nameColumn}>
+                        <Text style={styles.textTable}>
+                          {i.description}
+                        </Text>
+                      </View>
+                      <View style={styles.stockColumn}>
+                        <TouchableOpacity onPress={() => console.log("")}>
+                          <Text style={styles.textTable}>
+                            {currentStock + "/" + i.maxStock}
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </View>
+                );}
+              }
+              if (
+                i.defaultWarehouse == warehouseName + "1" ||
+                i.defaultWarehouse == warehouseName + "2"
+              ) {
+                currentStock=0;
+                i.materialsItemWarehouses.map((j) => {
+                  if (
+                    j.warehouse == warehouseName + "1" ||
+                    j.warehouse == warehouseName + "2"
+                  ) {
+                    currentStock += j.stockBalance;
+                  }
+                });
                 return (
                   <View>
                     <View style={styles.row} key={i}>
@@ -100,11 +133,11 @@ export default function StockListingScreen({ navigation, route }) {
                         </TouchableOpacity>
                       </View>
                     </View>
-                    </View>
+                  </View>
                 );
               }
             })}
-            </ScrollView>
+          </ScrollView>
         </View>
       </View>
       <View style={styles.bottom}>
@@ -182,5 +215,5 @@ const styles = StyleSheet.create({
   locColumn: { flexDirection: "column", flex: 0.6 },
   nameColumn: { flexDirection: "column", flex: 2 },
   stockColumn: { flexDirection: "column", flex: 0.5 },
-  scrollView: {height: Dimensions.get('window').height - 400}
+  scrollView: { height: Dimensions.get("window").height - 400 },
 });
