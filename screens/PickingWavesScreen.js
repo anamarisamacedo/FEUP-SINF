@@ -75,7 +75,7 @@ export default function PickingWavesScreen({ navigation }) {
                         <View>
                           <View style={styles.row} key={i}>
                             <View style={styles.waveColumn}>
-                              <Text style={styles.textTable}>{i.wave}</Text>
+                              <Text style={styles.textTable}>{"000" + i.wave}</Text>
                             </View>
                             <View style={styles.dateColumn}>
                               <Text style={styles.textTable}>
@@ -103,7 +103,7 @@ export default function PickingWavesScreen({ navigation }) {
                         >
                           <View style={styles.row} key={i}>
                             <View style={styles.waveColumn}>
-                              <Text style={styles.textTable}>{i.wave}</Text>
+                              <Text style={styles.textTable}>{"000" + i.wave}</Text>
                             </View>
                             <View style={styles.dateColumn}>
                               <Text style={styles.textTable}>
@@ -131,7 +131,7 @@ export default function PickingWavesScreen({ navigation }) {
                         >
                           <View style={styles.row} key={i}>
                             <View style={styles.waveColumn}>
-                              <Text style={styles.textTable}>{i.wave}</Text>
+                              <Text style={styles.textTable}>{"000" + i.wave}</Text>
                             </View>
                             <View style={styles.dateColumn}>
                               <Text style={styles.textTable}>
@@ -158,7 +158,7 @@ export default function PickingWavesScreen({ navigation }) {
                         >
                           <View style={styles.row} key={i}>
                             <View style={styles.waveColumn}>
-                              <Text style={styles.textTable}>{i.wave}</Text>
+                              <Text style={styles.textTable}>{"000" + i.wave}</Text>
                             </View>
                             <View style={styles.dateColumn}>
                               <Text style={styles.textTable}>
@@ -184,7 +184,7 @@ export default function PickingWavesScreen({ navigation }) {
       </View>
       <View style={styles.bottom}>
         <GeneralButton
-          name="Generate Picking Wave"
+          name="generate new picking wave"
           fontSize={14}
           onPress={() => navigation.navigate("GeneratePickingWaveScreen")}
         />

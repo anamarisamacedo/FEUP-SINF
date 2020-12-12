@@ -34,7 +34,7 @@ export default function LoginScreen({ navigation }) {
     <View style={styles.main}>
       <View style={styles.content}>
         <Image style={styles.image} source={LogoImage} />
-        <View style={{ marginVertical: 30 }}></View>
+        <View style={{ marginVertical: 60 }}></View>
         <Text style={styles.text}>username</Text>
         <View style={{ marginVertical: 4 }}></View>
         <TextInput

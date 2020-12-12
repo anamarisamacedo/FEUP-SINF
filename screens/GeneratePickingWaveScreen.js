@@ -70,19 +70,19 @@ export default function GeneratePickingWaveScreen({ navigation }) {
         </View>
       </View>
       <View style={styles.row}>
-        <Text style={styles.text2}> Max Number of Products: </Text>
+        <Text style={styles.text2}>max number products    </Text>
         <TextInput
           keyboardType="numeric"
           style={styles.input}
           placeholder={0}
-          onChangeText={(text) => onCheckLimit(text, 10)}
+          onChangeText={(text) => onCheckLimit(text, 100)}
           value={value}
           maxLength={10}
         />
       </View>
       <View style={styles.bottom}>
         <GeneralButton
-          name="Generate Picking Wave"
+          name="generate"
           fontSize={14}
           onPress={() => generatePW()}
         />
@@ -164,18 +164,18 @@ const styles = StyleSheet.create({
     fontFamily: "Corbel",
     fontStyle: "normal",
     fontWeight: "bold",
-    fontSize: 14,
+    fontSize: 18,
   },
 
   input: {
     borderBottomColor: "lightgray",
     borderBottomWidth: 1,
-    width: 50,
+    width: 40,
     color: "#d3d3d3",
     fontFamily: "Corbel",
     fontStyle: "normal",
     fontWeight: "bold",
-    fontSize: 14,
+    fontSize: 18,
     textAlign: "center",
   },
 });

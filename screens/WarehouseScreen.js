@@ -47,6 +47,6 @@ const styles = StyleSheet.create({
         marginVertical: 15,
     },
     warehouseBtns: {
-        marginTop: 80
+        marginTop: 120
     }
 });
