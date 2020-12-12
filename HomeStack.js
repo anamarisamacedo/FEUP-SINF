@@ -3,7 +3,6 @@ import { createAppContainer } from 'react-navigation';
 import EntryScreen from './screens/EntryScreen'; 
 import WarehouseScreen from './screens/WarehouseScreen';
 import StockListingScreen from './screens/StockListingScreen';
-import OPScreen from './screens/OPScreen';
 import ClientOrdersScreen from './screens/ClientOrdersScreen';
 import SupplierOrdersScreen from './screens/SupplierOrdersScreen';
 import OrderDetailsScreen from './screens/OrderDetailsScreen';
@@ -51,12 +50,6 @@ const screens = {
   },
   StockListingScreen: {
     screen: StockListingScreen,
-    navigationOptions: {
-      headerShown: false,
-    },
-  },
-  OPScreen: {
-    screen: OPScreen,
     navigationOptions: {
       headerShown: false,
     },
