@@ -13,7 +13,7 @@ import Navbar from '../components/Navbar';
 import token from '../services/token';
 import jasminConstants from '../services/jasminConstants';
 import Moment from 'moment';
-import queries from "../db/Database";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function OrderDetails({ navigation, route }) {
   const {id, orderId, date, client, status} = route.params;
@@ -28,7 +28,10 @@ export default function OrderDetails({ navigation, route }) {
     sales = "/purchases";
   const apiUrl = jasminConstants.url + "/api/" + jasminConstants.accountKey + "/" + jasminConstants.subscriptionKey + sales + "/orders/" + orderId;
 
+  const isFocused = useIsFocused();
+
   useEffect(() => {
+    console.log("Order details screen loaded!");
     fetch(apiUrl, {
       method: "GET",
       headers: {
@@ -39,7 +42,7 @@ export default function OrderDetails({ navigation, route }) {
       .then((response) => response.json())
       .then((order) => {setItems(order.documentLines), setTitle("Order " + order.naturalKey + " " + id)})
       .finally(setLoading(false));
-  }, [items, title])
+  }, [isFocused])
 
   const subtitle = "Date: " + Moment(date).format('YYYY/MM/DD') + " Status: " + status;
 

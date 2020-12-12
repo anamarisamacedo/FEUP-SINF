@@ -11,7 +11,9 @@ import {
 import BackButton from "../components/BackButton";
 import token from "../services/token";
 import jasminConstants from "../services/jasminConstants";
-import stockService from "../services/stock";
+import { useIsFocused } from "@react-navigation/native";
+
+
 
 export default function StockListingScreen({ navigation, route }) {
   const [stock, setStock] = useState([]);
@@ -23,7 +25,10 @@ export default function StockListingScreen({ navigation, route }) {
   var currentStock;
   //var itemLoc;
 
+  const isFocused = useIsFocused();
+
   useEffect(() => {
+    console.log("Stock listing page loaded!");
     const apiUrl =
       jasminConstants.url +
       "/api/" +
@@ -45,7 +50,7 @@ export default function StockListingScreen({ navigation, route }) {
       .finally(setLoading(false));
     
     //stockService.getItems().then((items) => setItemsDb(items))
-  }, []);
+  }, [isFocused]);
   return (
     <View style={styles.main}>
       <Navbar navigation={navigation} />

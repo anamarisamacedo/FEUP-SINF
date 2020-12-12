@@ -12,9 +12,9 @@ import {
   SafeAreaView,
 } from "react-native";
 import BackButton from "../components/BackButton";
-import GeneralButton from "../components/GeneralButton";
 import Expandable from "../components/Expandable";
-import {AuthProvider} from "../navigation/AuthProvider";
+import { AuthProvider } from "../navigation/AuthProvider";
+import { useIsFocused } from "@react-navigation/native";
 
 const wave = [
   {
@@ -113,7 +113,7 @@ export default function PickerWaveScreen({ navigation, route }) {
   const { pickingWave } = route.params;
   const title = "Picking Wave " + pickingWave.wave;
   var subtitle;
-  
+
   if (AuthProvider.IsManager) {
     subtitle =
       "Picker: " +
@@ -130,10 +130,7 @@ export default function PickerWaveScreen({ navigation, route }) {
   const [value, onChangeText] = useState(pickingWave.report);
   const [listDataSource, setListDataSource] = useState(wave);
 
-  const [executeFunc, setExecuteFunc] = useState(true);
-
   const organizeItems = (items) => {
-    setExecuteFunc(false);
     const array = [...listDataSource];
     items.forEach((item) => {
       array.forEach((wave) => {
@@ -146,9 +143,9 @@ export default function PickerWaveScreen({ navigation, route }) {
   };
 
   useEffect(() => {
-    console.log(pickingWave)
-    if (executeFunc) organizeItems(pickingWave.items);
-  });
+    console.log(pickingWave);
+    organizeItems(pickingWave.items);
+  }, [isFocused]);
 
   const multiSelect = true;
 
@@ -200,7 +197,7 @@ export default function PickerWaveScreen({ navigation, route }) {
             <Text style={styles.header}>{"P/Qty"}</Text>
           </View>
         </View>
-        <SafeAreaView style={{ flex: 1}}>
+        <SafeAreaView style={{ flex: 1 }}>
           <View>
             <View>
               <TouchableOpacity>

@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import { StyleSheet, Text, TextInput, View, Dimensions, Button, TouchableOpacity, InteractionManager } from "react-native";
+import { StyleSheet, Text, TextInput, View, Dimensions} from "react-native";
 import GeneralButton from "../components/GeneralButton";
 import Navbar from '../components/Navbar';
 import jasminConstants from '../services/jasminConstants';
