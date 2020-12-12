@@ -39,9 +39,17 @@ var whToInt = {
 
 const functions = {
     generatePickingWave: function (orders, numProducts) {
-        
+
+        orders.sort((a, b) => {
+            if(a.pwRatio == b.pwRatio) {
+                return (a.date < b.date) ? -1 : 1;
+            } else {
+                return (a.pwRatio > b.pwRatio) ? -1 : 1;
+            }
+        });
+
         console.log(orders);
-        orders.sort((a, b) => (a.pwRatio > b.pwRatio) ? -1 : 1);
+
         let i = 0,
             totalNumProducts = 0;
         for (i = 0; i < orders.length; i++) {
@@ -172,6 +180,7 @@ const functions = {
         let selectedItems = [];
 
         while (!stop && (!stopA || !stopB || !stopC)) {
+            console.log("CHOSEN = " + numItemsChosen);
             switch (n % 3) {
                 case 0:
                     if (i < itemsA.length) {
@@ -190,6 +199,7 @@ const functions = {
                                     qty: item.qty,
                                     ref: item.ref
                                 });
+                                console.log(item);
                                 queries.updateOrder(item);
                             }
                         });

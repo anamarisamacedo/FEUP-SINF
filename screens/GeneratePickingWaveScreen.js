@@ -42,7 +42,7 @@ export default function GeneratePickingWaveScreen({ navigation }) {
         let qtyPW = (order.id in ordersQtyPw && typeof ordersQtyPw[order.id][item.salesItem] !== 'undefined')? ordersQtyPw[order.id][item.salesItem] : 0;
         items.push({ref: item.salesItem, qty: item.quantity, qtyPW: qtyPW, loc: item.warehouse, name: item.salesItemDescription});
       });
-      ordersPw.push({id: order.id, items: items, pwRatio: functions.calculatePWRatio(items)});
+      ordersPw.push({id: order.id, items: items, pwRatio: functions.calculatePWRatio(items), date: order.createdOn});
     });
     functions.generatePickingWave(ordersPw, value);
     navigation.navigate('PickingWavesScreen');
