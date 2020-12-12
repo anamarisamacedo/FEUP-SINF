@@ -9,9 +9,11 @@ import {
   TouchableOpacity,
 } from "react-native";
 import BackButton from "../components/BackButton";
+import GeneralButton from "../components/GeneralButton";
 import token from "../services/token";
 import jasminConstants from "../services/jasminConstants";
 import { useIsFocused } from "@react-navigation/native";
+import shipping from "../services/shipping";
 
 export default function StockListingScreen({ navigation, route }) {
   const [stock, setStock] = useState([]);
@@ -100,11 +102,9 @@ export default function StockListingScreen({ navigation, route }) {
                         </Text>
                       </View>
                       <View style={styles.stockColumn}>
-                        <TouchableOpacity onPress={() => console.log("")}>
                           <Text style={styles.textTable}>
                             {currentStock + "/" + i.maxStock}
                           </Text>
-                        </TouchableOpacity>
                       </View>
                     </View>
                   </View>
@@ -136,11 +136,9 @@ export default function StockListingScreen({ navigation, route }) {
                         <Text style={styles.textTable}>{i.description}</Text>
                       </View>
                       <View style={styles.stockColumn}>
-                        <TouchableOpacity onPress={() => console.log("")}>
                           <Text style={styles.textTable}>
                             {currentStock + "/" + i.maxStock}
                           </Text>
-                        </TouchableOpacity>
                       </View>
                     </View>
                   </View>
@@ -149,6 +147,11 @@ export default function StockListingScreen({ navigation, route }) {
             })}
           </ScrollView>
         </View>
+        {warehouseName == "OP" &&
+            
+        <GeneralButton name="Genarate Delivery Note" onPress={() => shipping.generateDeliveryNote("ECL.2020.2")} />
+        
+        }
       </View>
       <View style={styles.bottom}>
         <BackButton onPress={() => navigation.goBack()} />
