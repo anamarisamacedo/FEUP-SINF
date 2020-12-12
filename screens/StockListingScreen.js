@@ -72,9 +72,9 @@ export default function StockListingScreen({ navigation, route }) {
             style={styles.scrollView}
           >
             {stock.map((i) => {
-              if (i.defaultWarehouseId == warehouseId) {
+              if (i.defaultWarehouse == (warehouseName + "1") || i.defaultWarehouse == (warehouseName + "2")) {
                 i.materialsItemWarehouses.map((j) => {
-                  if (j.warehouseId == warehouseId) {
+                  if (j.warehouse == i.defaultWarehouse) {
                     currentStock = j.stockBalance;
                   }
                 });

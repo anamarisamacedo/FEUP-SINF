@@ -3,7 +3,7 @@ import pwQueries from "../db/pickingWaves";
 
 
 var numOrdersToAnalyze = 3;
-/*var whToInt = {
+var whToInt = {
     'A11' : 0,
     'A12' : 1,
     'A21' : 2,
@@ -22,9 +22,9 @@ var numOrdersToAnalyze = 3;
     'C22' : 3,
     'C31' : 4,
     'C32' : 5
-}*/
+}
 
-var whToInt = {
+/*var whToInt = {
     'A1': 0,
     'A2': 1,
     'A3': 2,
@@ -34,14 +34,22 @@ var whToInt = {
     'C1': 0,
     'C2': 1,
     'C3': 2,
-}
+}*/
 
 
 const functions = {
     generatePickingWave: function (orders, numProducts) {
-        
+
+        orders.sort((a, b) => {
+            if(a.pwRatio == b.pwRatio) {
+                return (a.date < b.date) ? -1 : 1;
+            } else {
+                return (a.pwRatio > b.pwRatio) ? -1 : 1;
+            }
+        });
+
         console.log(orders);
-        orders.sort((a, b) => (a.pwRatio > b.pwRatio) ? -1 : 1);
+
         let i = 0,
             totalNumProducts = 0;
         for (i = 0; i < orders.length; i++) {
@@ -172,6 +180,7 @@ const functions = {
         let selectedItems = [];
 
         while (!stop && (!stopA || !stopB || !stopC)) {
+            console.log("CHOSEN = " + numItemsChosen);
             switch (n % 3) {
                 case 0:
                     if (i < itemsA.length) {
@@ -190,6 +199,7 @@ const functions = {
                                     qty: item.qty,
                                     ref: item.ref
                                 });
+                                console.log(item);
                                 queries.updateOrder(item);
                             }
                         });
