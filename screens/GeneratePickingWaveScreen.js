@@ -40,11 +40,13 @@ export default function GeneratePickingWaveScreen({ navigation }) {
     let ordersPw = [];
     orders.forEach(order => {
       let items = [];
+      let totalNumItems = 0;
       order.documentLines.forEach(item => {
         let qtyPW = (order.id in ordersQtyPw && typeof ordersQtyPw[order.id][item.salesItem] !== 'undefined') ? ordersQtyPw[order.id][item.salesItem] : 0;
         items.push({ ref: item.salesItem, qty: item.quantity, qtyPW: qtyPW, loc: item.warehouse, name: item.salesItemDescription });
+        totalNumItems += item.quantity;
       });
-      ordersPw.push({ id: order.id, items: items, pwRatio: functions.calculatePWRatio(items), date: order.createdOn });
+      ordersPw.push({ id: order.id, items: items, totalNumItems: totalNumItems, pwRatio: functions.calculatePWRatio(items), date: order.createdOn });
     });
     functions.generatePickingWave(ordersPw, value);
     navigation.navigate('PickingWavesScreen');
