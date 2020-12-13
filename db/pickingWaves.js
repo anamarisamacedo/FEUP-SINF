@@ -1,5 +1,11 @@
-import { db } from '../config';
+import {
+    db
+} from '../config';
 import queries from './Database';
+import jasminConstants from "../services/jasminConstants";
+import token from "../services/token";
+import shipping from "../services/shipping";
+const axios = require("axios");
 
 const pWqueries = {
     getPickingWaves() {
@@ -43,28 +49,84 @@ const pWqueries = {
                     concluded = false;
                 }
             })
-        }); 
-        concluded = true; 
+        });
+        concluded = true;
         db.ref('pickingWaves/').orderByChild('wave').equalTo(pw).once('value', function (snapshot) {
             snapshot.forEach(function (child) {
                 for (var [key, value] of picked) {
                     child.child('items/').forEach((item) => {
                         if (item.val().ref == key) {
-                            item.ref.update({ picked: value })
+                            item.ref.update({
+                                picked: value
+                            })
                         }
                     });
                 }
                 if (concluded) {
-                    child.ref.update({ report: report, status: "concluded" });
+                    child.ref.update({
+                        report: report,
+                        status: "concluded"
+                    });
                     if ("closesOrders" in pickingWave) {
                         pickingWave.closesOrders.forEach(orderID => {
                             queries.updateOrderStatus(orderID);
                         })
                     }
-                }
-                else child.ref.update({ report: report });
+                } else child.ref.update({
+                    report: report
+                });
             })
         })
+        if (concluded)
+            this.stockTransfer(wave, pickingWave);
+    },
+
+    stockTransfer(wave, pickingWave) {
+        const accessToken = token.getToken();
+        const apiUrl =
+            jasminConstants.url +
+            "/api/" +
+            jasminConstants.accountKey +
+            "/" +
+            jasminConstants.subscriptionKey +
+            "/materialsmanagement/stockTransferOrders";
+
+        wave.forEach(async section => {
+            if (section.items.length != 0) {
+                let body = {
+                    company: "SINFP",
+                    sourceWarehouse: section.section_name,
+                    targetWarehouse: "OP",
+                    UnloadingCountry: "PT",
+                    documentLines: [],
+                }
+
+                section.items.forEach(item => {
+                    body.documentLines.push({materialsItem: item.ref, quantity: item.qty});
+                })
+
+                console.log(body);
+
+                await axios({
+                    method: "POST",
+                    url: apiUrl,
+                    headers: {
+                        Accept: "application/json",
+                        "Content-Type": "application/json",
+                        Authorization: "Bearer " + accessToken,
+                    },
+                    data: JSON.stringify(body)
+                })
+                .then((response) => console.log(response.status));
+            }
+        });
+
+        if ("closesOrders" in pickingWave) {
+            pickingWave.closesOrders.forEach(orderID => {
+                queries.getClientOrderRef(orderID).then(orderRef => shipping.generateDeliveryNote(orderRef));
+            })
+        }
+
     },
 
     getNextPWId() {

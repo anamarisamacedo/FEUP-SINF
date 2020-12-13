@@ -35,7 +35,7 @@ export default function ClientOrdersScreen({ navigation }) {
       orders.map((i) => {
         queries.getClientOrderStatus(i.id).then(response => {
           if (response == false){
-            queries.addClientOrder(i.id);
+            queries.addClientOrder(i.id, i.naturalKey);
             response = 'WFP';
           }
           var aux = status;

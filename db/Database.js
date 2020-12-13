@@ -28,10 +28,11 @@ const queries = {
             });
         })
     },
-    addClientOrder: function (orderId) {
+    addClientOrder: function (orderId, orderRef) {
 
         db.ref('client_orders/' + orderId).set({
             status: "WFP",
+            ref: orderRef,
             items: {}
         }).then(() => console.log(orderId + " order was created!'"));
     },
@@ -67,6 +68,17 @@ const queries = {
                 if (data == null) {
                     resolve(false);
                 } else resolve(data.status);
+            });
+        })
+    },
+    getClientOrderRef: function (orderId) {
+        return new Promise(resolve => {
+            let data = null;
+            db.ref("client_orders/" + orderId).once('value', querySnapShot => {
+                data = querySnapShot.val();
+                if (data == null) {
+                    resolve(false);
+                } else resolve(data.ref);
             });
         })
     },

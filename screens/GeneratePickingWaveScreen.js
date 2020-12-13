@@ -46,7 +46,7 @@ export default function GeneratePickingWaveScreen({ navigation }) {
         items.push({ ref: item.salesItem, qty: item.quantity, qtyPW: qtyPW, loc: item.warehouse, name: item.salesItemDescription });
         totalNumItems += item.quantity;
       });
-      ordersPw.push({ id: order.id, items: items, totalNumItems: totalNumItems, pwRatio: functions.calculatePWRatio(items), date: order.createdOn });
+      ordersPw.push({ id: order.id, items: items, totalNumItems: totalNumItems, pwRatio: functions.calculatePWRatio(items), date: order.createdOn, ref: order.naturalKey });
     });
     functions.generatePickingWave(ordersPw, value);
     navigation.navigate('PickingWavesScreen');
