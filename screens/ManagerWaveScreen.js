@@ -134,15 +134,17 @@ export default function ManagerWaveScreen({ navigation, route }) {
   });
 
   const [item, setItem] = useState(pickers[0]);
-  const [listDataSource, setListDataSource] = useState(wave);
+  const [listDataSource, setListDataSource] = useState([]);
 
   const organizeItems = (items) => {
-    const array = [...listDataSource];
+    const array = [...wave];
+    console.log("AQUI")
+    console.log(wave);
     items.forEach(item => {
-      array.forEach(wave => {
-        if (item.defaultWarehouse == wave.section_name) {
-          if (!wave.items.includes(item))
-            wave.items.push(item);
+      array.forEach(waveT => {
+        if (item.defaultWarehouse == waveT.section_name) {
+          if (!waveT.items.includes(item))
+          waveT.items.push(item);
         }
       })
     });
@@ -244,7 +246,9 @@ export default function ManagerWaveScreen({ navigation, route }) {
         </View>
       </View>
       <View style={styles.bottomRow}>
-        <BackButton onPress={() => navigation.goBack()} />
+        <BackButton onPress={() => {
+          navigation.goBack();
+        }} />
       </View>
     </View>
   );

@@ -238,7 +238,7 @@ export default function PickerWaveScreen({ navigation, route }) {
       </View>
       <View style={styles.bottomRow}>
         <BackButton
-          onPress={() => { navigation.goBack();}}
+          onPress={() => { navigation.goBack(); }}
         />
         {!AuthProvider.IsManager && (
           <GeneralButton name="Report" onPress={navigateToInput} />
