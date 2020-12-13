@@ -83,7 +83,7 @@ const queries = {
     },
     sleep : function (ms) {
         return new Promise(resolve => setTimeout(resolve, ms));
-      },
+    },
     updateOrder: async function (item) {
         await queries.sleep(2000);
         if(item.oldQtyPW != 0) {
@@ -98,6 +98,11 @@ const queries = {
                 qtyPW: item.qty
             });
         }
+    },
+    updateOrderStatus: function (orderID) {
+        db.ref('client_orders/' + orderID).update({
+            status: "Shipping"
+        });
     },
     getUsername: function (email) {
         return getUsername(email);

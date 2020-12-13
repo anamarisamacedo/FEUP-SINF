@@ -13,11 +13,13 @@ export default function ClientOrdersScreen({ navigation }) {
   const [isLoading, setLoading] = useState(true);
   const title = "Clients' Orders";
   const accessToken = token.getToken();
+  const isFocused = useIsFocused();
 
   const isFocused = useIsFocused();
 
   useEffect(() => {
     const apiUrl = jasminConstants.url +"/api/" + jasminConstants.accountKey + "/" + jasminConstants.subscriptionKey + "/sales/orders";
+    var bar = new Promise((resolve, reject) => {
     fetch(apiUrl, {
       method: "GET",
       headers: {
@@ -26,9 +28,10 @@ export default function ClientOrdersScreen({ navigation }) {
         Authorization: "Bearer " + accessToken
       }})
       .then((response) => response.json())
-      .then((orders) => {setOrders(orders)})
-      .finally(setLoading(false));
+      .then((orders) => {setOrders(orders); resolve(orders)})
+    });
 
+    bar.then((orders) => {
       orders.map((i) => {
         queries.getClientOrderStatus(i.id).then(response => {
           if (response == false){
@@ -40,7 +43,8 @@ export default function ClientOrdersScreen({ navigation }) {
           setStatus(aux);
         });
       });
-  }, [orders, status]);
+    });
+  }, [isFocused]);
 
   return (
     <View style={styles.main}>
@@ -69,7 +73,7 @@ export default function ClientOrdersScreen({ navigation }) {
           onScroll={() => { console.log('onScroll!'); }}
           scrollEventThrottle={200}
           style={styles.scrollView}>
-            {orders.map((i) => {
+            {orders.map((i) => {console.log(i.id); console.log(status); console.log(status.get(i.id))
               return(
                 <TouchableOpacity
                   onPress={() => navigation.navigate('OrderDetailsScreen', {id: 'Client ' + i.buyerCustomerParty, orderId: i.id, date: i.documentDate, client: true, status: status.get(i.id), items: i.documentLines, naturalKey: i.naturalKey})}

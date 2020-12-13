@@ -258,25 +258,28 @@ const functions = {
             targetOrders.push(item.orderID);
         });
         targetOrders = [...new Set(targetOrders)];
+        let closesOrders = [];
 
         targetOrders.forEach(orderID => {
             let order = orders.filter((order) => order.id == orderID)[0];
             let qtyNeeded = order.totalNumItems;
+            order.items.forEach(item => {
+                qtyNeeded -= item.qtyPW;
+            });
             selectedItems.forEach(item => {
                 if(item.orderID == orderID) {
-                    qtyNeeded -= item.oldQtyPW + item.qty;
+                    qtyNeeded -= item.qty;
                 }
             });
-            console.log("FINAL QTYNEEDED = " + qtyNeeded);
             if(qtyNeeded == 0) {
-                console.log("generate delivery note");
+                closesOrders.push(orderID);
             }
         })
 
 
         return new Promise(resolve => {
             if(selectedItems.length > 0)
-                resolve(pwQueries.addPickingWave(selectedItems).then(() => {}));
+                resolve(pwQueries.addPickingWave(selectedItems, closesOrders).then(() => {}));
             else resolve();
         });
     },

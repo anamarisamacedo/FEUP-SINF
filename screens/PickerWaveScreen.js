@@ -179,6 +179,7 @@ export default function PickerWaveScreen({ navigation, route }) {
       waveID: pickingWave.wave,
       wave: temp,
       title,
+      pickingWave: pickingWave,
     });
   };
 
@@ -204,36 +205,25 @@ export default function PickerWaveScreen({ navigation, route }) {
               <Text style={[styles.header, {textAlign: 'right'}]}>{"P/Qty"}</Text>
             </View>
           </View>
-          <SafeAreaView style={{ flex: 1 }}>
-            <View>
-              <View>
-                <TouchableOpacity>
-                  <Text>
-                    {multiSelect
-                      ? "Enable Single \n Expand"
-                      : "Enalble Multiple \n Expand"}
-                  </Text>
-                </TouchableOpacity>
-              </View>
-              <ScrollView
-                automaticallyAdjustContentInsets={false}
-                onScroll={() => { console.log('onScroll!'); }}
-                scrollEventThrottle={200}
-                style={styles.scrollView}
-              >
-                {listDataSource.map((wave, key) => (
-                  <Expandable
-                    key={wave.defaultWarehouse}
-                    onClickFunction={() => {
-                      updateLayout(key);
-                    }}
-                    items={wave}
-                    input={false}
-                  />
-                ))}
-              </ScrollView>
-            </View>
-          </SafeAreaView>
+          <View style={styles.scrollView}>
+            <ScrollView
+              automaticallyAdjustContentInsets={false}
+              onScroll={() => { console.log('onScroll!'); }}
+              scrollEventThrottle={200}
+              style={styles.scrollView}
+            >
+              {listDataSource.map((wave, key) => (
+                <Expandable
+                  key={wave.defaultWarehouse}
+                  onClickFunction={() => {
+                    updateLayout(key);
+                  }}
+                  items={wave}
+                  input={false}
+                />
+              ))}
+            </ScrollView>
+          </View>
         </View>
       </View>
       <View style={styles.bottomRow}>
@@ -259,7 +249,7 @@ const styles = StyleSheet.create({
     backgroundColor: "black",
   },
   container: {
-    justifyContent: "space-evenly",
+    flex: 1,
     marginHorizontal: 15,
   },
   bottom: {
@@ -339,5 +329,5 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 25,
   },
-  scrollView: {height: Dimensions.get('window').height - 300}
+  scrollView: {height: Dimensions.get('window').height - 500}
 });

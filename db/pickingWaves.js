@@ -1,4 +1,5 @@
 import { db } from '../config';
+import queries from './Database';
 
 const pWqueries = {
     getPickingWaves() {
@@ -34,7 +35,16 @@ const pWqueries = {
             });
         })
     },
-    submitReportAndPicked(pw, report, picked) {
+    submitReportAndPicked(pw, report, picked, wave, pickingWave) {
+        let concluded = true;
+        wave.forEach(section => {
+            section.items.forEach(item => {
+                if (item.qty != picked.get(item.ref)) {
+                    concluded = false;
+                }
+            })
+        }); 
+        concluded = true; 
         db.ref('pickingWaves/').orderByChild('wave').equalTo(pw).once('value', function (snapshot) {
             snapshot.forEach(function (child) {
                 for (var [key, value] of picked) {
@@ -44,8 +54,15 @@ const pWqueries = {
                         }
                     });
                 }
-                child.ref.update({ report: report });
-
+                if (concluded) {
+                    child.ref.update({ report: report, status: "concluded" });
+                    if ("closesOrders" in pickingWave) {
+                        pickingWave.closesOrders.forEach(orderID => {
+                            queries.updateOrderStatus(orderID);
+                        })
+                    }
+                }
+                else child.ref.update({ report: report });
             })
         })
     },
@@ -63,7 +80,8 @@ const pWqueries = {
         });
     },
 
-    addPickingWave: function (items) {
+    addPickingWave: function (items, closesOrders) {
+        console.log(closesOrders);
         return new Promise(() => {
             this.getNextPWId().then(nextId => {
                 let today = new Date();
@@ -89,7 +107,8 @@ const pWqueries = {
                     createdHour: hourStr,
                     concludedDate: ' - ',
                     concludedHour: ' - ',
-                    report: ""
+                    report: "",
+                    closesOrders: closesOrders,
                 }).then(() => console.log("Picking wave " + nextId + " has been created!"));
             });
         });

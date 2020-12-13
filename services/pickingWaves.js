@@ -13,8 +13,8 @@ const pickingWaves = {
     getPWNum(picker){
         return db.getPWNum(picker);
     },
-    submitReportAndPicked(pw, report, picked){
-        return db.submitReportAndPicked(pw, report, picked);
+    submitReportAndPicked(pw, report, picked, wave, pickingWave){
+        return db.submitReportAndPicked(pw, report, picked, wave, pickingWave);
     }
 }
 
