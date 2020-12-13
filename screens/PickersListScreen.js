@@ -68,7 +68,7 @@ export default function PickersListScreen({ navigation, route }) {
               <Text style={styles.header}>{"Assigned Waves"}</Text>
             </View>
             <View style={styles.managerColumn}>
-              <Text style={styles.header}>{"Assign Manager"}</Text>
+              <Text style={styles.header}>{"Manager"}</Text>
             </View>
           </View>
           {pickers.map((i) => {

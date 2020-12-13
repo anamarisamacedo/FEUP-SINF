@@ -197,7 +197,7 @@ export default function ManagerWaveScreen({ navigation, route }) {
               pickersService.submitPicker(newItem.value, pickingWave.wave);
             }}
           />
-          <Text style={styles.subtext}> {status} </Text>
+          <Text style={[styles.subtext, {marginLeft: 16}]}> {status} </Text>
         </View>
         <View>
           <View style={styles.row}>
@@ -207,8 +207,8 @@ export default function ManagerWaveScreen({ navigation, route }) {
             <View style={styles.nameColumn}>
               <Text style={styles.header}>{"Name"}</Text>
             </View>
-            <View style={styles.pqtyColumn}>
-              <Text style={styles.header}>{"P/Qty"}</Text>
+            <View style={[styles.pqtyColumn, {textAlign: 'right'}]}>
+              <Text style={[styles.header, {textAlign: 'right'}]}>{"P/Qty"}</Text>
             </View>
           </View>
           <SafeAreaView style={{ flex: 1 }}>
@@ -327,7 +327,6 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   refColumn: { flexDirection: "column", flex: 0.6 },
-  locColumn: { flexDirection: "column", flex: 0.6 },
   nameColumn: { flexDirection: "column", flex: 1.5 },
   pqtyColumn: { flexDirection: "column", flex: 0.5 },
 
