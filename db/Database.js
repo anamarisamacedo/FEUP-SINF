@@ -101,7 +101,17 @@ const queries = {
     },
     getUsername: function (email) {
         return getUsername(email);
-    }
+    },
+    assignManager: function (username) {
+        db.ref('accounts/' + username).update({
+            manager: true
+        }).then(() => console.log(username + " is now a Manager!"));
+    },
+    unssignManager: function (username) {
+        db.ref('accounts/' + username).update({
+            manager: false
+        }).then(() => console.log(username + " is no longer a Manager!"));
+    },
 }
 
 function getUsername(string) {
