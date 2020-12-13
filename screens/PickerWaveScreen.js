@@ -200,8 +200,8 @@ export default function PickerWaveScreen({ navigation, route }) {
             <View style={styles.nameColumn}>
               <Text style={styles.header}>{"Name"}</Text>
             </View>
-            <View style={styles.pqtyColumn}>
-              <Text style={styles.header}>{"P/Qty"}</Text>
+            <View style={[styles.pqtyColumn, {textAlign: 'right'}]}>
+              <Text style={[styles.header, {textAlign: 'right'}]}>{"P/Qty"}</Text>
             </View>
           </View>
           <SafeAreaView style={{ flex: 1 }}>

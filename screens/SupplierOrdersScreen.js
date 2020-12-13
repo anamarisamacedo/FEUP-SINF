@@ -8,7 +8,7 @@ import queries from "../db/Database";
 
 export default function SupplierOrdersScreen({ navigation }) {
   const [orders, setOrders] = useState([]);
-  const [status, setStatus] = useState(new Map());
+  //const [status, setStatus] = useState(new Map());
   const [isLoading, setLoading] = useState(true);
   const title = "Suppliers' Orders";
   const accessToken = token.getToken();
@@ -27,7 +27,7 @@ export default function SupplierOrdersScreen({ navigation }) {
       .then((orders) => {setOrders(orders)})
       .finally(setLoading(false));
 
-      orders.map((i) => {
+      /*orders.map((i) => {
         queries.getSupplierOrderStatus(i.id).then(response => {
             if (response == false){
               queries.addSupplierOrder(i.id);
@@ -37,8 +37,8 @@ export default function SupplierOrdersScreen({ navigation }) {
             aux.set(i.id, response);
             setStatus(aux);
         });
-      });
-  }, [orders, status])
+      });*/
+  }, [orders/*, status*/])
 
   return (
     <View style={styles.main}>
@@ -58,9 +58,9 @@ export default function SupplierOrdersScreen({ navigation }) {
             <View style={styles.dateColumn}>
               <Text style={styles.header}>{"Date"}</Text>
             </View>
-            <View style={styles.statusColumn}>
+            {/* <View style={styles.statusColumn}>
               <Text style={[styles.header, {textAlign: 'right'}]}>{"Status"}</Text>
-            </View>
+            </View> */}
           </View>
           <ScrollView
           automaticallyAdjustContentInsets={false}
@@ -70,7 +70,7 @@ export default function SupplierOrdersScreen({ navigation }) {
             {orders.map((i) => {
               return (
                 <TouchableOpacity
-                  onPress={() => navigation.navigate("OrderDetailsScreen", {id: 'Supplier ' + i.sellerSupplierPartyName, orderId: i.id, date: i.documentDate, client: false, status: status.get(i.id)})}
+                  onPress={() => navigation.navigate("OrderDetailsScreen", {id: 'Supplier ' + i.sellerSupplierPartyName, orderId: i.id, date: i.documentDate, client: false, status: false/*status.get(i.id)*/, items: i.documentLines, naturalKey: i.naturalKey})}
                 >
                   <View style={styles.row} key={i}>
                     <View style={styles.supplierColumn}>
@@ -82,9 +82,9 @@ export default function SupplierOrdersScreen({ navigation }) {
                     <View style={styles.dateColumn}>
                       <Text style={styles.textTable}>{Moment(i.documentDate).format('YYYY/MM/DD')}</Text>
                     </View>
-                    <View style={styles.statusColumn}>
+                    {/* <View style={styles.statusColumn}>
                       <Text style={[styles.textTable, {textAlign: 'right'}]}>{status.get(i.id)}</Text>
-                    </View>
+                    </View> */}
                   </View>
                 </TouchableOpacity>
               );

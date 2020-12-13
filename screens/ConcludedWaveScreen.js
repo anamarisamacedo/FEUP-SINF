@@ -317,7 +317,7 @@ const styles = StyleSheet.create({
     height: 60,
     alignItems: "right",
     backgroundColor: "darkgrey",
-    color: "#d3d3d3",
+    color: "black",
     fontFamily: "Corbel",
     fontStyle: "normal",
     fontSize: 15,
