@@ -131,7 +131,7 @@ export default function PickerWaveScreen({ navigation, route }) {
   const [listDataSource, setListDataSource] = useState(wave);
   const isFocused = useIsFocused();
   const organizeItems = (items) => {
-    const array = [...listDataSource];
+    const array = _.cloneDeep(wave);
     items.forEach((item) => {
       array.forEach((wave) => {
         if (item.defaultWarehouse == wave.section_name) {
@@ -141,6 +141,8 @@ export default function PickerWaveScreen({ navigation, route }) {
     });
     setListDataSource(array);
   };
+
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     console.log(pickingWave);

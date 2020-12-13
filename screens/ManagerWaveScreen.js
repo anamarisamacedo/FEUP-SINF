@@ -137,9 +137,7 @@ export default function ManagerWaveScreen({ navigation, route }) {
   const [listDataSource, setListDataSource] = useState([]);
 
   const organizeItems = (items) => {
-    const array = [...wave];
-    console.log("AQUI")
-    console.log(wave);
+    const array = _.cloneDeep(wave);
     items.forEach(item => {
       array.forEach(waveT => {
         if (item.defaultWarehouse == waveT.section_name) {
