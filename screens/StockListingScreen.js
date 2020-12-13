@@ -15,7 +15,6 @@ import { useIsFocused } from "@react-navigation/native";
 
 export default function StockListingScreen({ navigation, route }) {
   const [stock, setStock] = useState([]);
-  const [isLoading, setLoading] = useState(true);
   const { warehouseId, warehouseName, warehouseDescription } = route.params;
   const title = warehouseName + " " + warehouseDescription;
   const accessToken = token.getToken();
@@ -45,9 +44,7 @@ export default function StockListingScreen({ navigation, route }) {
       .then((materials) => {
         setStock(materials);
       })
-      .finally(setLoading(false));
     
-    //stockService.getItems().then((items) => setItemsDb(items))
   }, [isFocused]);
   return (
     <View style={styles.main}>
@@ -61,6 +58,11 @@ export default function StockListingScreen({ navigation, route }) {
             <View style={styles.refColumn}>
               <Text style={styles.header}>{"Ref"}</Text>
             </View>
+            {warehouseName != "OP" &&
+            <View style={styles.locColumn}>
+              <Text style={styles.header}>{"Loc"}</Text>
+            </View>
+            }
             <View style={styles.nameColumn}>
               <Text style={styles.header}>{"Name"}</Text>
             </View>
@@ -126,6 +128,9 @@ export default function StockListingScreen({ navigation, route }) {
                     <View style={styles.row} key={i}>
                       <View style={styles.refColumn}>
                         <Text style={styles.textTable}>{i.itemKey}</Text>
+                      </View>
+                      <View style={styles.locColumn}>
+                        <Text style={styles.textTable}>{i.defaultWarehouse}</Text>
                       </View>
                       <View style={styles.nameColumn}>
                         <Text style={styles.textTable}>{i.description}</Text>
