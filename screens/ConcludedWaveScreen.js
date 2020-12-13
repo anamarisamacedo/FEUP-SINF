@@ -129,7 +129,7 @@ export default function PickerWaveScreen({ navigation, route }) {
 
   const [value, onChangeText] = useState(pickingWave.report);
   const [listDataSource, setListDataSource] = useState(wave);
-
+  const isFocused = useIsFocused();
   const organizeItems = (items) => {
     const array = [...listDataSource];
     items.forEach((item) => {
@@ -348,7 +348,6 @@ const styles = StyleSheet.create({
     marginTop: 4,
   },
   refColumn: { flexDirection: "column", flex: 0.6 },
-  locColumn: { flexDirection: "column", flex: 0.6 },
   nameColumn: { flexDirection: "column", flex: 1.5 },
   pqtyColumn: { flexDirection: "column", flex: 0.5 },
 

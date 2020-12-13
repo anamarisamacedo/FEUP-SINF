@@ -134,10 +134,9 @@ const styles = StyleSheet.create({
     borderBottomColor: "darkgray",
     marginTop: 4,
   },
-  refColumn: { flexDirection: "column", flex: 0.6 },
-  locColumn: { flexDirection: "column", flex: 0.6 },
+  refColumn: { flexDirection: "column", flex: 0.4 },
   nameColumn: { flexDirection: "column", flex: 1.5 },
-  pqtyColumn: { flexDirection: "row", flex: 0.5 },
+  pqtyColumn: { flexDirection: "row", alignItems: 'right', flex: 0.3 },
   quantityInput: {
     textAlign: "center",
     color: "#d3d3d3",
