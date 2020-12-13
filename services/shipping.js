@@ -76,7 +76,7 @@ const shipping = {
           sourceDocKey: item.sourceDocKey,
           sourceDocLineNumber: item.sourceDocLineNumber,
           id: element.id,
-          quantity: element.quantity,
+          quantity: item.quantity
         });
       }
     });
@@ -90,16 +90,20 @@ const shipping = {
     deliveries = await this.filterDeliveries(deliveries, orderRef);
 
     var op = await this.getOP();
+
     deliveries = await this.filterByOP(deliveries, op);
+
+    if (deliveries.length == 0)
+      return;
     
     var body = [];
 
     deliveries.map((delivery) => {
       body.push({
-        companyKey: "SINFP",
-        sourceDocKey: delivery.sourceDocKey,
-        sourceDocLineNumber: delivery.sourceDocLineNumber,
-        quantity: delivery.quantity,
+        "companyKey": "SINFP",
+        "sourceDocKey": delivery.sourceDocKey,
+        "sourceDocLineNumber": delivery.sourceDocLineNumber,
+        "quantity": delivery.quantity
       });
     });
 
@@ -112,14 +116,16 @@ const shipping = {
       "/shipping/processOrders/SINFP";
 
     await axios({
-    method: "POST",
-    url: apiUrl,
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      Authorization: "Bearer " + accessToken,
-    },
-    data: JSON.stringify(body)}).then((response) => console.log(response.status));
+      method: "POST",
+      url: apiUrl,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+      data: JSON.stringify(body)
+    })
+    .then((response) => console.log(response.status));
   },
 
   async getWaitingGoods() {

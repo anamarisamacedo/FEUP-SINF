@@ -149,7 +149,7 @@ export default function StockListingScreen({ navigation, route }) {
         </View>
         {warehouseName == "OP" &&
             
-        <GeneralButton name="Genarate Delivery Note" onPress={() => shipping.generateDeliveryNote("ECL.2020.2")} />
+        <GeneralButton name="Genarate Delivery Note" onPress={() => shipping.generateDeliveryNote("ECL.2020.7")} />
         
         }
       </View>
