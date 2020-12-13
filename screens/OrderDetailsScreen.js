@@ -14,10 +14,13 @@ import Moment from 'moment';
 export default function OrderDetails({ navigation, route }) {
   const {id, orderId, date, client, status, items, naturalKey} = route.params;
 
-  
   const title = "Order " + naturalKey + " " + id;
+  var subtitle = "";
 
-  const subtitle = "Date: " + Moment(date).format('YYYY/MM/DD') + " Status: " + status;
+  if (client)
+    subtitle = "Date: " + Moment(date).format('YYYY/MM/DD') + " Status: " + status;
+  else
+    subtitle = "Date: " + Moment(date).format('YYYY/MM/DD')/* + " Status: " + status*/;
 
   return (
     <View style={styles.main}>
