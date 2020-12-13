@@ -70,7 +70,7 @@ export default function SupplierOrdersScreen({ navigation }) {
             {orders.map((i) => {
               return (
                 <TouchableOpacity
-                  onPress={() => navigation.navigate("OrderDetailsScreen", {id: 'Supplier ' + i.sellerSupplierPartyName, orderId: i.id, date: i.documentDate, client: false, status: status.get(i.id)})}
+                  onPress={() => navigation.navigate("OrderDetailsScreen", {id: 'Supplier ' + i.sellerSupplierPartyName, orderId: i.id, date: i.documentDate, client: false, status: status.get(i.id), items: i.documentLines, naturalKey: i.naturalKey})}
                 >
                   <View style={styles.row} key={i}>
                     <View style={styles.supplierColumn}>

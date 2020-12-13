@@ -5,6 +5,7 @@ import token from '../services/token';
 import Moment from 'moment';
 import jasminConstants from '../services/jasminConstants';
 import queries from "../db/Database";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function ClientOrdersScreen({ navigation }) {
   const [orders, setOrders] = useState([]);
@@ -12,6 +13,8 @@ export default function ClientOrdersScreen({ navigation }) {
   const [isLoading, setLoading] = useState(true);
   const title = "Clients' Orders";
   const accessToken = token.getToken();
+
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     const apiUrl = jasminConstants.url +"/api/" + jasminConstants.accountKey + "/" + jasminConstants.subscriptionKey + "/sales/orders";
@@ -69,7 +72,7 @@ export default function ClientOrdersScreen({ navigation }) {
             {orders.map((i) => {
               return(
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('OrderDetailsScreen', {id: 'Client ' + i.buyerCustomerParty, orderId: i.id, date: i.documentDate, client: true, status: status.get(i.id)})}
+                  onPress={() => navigation.navigate('OrderDetailsScreen', {id: 'Client ' + i.buyerCustomerParty, orderId: i.id, date: i.documentDate, client: true, status: status.get(i.id), items: i.documentLines, naturalKey: i.naturalKey})}
                 >
                   <View style={styles.row} key={i}>
                     <View style={styles.clientColumn}>

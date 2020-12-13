@@ -4,45 +4,18 @@ import {
   Text,
   View,
   Dimensions,
-  ActivityIndicator,
   ScrollView
 } from "react-native";
 
 import BackButton from "../components/BackButton";
 import Navbar from '../components/Navbar';
-import token from '../services/token';
-import jasminConstants from '../services/jasminConstants';
 import Moment from 'moment';
-import { useIsFocused } from "@react-navigation/native";
 
 export default function OrderDetails({ navigation, route }) {
-  const {id, orderId, date, client, status} = route.params;
+  const {id, orderId, date, client, status, items, naturalKey} = route.params;
 
-  const [items, setItems] = useState([]);
-  const [title, setTitle] = useState("");
-  const [isLoading, setLoading] = useState(true);
-  const accessToken = token.getToken();
   
-  var sales = "/sales";
-  if (!client)
-    sales = "/purchases";
-  const apiUrl = jasminConstants.url + "/api/" + jasminConstants.accountKey + "/" + jasminConstants.subscriptionKey + sales + "/orders/" + orderId;
-
-  const isFocused = useIsFocused();
-
-  useEffect(() => {
-    console.log("Order details screen loaded!");
-    fetch(apiUrl, {
-      method: "GET",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: "Bearer " + accessToken
-      }})
-      .then((response) => response.json())
-      .then((order) => {setItems(order.documentLines), setTitle("Order " + order.naturalKey + " " + id)})
-      .finally(setLoading(false));
-  }, [isFocused])
+  const title = "Order " + naturalKey + " " + id;
 
   const subtitle = "Date: " + Moment(date).format('YYYY/MM/DD') + " Status: " + status;
 
@@ -57,9 +30,6 @@ export default function OrderDetails({ navigation, route }) {
           <Text style={styles.subtext}>{subtitle}</Text>
         </View>
         <View>
-          {isLoading ? (
-            <ActivityIndicator />
-          ) : (
             <View>
               <View style={styles.row}>
                 <View style={styles.refColumn}>
@@ -107,7 +77,6 @@ export default function OrderDetails({ navigation, route }) {
                 })}
               </ScrollView>
             </View>
-          )}
         </View>
       </View>
       <View style={styles.bottom}>
