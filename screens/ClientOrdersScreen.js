@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Dimensions, TouchableOpacity, ScrollView} from "react-native";
+import { StyleSheet, Text, View, Dimensions, TouchableOpacity, ScrollView } from "react-native";
 import Navbar from '../components/Navbar';
 import token from '../services/token';
 import Moment from 'moment';
@@ -9,47 +9,51 @@ import { useIsFocused } from "@react-navigation/native";
 
 export default function ClientOrdersScreen({ navigation }) {
   const [orders, setOrders] = useState([]);
-  const [status, setStatus] = useState(new Map());
-  const [isLoading, setLoading] = useState(true);
+  const [status, setStatus] = useState({});
   const title = "Clients' Orders";
   const accessToken = token.getToken();
 
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    const apiUrl = jasminConstants.url +"/api/" + jasminConstants.accountKey + "/" + jasminConstants.subscriptionKey + "/sales/orders";
+    const apiUrl = jasminConstants.url + "/api/" + jasminConstants.accountKey + "/" + jasminConstants.subscriptionKey + "/sales/orders";
     var bar = new Promise((resolve, reject) => {
-    fetch(apiUrl, {
-      method: "GET",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json',
-        Authorization: "Bearer " + accessToken
-      }})
-      .then((response) => response.json())
-      .then((orders) => {
-        setOrders(orders); 
-        resolve(orders)})
+      fetch(apiUrl, {
+        method: "GET",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          Authorization: "Bearer " + accessToken
+        }
+      })
+        .then((response) => response.json())
+        .then((orders) => {
+          setOrders(orders);
+          resolve(orders)
+        })
     });
 
     bar.then((orders) => {
-      orders.map((i) => {
-        queries.getClientOrderStatus(i.id).then(response => {
-          if (response == false){
+      let statusTemp = {};
+      queries.getClientOrders().then(ordersDB => {
+        orders.map((i) => {
+          let orderStatus;
+          if(!(i.id in ordersDB)) {
             queries.addClientOrder(i.id, i.naturalKey);
-            response = 'WFP';
+            orderStatus = 'WFP';
+          } else {
+            orderStatus = ordersDB[i.id].status;
           }
-          var aux = status;
-          aux.set(i.id, response);
-          setStatus(aux);
+          statusTemp[i.id] = orderStatus;
         });
+        setStatus(statusTemp);
       });
     });
   }, [isFocused]);
 
   return (
     <View style={styles.main}>
-      <Navbar navigation={navigation}/>
+      <Navbar navigation={navigation} />
       <View style={styles.container}>
         <View style={styles.title}>
           <Text style={styles.text}>{title}</Text>
@@ -66,18 +70,19 @@ export default function ClientOrdersScreen({ navigation }) {
               <Text style={styles.header}>{"Date"}</Text>
             </View>
             <View style={styles.statusColumn}>
-              <Text style={[styles.header, {textAlign: 'right'}]}>{"Status"}</Text>
+              <Text style={[styles.header, { textAlign: 'right' }]}>{"Status"}</Text>
             </View>
           </View>
           <ScrollView
-          automaticallyAdjustContentInsets={false}
-          onScroll={() => { console.log('onScroll!'); }}
-          scrollEventThrottle={200}
-          style={styles.scrollView}>
-            {orders.map((i) => {console.log(i.id); console.log(status); console.log(status.get(i.id))
-              return(
+            automaticallyAdjustContentInsets={false}
+            onScroll={() => { console.log('onScroll!'); }}
+            scrollEventThrottle={200}
+            style={styles.scrollView}>
+            {orders.map((i) => {
+              //console.log(i.id); console.log(status); console.log(status[i.id])
+              return (
                 <TouchableOpacity
-                  onPress={() => navigation.navigate('OrderDetailsScreen', {id: 'Client ' + i.buyerCustomerParty, orderId: i.id, date: i.documentDate, client: true, status: status.get(i.id), items: i.documentLines, naturalKey: i.naturalKey})}
+                  onPress={() => navigation.navigate('OrderDetailsScreen', { id: 'Client ' + i.buyerCustomerParty, orderId: i.id, date: i.documentDate, client: true, status: status.get(i.id), items: i.documentLines, naturalKey: i.naturalKey })}
                 >
                   <View style={styles.row} key={i}>
                     <View style={styles.clientColumn}>
@@ -90,13 +95,13 @@ export default function ClientOrdersScreen({ navigation }) {
                       <Text style={styles.textTable}>{Moment(i.documentDate).format('YYYY/MM/DD')}</Text>
                     </View>
                     <View style={styles.statusColumn}>
-                      <Text style={[styles.textTable, {textAlign: 'right'}]}>{status.get(i.id)}</Text>
+                      <Text style={[styles.textTable, { textAlign: 'right' }]}>{status[i.id]}</Text>
                     </View>
                   </View>
                 </TouchableOpacity>
               );
             })}
-          </ScrollView> 
+          </ScrollView>
         </View>
       </View>
     </View>
@@ -171,5 +176,5 @@ const styles = StyleSheet.create({
   orderColumn: { flexDirection: "column", flex: 1 },
   dateColumn: { flexDirection: "column", flex: 0.8 },
   statusColumn: { flexDirection: "column", flex: 0.9 },
-  scrollView: {height: Dimensions.get('window').height - 300}
+  scrollView: { height: Dimensions.get('window').height - 300 }
 });

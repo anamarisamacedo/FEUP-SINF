@@ -261,5 +261,5 @@ const styles = StyleSheet.create({
   dateColumn: { flexDirection: "column", flex: 0.9 },
   hourColumn: { flexDirection: "column", flex: 0.6 },
   statusColumn: { flexDirection: "column", flex: 0.9 },
-  scrollView: { height: Dimensions.get("window").height - 300 },
+  scrollView: { height: Dimensions.get("window").height - 350 },
 });

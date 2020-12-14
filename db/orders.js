@@ -33,14 +33,14 @@ const queries = {
             });
         });
     },
-    getClientOrderStatus: function (orderId) {
+    getClientOrders: function () {
         return new Promise(resolve => {
             let data = null;
-            db.ref("client_orders/" + orderId).once('value', querySnapShot => {
+            db.ref("client_orders").once('value', querySnapShot => {
                 data = querySnapShot.val();
                 if (data == null) {
                     resolve(false);
-                } else resolve(data.status);
+                } else resolve(data);
             });
         })
     },

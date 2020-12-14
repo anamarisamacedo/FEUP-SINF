@@ -8,8 +8,6 @@ import {
   Platform,
   ScrollView,
   LayoutAnimation,
-  TouchableOpacity,
-  SafeAreaView
 } from "react-native";
 import BackButton from "../components/BackButton";
 import Expandable from "../components/Expandable";
@@ -133,7 +131,6 @@ export default function ManagerWaveScreen({ navigation, route }) {
       pickers.push({ label: entry[0], value: entry[0] });
   });
 
-  const [item, setItem] = useState(pickers[0]);
   const [listDataSource, setListDataSource] = useState([]);
 
   const organizeItems = (items) => {
@@ -193,7 +190,6 @@ export default function ManagerWaveScreen({ navigation, route }) {
             dropDownStyle={{ backgroundColor: 'black' }}
             activeLabelStyle={{ color: 'white' }}
             onChangeItem={(newItem) => {
-              setItem(newItem);
               pickersService.submitPicker(newItem.value, pickingWave.wave);
             }}
           />
