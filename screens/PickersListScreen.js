@@ -5,9 +5,7 @@ import { CheckBox } from "react-native-elements";
 import pickersService from "../services/picker";
 import pickingWaves from "../services/pickingWaves";
 import { useIsFocused } from "@react-navigation/native";
-import { AuthProvider } from "../navigation/AuthProvider";
-import db from "../db/Database";
-import { set } from "react-native-reanimated";
+import db from "../db/accounts";
 
 export default function PickersListScreen({ navigation, route }) {
   const title = "Pickers";

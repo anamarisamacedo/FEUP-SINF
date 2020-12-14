@@ -1,7 +1,7 @@
 import {
     db
 } from '../config';
-import queries from './Database';
+import queries from './orders';
 import jasminConstants from "../services/jasminConstants";
 import token from "../services/token";
 import shipping from "../services/shipping";

@@ -5,11 +5,9 @@ import {
   View,
   Dimensions,
   TextInput,
-  SafeAreaView,
-  TouchableOpacity,
   LayoutAnimation,
   ScrollView,
-  Platform, Alert
+  Platform
 } from "react-native";
 import BackButton from "../components/BackButton";
 import GeneralButton from "../components/GeneralButton";

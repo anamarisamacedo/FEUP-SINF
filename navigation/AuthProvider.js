@@ -1,6 +1,6 @@
 import React, { createContext, useState } from 'react';
 import Firebase from 'firebase';
-import queries from '../db/Database';
+import queries from '../db/accounts';
 
 export const AuthContext = createContext({});
 export var isManager = false;

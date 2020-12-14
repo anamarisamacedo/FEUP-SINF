@@ -1,6 +1,5 @@
-import queries from "../db/Database";
+import queries from "../db/orders";
 import pwQueries from "../db/pickingWaves";
-
 
 var numOrdersToAnalyze = 3;
 var whToInt = {

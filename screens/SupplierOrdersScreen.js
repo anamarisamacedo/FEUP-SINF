@@ -4,7 +4,6 @@ import Navbar from '../components/Navbar';
 import token from '../services/token';
 import Moment from 'moment';
 import jasminConstants from '../services/jasminConstants';
-import queries from "../db/Database";
 
 export default function SupplierOrdersScreen({ navigation }) {
   const [orders, setOrders] = useState([]);

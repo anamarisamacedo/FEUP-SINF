@@ -11,21 +11,30 @@ import GeneralButton from "../components/GeneralButton";
 import LogoImage from "../images/logo.png";
 
 import { AuthContext } from "../navigation/AuthProvider";
-import queries from "../db/Database";
+import queries from "../db/accounts";
 import BackButton from "../components/BackButton";
 
 export default function SignUpScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [authCode, setAuthCode] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
 
   const { register } = useContext(AuthContext);
 
   function registerSubmit() {
-    register(email, password).then((res) => {
-      setErrorMsg(res);
-      queries.addAccount(email);
-    });
+    queries.validateAuthCode(authCode).then(result => {
+      if(result) {
+        register(email, password).then((res) => {
+          setErrorMsg(res);
+          console.log(res);
+          if(res == "")
+            queries.addAccount(email);
+        });
+      } else {
+        setErrorMsg("Invalid authorization code!");
+      }
+    })
   }
 
   return (
@@ -54,13 +63,13 @@ export default function SignUpScreen({ navigation }) {
 
         <Text style={styles.text}>authorization code</Text>
         <View style={{ marginVertical: 4 }}></View>
-        <TextInput style={styles.textInput} onChangeText={(text) => {}} />
+        <TextInput style={styles.textInput} onChangeText={(authCode) => setAuthCode(authCode)} />
 
         <Text style={styles.feedback}> {errorMsg} </Text>
         <View style={{ marginVertical: 10 }}></View>
         <GeneralButton
           name="sign up"
-          onPress={() => registerSubmit(email, password)}
+          onPress={() => registerSubmit()}
         />
       </View>
       <View style={styles.bottom}>

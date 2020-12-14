@@ -8,8 +8,6 @@ import {
   Platform,
   ScrollView,
   LayoutAnimation,
-  TouchableOpacity,
-  SafeAreaView,
 } from "react-native";
 import BackButton from "../components/BackButton";
 import Expandable from "../components/Expandable";
@@ -129,7 +127,7 @@ export default function PickerWaveScreen({ navigation, route }) {
 
   const [value, onChangeText] = useState(pickingWave.report);
   const [listDataSource, setListDataSource] = useState(wave);
-  const isFocused = useIsFocused();
+  
   const organizeItems = (items) => {
     const array = _.cloneDeep(wave);
     items.forEach((item) => {

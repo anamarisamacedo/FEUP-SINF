@@ -6,7 +6,6 @@ import {
   Text,
   View,
   Dimensions,
-  TouchableOpacity,
 } from "react-native";
 import BackButton from "../components/BackButton";
 import GeneralButton from "../components/GeneralButton";

@@ -4,7 +4,7 @@ import GeneralButton from "../components/GeneralButton";
 import Navbar from '../components/Navbar';
 import jasminConstants from '../services/jasminConstants';
 import token from '../services/token';
-import queries from "../db/Database";
+import queries from "../db/orders";
 import functions from "../logic/pickingWaveGen";
 import { useIsFocused } from "@react-navigation/native";
 

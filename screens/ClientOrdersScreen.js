@@ -4,7 +4,7 @@ import Navbar from '../components/Navbar';
 import token from '../services/token';
 import Moment from 'moment';
 import jasminConstants from '../services/jasminConstants';
-import queries from "../db/Database";
+import queries from "../db/orders";
 import { useIsFocused } from "@react-navigation/native";
 
 export default function ClientOrdersScreen({ navigation }) {
@@ -13,7 +13,6 @@ export default function ClientOrdersScreen({ navigation }) {
   const [isLoading, setLoading] = useState(true);
   const title = "Clients' Orders";
   const accessToken = token.getToken();
-  const isFocused = useIsFocused();
 
   const isFocused = useIsFocused();
 
