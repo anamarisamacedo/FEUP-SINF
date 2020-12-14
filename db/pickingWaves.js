@@ -51,6 +51,7 @@ const pWqueries = {
             })
         });
         concluded = true;
+        let {dayStr, hourStr} = this.getCurrentTime();
         db.ref('pickingWaves/').orderByChild('wave').equalTo(pw).once('value', function (snapshot) {
             snapshot.forEach(function (child) {
                 for (var [key, value] of picked) {
@@ -65,7 +66,9 @@ const pWqueries = {
                 if (concluded) {
                     child.ref.update({
                         report: report,
-                        status: "concluded"
+                        status: "concluded",
+                        concludedDate: dayStr,
+                        concludedHour: hourStr,
                     });
                     if ("closesOrders" in pickingWave) {
                         pickingWave.closesOrders.forEach(orderID => {
@@ -146,19 +149,8 @@ const pWqueries = {
         console.log(closesOrders);
         return new Promise(() => {
             this.getNextPWId().then(nextId => {
-                let today = new Date();
-                let dd = String(today.getDate()).padStart(2, '0');
-                if (dd.length == 1) {
-                    dd = "0" + dd;
-                }
-                let mm = String(today.getMonth() + 1).padStart(2, '0');
-                if (mm.length == 1) {
-                    mm = "0" + mm;
-                }
-                let yyyy = today.getFullYear();
 
-                let dayStr = dd + '/' + mm + '/' + yyyy;
-                let hourStr = (today.getHours() < 10 ? "0" : "") + today.getHours() + ":" + (today.getMinutes() < 10 ? "0" : "") + today.getMinutes();
+                let {dayStr, hourStr} = this.getCurrentTime();
                 console.log(items);
                 db.ref('pickingWaves/' + nextId).set({
                     items: items,
@@ -174,6 +166,23 @@ const pWqueries = {
                 }).then(() => console.log("Picking wave " + nextId + " has been created!"));
             });
         });
+    },
+
+    getCurrentTime() {
+        let today = new Date();
+        let dd = String(today.getDate()).padStart(2, '0');
+        if (dd.length == 1) {
+            dd = "0" + dd;
+        }
+        let mm = String(today.getMonth() + 1).padStart(2, '0');
+        if (mm.length == 1) {
+            mm = "0" + mm;
+        }
+        let yyyy = today.getFullYear();
+
+        let dayStr = dd + '/' + mm + '/' + yyyy;
+        let hourStr = (today.getHours() < 10 ? "0" : "") + today.getHours() + ":" + (today.getMinutes() < 10 ? "0" : "") + today.getMinutes();
+        return {dayStr, hourStr};
     }
 }
 
