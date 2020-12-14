@@ -260,6 +260,44 @@ const functions = {
             n++;
         }
 
+        let selectedItemsBundledUp = [];
+        /*selectedItems.forEach(item => {
+            let filtered = selectedItemsBundledUp.filter(itemF => {
+                return itemF.ref == item.ref;
+            })
+            if (filtered.length == 0) {
+                selectedItemsBundledUp.push(item);
+            } else {
+                let itemFiltered = filtered[0];
+                selectedItemsBundledUp.forEach(itemB => {
+                    if (itemB.ref == itemFiltered.ref)
+                    itemB.qty += item.qty;
+                })
+            }
+        });*/
+        
+        selectedItems.sort((a, b) => {
+            return (a.ref < b.ref) ? -1 : 1;
+        });
+        
+        qty = 0;
+        let item;
+        if (selectedItems.length != 0)
+            item = _.cloneDeep(selectedItems[0]);
+        for (let i = 0; i < selectedItems.length; i++) {
+            let currItem = _.cloneDeep(selectedItems[i]);
+            if (currItem.ref != item.ref && i != 0) {
+                item.qty = qty;
+                selectedItemsBundledUp.push(item);
+                qty = currItem.qty;
+                item = _.cloneDeep(currItem);
+            } else {
+                qty += currItem.qty;
+            }
+        }
+        item.qty = qty;
+        selectedItemsBundledUp.push(item);
+
         let targetOrders = [];
         let targetSections = [];
         selectedItems.forEach(item => {

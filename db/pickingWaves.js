@@ -14,7 +14,7 @@ const pWqueries = {
             db.ref('pickingWaves/').once('value', querySnapShot => {
                 pw = querySnapShot.val();
                 if (pw == null) {
-                    resolve(false);
+                    resolve([]);
                 } else resolve(pw);
             });
         })
