@@ -44,7 +44,7 @@ export default function SupplierOrdersScreen({ navigation }) {
       });
     });
 
-    shipping.generateGoodsReceipt("ECF.2020.10");
+    shipping.generateGoodsReceipt();
 
   }, [isFocused])
 

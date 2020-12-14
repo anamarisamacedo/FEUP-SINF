@@ -171,7 +171,7 @@ const shipping = {
       jasminConstants.accountKey +
       "/" +
       jasminConstants.subscriptionKey +
-      "/shipping/processOrders/SINFP";
+      "/goodsReceipt/processOrders/SINFP";
     axios({
         method: "POST",
         url: apiUrl,
@@ -205,7 +205,7 @@ const shipping = {
       jasminConstants.accountKey +
       "/" +
       jasminConstants.subscriptionKey +
-      "/shipping/processOrders/SINFP";
+      "/goodsReceipt/processOrders/SINFP";
     axios({
         method: "POST",
         url: apiUrl,
