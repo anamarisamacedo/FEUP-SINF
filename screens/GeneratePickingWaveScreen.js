@@ -80,7 +80,7 @@ export default function GeneratePickingWaveScreen({ navigation }) {
           keyboardType="numeric"
           style={styles.input}
           placeholder={0}
-          onChangeText={(text) => onCheckLimit(text, 1000)}
+          onChangeText={(text) => onCheckLimit(text, 100)}
           value={value}
           maxLength={10}
         />
