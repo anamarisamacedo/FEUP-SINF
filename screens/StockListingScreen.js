@@ -102,7 +102,7 @@ export default function StockListingScreen({ navigation, route }) {
                       </View>
                       <View style={styles.stockColumn}>
                           <Text style={styles.textTable}>
-                            {currentStock + "/" + i.maxStock}
+                            {currentStock}
                           </Text>
                       </View>
                     </View>
@@ -136,7 +136,7 @@ export default function StockListingScreen({ navigation, route }) {
                       </View>
                       <View style={styles.stockColumn}>
                           <Text style={styles.textTable}>
-                            {currentStock + "/" + i.maxStock}
+                            {currentStock}
                           </Text>
                       </View>
                     </View>
@@ -146,11 +146,6 @@ export default function StockListingScreen({ navigation, route }) {
             })}
           </ScrollView>
         </View>
-        {warehouseName == "OP" &&
-            
-        <GeneralButton name="Genarate Delivery Note" onPress={() => shipping.generateDeliveryNote("ECL.2020.7")} />
-        
-        }
       </View>
       <View style={styles.bottom}>
         <BackButton onPress={() => navigation.goBack()} />
