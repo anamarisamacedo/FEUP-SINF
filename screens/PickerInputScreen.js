@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -16,17 +16,23 @@ import GeneralButton from "../components/GeneralButton";
 import Expandable from "../components/Expandable";
 import Navbar from '../components/Navbar';
 import pickingWaves from "../services/pickingWaves";
+import { useIsFocused } from "@react-navigation/native";
 
 export default function PickerInputScreen({ navigation, route }) {
   const [value, onChangeText] = useState("Submit any observations or comments here");
-  const {waveID, wave, title} = route.params;
+  const {waveID, wave, title, pickingWave} = route.params;
   const [itemsInput, setItemsInput] = useState(new Map());
   const [listDataSource, setListDataSource] = useState(wave);
   const multiSelect = true;
+  const isFocused = useIsFocused();
 
   if (Platform.OS === 'android') {
     UIManager.setLayoutAnimationEnabledExperimental(true);
   }
+
+  useEffect(() => {
+    setListDataSource(wave);
+  }, [isFocused]);
 
   const updateLayout = (index) => {
     LayoutAnimation.configureNext(LayoutAnimation.Presets.easeInEaseOut);
@@ -46,21 +52,6 @@ export default function PickerInputScreen({ navigation, route }) {
     setListDataSource(array);
   };
 
-  const reporAlert = () => 
-  Alert.alert(
-    "Alert Title",
-    "My Alert Msg",
-    [
-      {
-        text: "Cancel",
-        onPress: () => console.log("Cancel Pressed"),
-        style: "cancel"
-      },
-      { text: "OK", onPress: () => console.log("OK Pressed") }
-    ],
-    { cancelable: false }
-  );
-
   return (
     <View style={styles.main}>
       <Navbar navigation={navigation}/>
@@ -68,7 +59,6 @@ export default function PickerInputScreen({ navigation, route }) {
         <View style={styles.title}>
           <Text style={styles.text}>{title}</Text>
         </View>
-        <View style={styles.bottomRight}></View>
         <View>
           <View style={styles.row}>
             <View style={styles.refColumn}>
@@ -82,36 +72,27 @@ export default function PickerInputScreen({ navigation, route }) {
             </View>
           </View>
         </View>
-          <SafeAreaView style={{flex: 1}}>
-              <View>
-                <View>
-                  <TouchableOpacity>
-                    <Text>
-                      {multiSelect
-                        ? 'Enable Single \n Expand'
-                        : 'Enalble Multiple \n Expand'}
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <ScrollView
-                  automaticallyAdjustContentInsets={false}
-                  onScroll={() => { console.log('onScroll!'); }}
-                  scrollEventThrottle={200}
-                  style={styles.scrollView}
-                >
-                  {listDataSource.map((wave, key) => (
-                    <Expandable itemsInput={itemsInput}
-                      key={wave.section_name}
-                      onClickFunction={() => {
-                        updateLayout(key);
-                      }}
-                      items={wave}
-                      input={true}
-                    />
-                  ))}
-                </ScrollView>
-              </View>
-            </SafeAreaView>
+        <View style={styles.scrollView}>
+          <ScrollView
+              automaticallyAdjustContentInsets={false}
+              onScroll={() => {
+                console.log("onScroll!");
+              }}
+              scrollEventThrottle={200}
+              style={styles.scrollView}
+            >
+              {listDataSource.map((wave, key) => (
+                <Expandable itemsInput={itemsInput}
+                  key={wave.section_name}
+                  onClickFunction={() => {
+                    updateLayout(key);
+                  }}
+                  items={wave}
+                  input={true}
+                />
+              ))}
+          </ScrollView>
+        </View>
       </View>
       <View style={styles.bottomInput}>
         <TextInput 
@@ -124,7 +105,7 @@ export default function PickerInputScreen({ navigation, route }) {
       </View>
       <View style={styles.bottomRow}>
         <BackButton onPress={() => navigation.goBack()} />
-        <GeneralButton name="Submit" onPress={() => {pickingWaves.submitReportAndPicked(waveID, value, itemsInput), navigation.navigate("PickingWavesScreen")}}/>
+        <GeneralButton name="Submit" onPress={() => {pickingWaves.submitReportAndPicked(waveID, value, itemsInput, wave, pickingWave), navigation.navigate("PickingWavesScreen")}}/>
       </View>
     </View>
   );
@@ -137,7 +118,6 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: "space-evenly",
     marginHorizontal: 15,
   },
   bottomRow: {
@@ -149,11 +129,10 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
    bottomInput: {
-       flex: 1,
-       justifyContent: "flex-end",
-       marginBottom: 0,
-       alignItems: "center",
-     },
+      justifyContent: "flex-end",
+      marginBottom: 0,
+      alignItems: "center",
+    },
   list: {
     backgroundColor: "black",
   },
@@ -242,5 +221,5 @@ const styles = StyleSheet.create({
   locColumn: { flexDirection: "column", flex: 0.6 },
   nameColumn: { flexDirection: "column", flex: 1.5 },
   pqtyColumn: { flexDirection: "column", flex: 0.5 },
-  scrollView: {height: Dimensions.get('window').height - 300}
+  scrollView: { height: Dimensions.get("window").height - 500 },
 });

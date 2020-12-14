@@ -14,6 +14,8 @@ const stockService = {
       stockDb.updateItem(item);
     }
   }
+
+  
 }
 
 export default stockService;

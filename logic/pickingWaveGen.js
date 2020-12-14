@@ -108,7 +108,7 @@ const functions = {
                                 }]
                             };
                         }
-                        break;
+                        break; 
                     case 'C':
                         if (typeof itemsC[arrayLocPos] !== 'undefined') {
                             itemsC[arrayLocPos].qty += qtyLeft;
@@ -184,7 +184,9 @@ const functions = {
                                     name: item.name,
                                     picked: 0,
                                     qty: item.qty,
-                                    ref: item.ref
+                                    ref: item.ref,
+                                    orderID: item.orderID,
+                                    oldQtyPW: item.oldQtyPW,
                                 });
                                 console.log(item);
                                 queries.updateOrder(item);
@@ -209,7 +211,9 @@ const functions = {
                                     name: item.name,
                                     picked: 0,
                                     qty: item.qty,
-                                    ref: item.ref
+                                    ref: item.ref,
+                                    orderID: item.orderID,
+                                    oldQtyPW: item.oldQtyPW,
                                 });
                                 queries.updateOrder(item);
                             }
@@ -233,7 +237,9 @@ const functions = {
                                     name: item.name,
                                     picked: 0,
                                     qty: item.qty,
-                                    ref: item.ref
+                                    ref: item.ref,
+                                    orderID: item.orderID,
+                                    oldQtyPW: item.oldQtyPW,
                                 });
                                 queries.updateOrder(item);
                             }
@@ -246,8 +252,35 @@ const functions = {
             }
             n++;
         }
+
+        let targetOrders = [];
+        selectedItems.forEach(item => {
+            targetOrders.push(item.orderID);
+        });
+        targetOrders = [...new Set(targetOrders)];
+        let closesOrders = [];
+
+        targetOrders.forEach(orderID => {
+            let order = orders.filter((order) => order.id == orderID)[0];
+            let qtyNeeded = order.totalNumItems;
+            order.items.forEach(item => {
+                qtyNeeded -= item.qtyPW;
+            });
+            selectedItems.forEach(item => {
+                if(item.orderID == orderID) {
+                    qtyNeeded -= item.qty;
+                }
+            });
+            if(qtyNeeded == 0) {
+                closesOrders.push(orderID);
+            }
+        })
+
+
         return new Promise(resolve => {
-            resolve(pwQueries.addPickingWave(selectedItems).then(() => {}));
+            if(selectedItems.length > 0)
+                resolve(pwQueries.addPickingWave(selectedItems, closesOrders).then(() => {}));
+            else resolve();
         });
     },
     calculatePWRatio: function (items) {
