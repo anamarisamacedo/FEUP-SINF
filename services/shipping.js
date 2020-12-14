@@ -151,6 +151,39 @@ const shipping = {
     return goods.filter((good) => good.sourceDocKey == orderRef);
   },
 
+  async generateGoodsReceipt() {
+
+    var goods = await this.getWaitingGoods();
+    var body = [];
+
+    goods.map((good) => {
+      body.push({
+        companyKey: "SINFP",
+        sourceDocKey: good.sourceDocKey,
+        sourceDocLineNumber: good.sourceDocLineNumber,
+        quantity: good.quantity,
+      });
+    });
+
+    const apiUrl =
+      jasminConstants.url +
+      "/api/" +
+      jasminConstants.accountKey +
+      "/" +
+      jasminConstants.subscriptionKey +
+      "/goodsReceipt/processOrders/SINFP";
+    axios({
+        method: "POST",
+        url: apiUrl,
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + accessToken,
+      },
+      data: JSON.stringify(body)
+    }).then((response) => console.log(response.status));
+  },
+
   async generateGoodsReceipt(orderRef) {
     var goods = await this.getWaitingGoods();
     goods = await this.filterGoods(goods, orderRef);
@@ -172,7 +205,7 @@ const shipping = {
       jasminConstants.accountKey +
       "/" +
       jasminConstants.subscriptionKey +
-      "/shipping/processOrders/SINFP";
+      "/goodsReceipt/processOrders/SINFP";
     axios({
         method: "POST",
         url: apiUrl,
