@@ -330,5 +330,5 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 25,
   },
-  scrollView: { height: Dimensions.get('window').height - 500 }
+  scrollView: { height: Dimensions.get('window').height - 300 }
 });

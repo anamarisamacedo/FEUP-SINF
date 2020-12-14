@@ -33,21 +33,24 @@ export default function GeneratePickingWaveScreen({ navigation }) {
       }
     })
       .then((response) => response.json())
-      .then((orders) => { setOrders(orders) })
+      .then((orders) => { setOrders(orders); console.log("ORDERS DO JASMIN A SERIO : "); console.log(orders); })
   }, [isFocused]);
 
   function generatePW() {
     let ordersPw = [];
     orders.forEach(order => {
-      let items = [];
-      let totalNumItems = 0;
-      order.documentLines.forEach(item => {
-        let qtyPW = (order.id in ordersQtyPw && typeof ordersQtyPw[order.id][item.salesItem] !== 'undefined') ? ordersQtyPw[order.id][item.salesItem] : 0;
-        items.push({ ref: item.salesItem, qty: item.quantity, qtyPW: qtyPW, loc: item.warehouse, name: item.salesItemDescription });
-        totalNumItems += item.quantity;
-      });
-      ordersPw.push({ id: order.id, items: items, totalNumItems: totalNumItems, pwRatio: functions.calculatePWRatio(items), date: order.createdOn, ref: order.naturalKey });
+      if (order.isDeleted == false) {
+        let items = [];
+        let totalNumItems = 0;
+        order.documentLines.forEach(item => {
+          let qtyPW = (order.id in ordersQtyPw && typeof ordersQtyPw[order.id][item.salesItem] !== 'undefined') ? ordersQtyPw[order.id][item.salesItem] : 0;
+          items.push({ ref: item.salesItem, qty: item.quantity, qtyPW: qtyPW, loc: item.warehouse, name: item.salesItemDescription });
+          totalNumItems += item.quantity;
+        });
+        ordersPw.push({ id: order.id, items: items, totalNumItems: totalNumItems, pwRatio: functions.calculatePWRatio(items), date: order.createdOn, ref: order.naturalKey });
+      }
     });
+    console.log("ORDERS DO JASMIN : "); console.log(ordersPw);
     functions.generatePickingWave(ordersPw, value);
     navigation.navigate('PickingWavesScreen');
   }

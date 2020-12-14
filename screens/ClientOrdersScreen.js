@@ -27,7 +27,9 @@ export default function ClientOrdersScreen({ navigation }) {
         Authorization: "Bearer " + accessToken
       }})
       .then((response) => response.json())
-      .then((orders) => {setOrders(orders); resolve(orders)})
+      .then((orders) => {
+        setOrders(orders); 
+        resolve(orders)})
     });
 
     bar.then((orders) => {

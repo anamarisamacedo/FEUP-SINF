@@ -34,11 +34,12 @@ const functions = {
             }
         });
 
-        console.log(orders);
-
         let i = 0,
             totalNumProducts = 0;
         for (i = 0; i < orders.length; i++) {
+            if(orders.pwRatio == 1) {
+                continue;
+            } 
             orders[i].items.forEach(item => {
                 totalNumProducts += item.qty - item.qtyPW;
             });
@@ -48,12 +49,17 @@ const functions = {
         }
         orders = orders.slice(0, Math.min(orders.length, Math.max(i + 1, numOrdersToAnalyze)));
 
+        console.log(orders);
+
         let itemsA = [],
             itemsB = [],
             itemsC = [];
 
         for (i = 0; i < orders.length; i++) {
             let order = orders[i];
+            if(order.pwRatio == 1) {
+                continue;
+            } 
             order.items.forEach(item => {
                 let qtyLeft = item.qty - item.qtyPW;
                 let arrayLocPos = whToInt[item.loc];
