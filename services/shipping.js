@@ -165,6 +165,10 @@ const shipping = {
       });
     });
 
+    console.log(goods)
+    console.log("AQUI")
+    console.log(body)
+
     const apiUrl =
       jasminConstants.url +
       "/api/" +
@@ -184,7 +188,7 @@ const shipping = {
     }).then((response) => console.log(response.status));
   },
 
-  async generateGoodsReceipt(orderRef) {
+  async generateGoodsReceiptOrder(orderRef) {
     var goods = await this.getWaitingGoods();
     goods = await this.filterGoods(goods, orderRef);
 

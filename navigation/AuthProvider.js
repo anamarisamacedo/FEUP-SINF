@@ -27,6 +27,7 @@ export const AuthProvider = ({ children }) => {
           register: async (email, password) => {
             try {
               await Firebase.auth().createUserWithEmailAndPassword(email, password);
+              isManager = false;
               return "";
             } catch (e) {
               return e.message;
