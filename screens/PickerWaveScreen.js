@@ -16,7 +16,7 @@ import { AuthProvider } from "../navigation/AuthProvider";
 import { useIsFocused } from "@react-navigation/native";
 
 
-const wave = [];
+var wave = [];
 
 export default function PickerWaveScreen({ navigation, route }) {
   const { pickingWave } = route.params;
@@ -48,6 +48,7 @@ export default function PickerWaveScreen({ navigation, route }) {
   };
 
   const orderSections = () => {
+    wave = [];
     pickingWave.route.forEach(whSection => {
       wave.push({
         isExpanded: false,

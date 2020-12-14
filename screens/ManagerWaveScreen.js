@@ -14,8 +14,7 @@ import Expandable from "../components/Expandable";
 import pickersService from "../services/picker";
 import { useIsFocused } from "@react-navigation/native";
 
-const wave = [
-];
+var wave = [];
 
 export default function ManagerWaveScreen({ navigation, route }) {
   const { pickingWave } = route.params;
@@ -58,6 +57,7 @@ export default function ManagerWaveScreen({ navigation, route }) {
   }
 
   const orderSections = () => {
+    wave = [];
     pickingWave.route.forEach(whSection => {
       wave.push({
         isExpanded: false,
