@@ -103,8 +103,6 @@ const functions = {
                     possibleRoute = possibleRoute.filter(function (elem) {
                         return elem != " ";
                     });
-                    let firstPoint = possibleRoute[0];
-                    let lastPoint = possibleRoute[possibleRoute.length - 1];
 
                     let dist = functions.calculateTotalDistance(possibleRoute);
                     if(dist < minDistance) {
