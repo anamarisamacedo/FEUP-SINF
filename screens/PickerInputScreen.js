@@ -17,7 +17,7 @@ import pickingWaves from "../services/pickingWaves";
 import { useIsFocused } from "@react-navigation/native";
 
 export default function PickerInputScreen({ navigation, route }) {
-  const [value, onChangeText] = useState("Submit any observations or comments here");
+  const [value, onChangeText] = useState("");
   const {waveID, wave, title, pickingWave} = route.params;
   const [itemsInput, setItemsInput] = useState(new Map());
   const [listDataSource, setListDataSource] = useState(wave);
@@ -99,6 +99,7 @@ export default function PickerInputScreen({ navigation, route }) {
           editable = {true}
           onChangeText={(text) => onChangeText(text)}
           value={value}
+          placeholder="Submit any observations or comments here"
         />
       </View>
       <View style={styles.bottomRow}>

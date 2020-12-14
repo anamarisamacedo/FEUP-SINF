@@ -136,7 +136,7 @@ const styles = StyleSheet.create({
   },
   refColumn: { flexDirection: "column", flex: 0.4 },
   nameColumn: { flexDirection: "column", flex: 1.5 },
-  pqtyColumn: { flexDirection: "row", alignItems: 'right', flex: 0.3 },
+  pqtyColumn: { flexDirection: "row", flex: 0.4 },
   quantityInput: {
     textAlign: "center",
     color: "#d3d3d3",

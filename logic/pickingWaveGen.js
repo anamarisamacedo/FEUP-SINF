@@ -300,7 +300,7 @@ const functions = {
 
         let targetOrders = [];
         let targetSections = [];
-        selectedItems.forEach(item => {
+        selectedItemsBundledUp.forEach(item => {
             targetSections.push(item.defaultWarehouse);
             targetOrders.push(item.orderID);
         });
@@ -314,7 +314,7 @@ const functions = {
             order.items.forEach(item => {
                 qtyNeeded -= item.qtyPW;
             });
-            selectedItems.forEach(item => {
+            selectedItemsBundledUp.forEach(item => {
                 if(item.orderID == orderID) {
                     qtyNeeded -= item.qty;
                 }
@@ -325,10 +325,10 @@ const functions = {
         })
 
         return new Promise(resolve => {
-            if(selectedItems.length > 0) {
+            if(selectedItemsBundledUp.length > 0) {
                 let route = Functions.findBestRoute(targetSections);
                 console.log(route);
-                resolve(pwQueries.addPickingWave(selectedItems, closesOrders, route).then(() => {}));
+                resolve(pwQueries.addPickingWave(selectedItemsBundledUp, closesOrders, route).then(() => {}));
             }
             else resolve();
         });

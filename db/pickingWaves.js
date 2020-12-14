@@ -50,7 +50,6 @@ const pWqueries = {
                 }
             })
         });
-        concluded = true;
         let {dayStr, hourStr} = this.getCurrentTime();
         db.ref('pickingWaves/').orderByChild('wave').equalTo(pw).once('value', function (snapshot) {
             snapshot.forEach(function (child) {
