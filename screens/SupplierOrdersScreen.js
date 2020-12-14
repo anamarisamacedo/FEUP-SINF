@@ -4,6 +4,9 @@ import Navbar from '../components/Navbar';
 import token from '../services/token';
 import Moment from 'moment';
 import jasminConstants from '../services/jasminConstants';
+import queries from '../db/orders';
+import shipping from '../services/shipping';
+import { useIsFocused } from "@react-navigation/native";
 
 export default function SupplierOrdersScreen({ navigation }) {
   const [orders, setOrders] = useState([]);
@@ -12,32 +15,38 @@ export default function SupplierOrdersScreen({ navigation }) {
   const title = "Suppliers' Orders";
   const accessToken = token.getToken();
   
-  useEffect(() => {
-    const apiUrl = jasminConstants.url +"/api/" + jasminConstants.accountKey + "/" + jasminConstants.subscriptionKey + "/purchases/orders";
+  const isFocused = useIsFocused();
 
+  useEffect(() => {
+
+    const apiUrl = jasminConstants.url +"/api/" + jasminConstants.accountKey + "/" + jasminConstants.subscriptionKey + "/purchases/orders";
     fetch(apiUrl, {
       method: "GET",
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
         Authorization: "Bearer " + accessToken
-      }})
-      .then((response) => response.json())
-      .then((orders) => {setOrders(orders)})
-      .finally(setLoading(false));
+      }
+    })
+    .then((response) => response.json())
+    .then((orders) => {setOrders(orders)})
+    .finally(setLoading(false));
 
-      /*orders.map((i) => {
-        queries.getSupplierOrderStatus(i.id).then(response => {
-            if (response == false){
-              queries.addSupplierOrder(i.id);
-              response = 'WFR';
-            }
-            var aux = status;
-            aux.set(i.id, response);
-            setStatus(aux);
-        });
-      });*/
-  }, [orders/*, status*/])
+    orders.map((i) => {
+      queries.getSupplierOrderStatus(i.id).then(response => {
+          if (response == false){
+            queries.addSupplierOrder(i.id);
+            response = 'finished';
+          }
+          /*var aux = status;
+          aux.set(i.id, response);
+          setStatus(aux);*/
+      });
+    });
+
+    shipping.generateGoodsReceipt("ECF.2020.10");
+
+  }, [isFocused])
 
   return (
     <View style={styles.main}>
