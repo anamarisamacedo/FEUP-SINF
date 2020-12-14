@@ -15,96 +15,6 @@ import pickersService from "../services/picker";
 import { useIsFocused } from "@react-navigation/native";
 
 const wave = [
-  {
-    isExpanded: false,
-    section_name: "A11",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "A12",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "A21",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "A22",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "A31",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "A32",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "B11",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "B12",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "B21",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "B22",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "B31",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "B32",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "C11",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "C12",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "C21",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "C22",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "C31",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "C32",
-    items: [],
-  },
 ];
 
 export default function ManagerWaveScreen({ navigation, route }) {
@@ -122,6 +32,7 @@ export default function ManagerWaveScreen({ navigation, route }) {
     pickersService.getPickers().then((response) => {
       setAux(Object.entries(response));
     });
+    orderSections();
     organizeItems(pickingWave.items);
   }, [isFocused]);
 
@@ -139,11 +50,21 @@ export default function ManagerWaveScreen({ navigation, route }) {
       array.forEach(waveT => {
         if (item.defaultWarehouse == waveT.section_name) {
           if (!waveT.items.includes(item))
-          waveT.items.push(item);
+            waveT.items.push(item);
         }
       })
     });
     setListDataSource(array);
+  }
+
+  const orderSections = () => {
+    pickingWave.route.forEach(whSection => {
+      wave.push({
+        isExpanded: false,
+        section_name: whSection,
+        items: [],
+      },)
+    });
   }
 
   const multiSelect = true;
@@ -193,7 +114,7 @@ export default function ManagerWaveScreen({ navigation, route }) {
               pickersService.submitPicker(newItem.value, pickingWave.wave);
             }}
           />
-          <Text style={[styles.subtext, {marginLeft: 16}]}> {status} </Text>
+          <Text style={[styles.subtext, { marginLeft: 16 }]}> {status} </Text>
         </View>
         <View>
           <View style={styles.row}>
@@ -203,8 +124,8 @@ export default function ManagerWaveScreen({ navigation, route }) {
             <View style={styles.nameColumn}>
               <Text style={styles.header}>{"Name"}</Text>
             </View>
-            <View style={[styles.pqtyColumn, {textAlign: 'right'}]}>
-              <Text style={[styles.header, {textAlign: 'right'}]}>{"P/Qty"}</Text>
+            <View style={[styles.pqtyColumn, { textAlign: 'right' }]}>
+              <Text style={[styles.header, { textAlign: 'right' }]}>{"P/Qty"}</Text>
             </View>
           </View>
           <View style={styles.scrollView}>
@@ -214,6 +135,7 @@ export default function ManagerWaveScreen({ navigation, route }) {
               scrollEventThrottle={200}
               style={styles.scrollView}
             >
+              
               {listDataSource.map((wave, key) => (
                 <Expandable
                   key={wave.defaultWarehouse}
@@ -224,6 +146,7 @@ export default function ManagerWaveScreen({ navigation, route }) {
                   input={false}
                 />
               ))}
+              
             </ScrollView>
           </View>
         </View>

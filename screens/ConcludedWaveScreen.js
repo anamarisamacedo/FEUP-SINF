@@ -14,98 +14,7 @@ import Expandable from "../components/Expandable";
 import { AuthProvider } from "../navigation/AuthProvider";
 import { useIsFocused } from "@react-navigation/native";
 
-const wave = [
-  {
-    isExpanded: false,
-    section_name: "A11",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "A12",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "A21",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "A22",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "A31",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "A32",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "B11",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "B12",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "B21",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "B22",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "B31",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "B32",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "C11",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "C12",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "C21",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "C22",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "C31",
-    items: [],
-  },
-  {
-    isExpanded: false,
-    section_name: "C32",
-    items: [],
-  },
-];
+const wave = [];
 
 export default function PickerWaveScreen({ navigation, route }) {
   const { pickingWave } = route.params;
@@ -143,8 +52,19 @@ export default function PickerWaveScreen({ navigation, route }) {
   const isFocused = useIsFocused();
 
   useEffect(() => {
+    orderSections();
     organizeItems(pickingWave.items);
   }, [isFocused]);
+
+  const orderSections = () => {
+    pickingWave.route.forEach(whSection => {
+      wave.push({
+        isExpanded: false,
+        section_name: whSection,
+        items: [],
+      },)
+    });
+  }
 
   const multiSelect = true;
 
@@ -349,5 +269,5 @@ const styles = StyleSheet.create({
     position: "absolute",
     bottom: 25,
   },
-  scrollView: {height: Dimensions.get('window').height - 500}
+  scrollView: {height: Dimensions.get('window').height - 300}
 });

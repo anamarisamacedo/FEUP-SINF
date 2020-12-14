@@ -1,5 +1,7 @@
 import queries from "../db/orders";
 import pwQueries from "../db/pickingWaves";
+import Functions from './routes';
+
 
 var numOrdersToAnalyze = 3;
 var whToInt = {
@@ -259,10 +261,13 @@ const functions = {
         }
 
         let targetOrders = [];
+        let targetSections = [];
         selectedItems.forEach(item => {
+            targetSections.push(item.defaultWarehouse);
             targetOrders.push(item.orderID);
         });
         targetOrders = [...new Set(targetOrders)];
+        targetSections = [...new Set(targetSections)];
         let closesOrders = [];
 
         targetOrders.forEach(orderID => {
@@ -281,10 +286,12 @@ const functions = {
             }
         })
 
-
         return new Promise(resolve => {
-            if(selectedItems.length > 0)
-                resolve(pwQueries.addPickingWave(selectedItems, closesOrders).then(() => {}));
+            if(selectedItems.length > 0) {
+                let route = Functions.findBestRoute(targetSections);
+                console.log(route);
+                resolve(pwQueries.addPickingWave(selectedItems, closesOrders, route).then(() => {}));
+            }
             else resolve();
         });
     },

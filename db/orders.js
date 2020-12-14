@@ -39,7 +39,7 @@ const queries = {
             db.ref("client_orders").once('value', querySnapShot => {
                 data = querySnapShot.val();
                 if (data == null) {
-                    resolve(false);
+                    resolve({});
                 } else resolve(data);
             });
         })

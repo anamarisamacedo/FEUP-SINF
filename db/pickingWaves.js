@@ -145,14 +145,14 @@ const pWqueries = {
         });
     },
 
-    addPickingWave: function (items, closesOrders) {
+    addPickingWave: function (items, closesOrders, route) {
         console.log(closesOrders);
         return new Promise(() => {
             this.getNextPWId().then(nextId => {
-
                 let {dayStr, hourStr} = this.getCurrentTime();
                 console.log(items);
                 db.ref('pickingWaves/' + nextId).set({
+                    route: route,
                     items: items,
                     status: 'pending',
                     wave: nextId,
