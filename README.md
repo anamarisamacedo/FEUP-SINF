@@ -2,7 +2,14 @@
 
 
 This project consists in the development of a Mobile Application to support the management of all the logistic activity related to a computer parts retailer company, NerdWired. 
-It contemplates the purchase and sales process, handles stock replenishment and allocation to warehouse and assists the picking process of a sales order. And It has 2 types of users: managers and pickers.
+It contemplates the purchase and sales process, handles stock replenishment and allocation to warehouse and assists the picking process of a sales order. 
+
+The app has 2 types of users: managers and pickers. The picker is in charge of picking up products from the warehouse according to tasks that are given to him, which include the route and the items to pick up, and delivering them to the OP (Out Point), making a report for each individual task. The manager has the responsibility of guiding the picking process as well as rectifying any mistake on stock information by analyzing the pickers’ reports. When a sales order is completed by the picker, the manager should also receive a delivery note.
+
+## Contextualization
+
+NerdWired is a company that sells computer components to final customers.
+When orders from suppliers arrive at the warehouse, the products are immediately stored in their respective subsections/shelves. As for the picking process related to the customers' orders, it is based on picking waves that can aggregate products from different orders.
 
 ## SiteMap
 
