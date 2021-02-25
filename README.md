@@ -1,3 +1,9 @@
+![alt text](./images/logo.png)
+
+
+This project consists on the development of a Mobile Application to support the management of all the logistic activity related to a computer parts retailer company, NerdWired. 
+It contemplates the purchase and sales process, handles stock replenishment and allocation to warehouse and assists the picking process of a sales order.
+
 ## Steps to build/run the app
 
 #### Download Node.js from https://nodejs.org/en/download/ (LTS, Windows Installer (.msi))
