@@ -11,6 +11,8 @@ The app has 2 types of users: managers and pickers. The picker is in charge of p
 NerdWired is a company that sells computer components to final customers.
 When orders from suppliers arrive at the warehouse, the products are immediately stored in their respective subsections/shelves. As for the picking process related to the customers' orders, it is based on picking waves that can aggregate products from different orders.
 
+![contex](files/Contextualization.png)
+
 ## SiteMap
 
 ![SiteMap](files/SiteMap.png)
