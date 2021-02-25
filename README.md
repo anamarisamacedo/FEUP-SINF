@@ -4,7 +4,15 @@
 This project consists in the development of a Mobile Application to support the management of all the logistic activity related to a computer parts retailer company, NerdWired. 
 It contemplates the purchase and sales process, handles stock replenishment and allocation to warehouse and assists the picking process of a sales order. And It has 2 types of users: managers and pickers.
 
+## Presentation
 
+[presentation](./files/4MIEIC04_G_Y_SLIDES.pdf)
+
+## Technologies used
+
+* Jasmin
+* React Native
+* Firebase
 
 ## Steps to build/run the app
 
